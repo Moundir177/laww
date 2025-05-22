@@ -25,6 +25,9 @@ jobs:
         
       - name: Prepare for Cloudflare Pages deployment
         run: |
+          # Ensure index.html exists in the output directory
+          cp out/index.html out/404.html
+          
           # Create _redirects file to handle client-side routing
           cat > out/_redirects << EOF
           # Redirect all requests to index.html for client-side routing
@@ -45,16 +48,27 @@ jobs:
             Expires: 0
           EOF
           
+          # Create _routes.json to ensure worker handles admin routes
+          cat > out/_routes.json << EOF
+          {
+            "version": 1,
+            "include": ["/admin", "/admin/*"],
+            "exclude": []
+          }
+          EOF
+          
           # Copy Functions directly to the output directory as a worker script
-          mkdir -p out
           cat > out/_worker.js << EOF
           export default {
             async fetch(request, env) {
               const url = new URL(request.url);
               
+              console.log("Request URL:", url.toString());
+              console.log("Request path:", url.pathname);
+              
               // Handle admin routes
               if (url.pathname.startsWith('/admin')) {
-                // Add CORS headers
+                // Set headers for API responses
                 const headers = new Headers({
                   'Access-Control-Allow-Origin': '*',
                   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
@@ -98,30 +112,50 @@ jobs:
                   }
                 ];
                 
-                // Handle news API endpoints
-                if (url.pathname.includes('/api/news')) {
-                  // Get a specific news item by ID
-                  const idMatch = url.pathname.match(/\/api\/news\/(\d+)/);
-                  if (idMatch) {
-                    const id = parseInt(idMatch[1]);
-                    const newsItem = newsItems.find(item => item.id === id);
-                    
-                    if (newsItem) {
-                      return new Response(JSON.stringify(newsItem), { headers });
-                    } else {
-                      return new Response(JSON.stringify({ error: 'News item not found' }), {
-                        status: 404,
-                        headers
-                      });
+                // Check if this is an API request
+                if (url.pathname.includes('/api/')) {
+                  // Handle news API endpoints
+                  if (url.pathname.includes('/news')) {
+                    // Get a specific news item by ID
+                    const idMatch = url.pathname.match(/\/news\/(\d+)/);
+                    if (idMatch) {
+                      const id = parseInt(idMatch[1]);
+                      const newsItem = newsItems.find(item => item.id === id);
+                      
+                      if (newsItem) {
+                        return new Response(JSON.stringify(newsItem), { headers });
+                      } else {
+                        return new Response(JSON.stringify({ error: 'News item not found' }), {
+                          status: 404,
+                          headers
+                        });
+                      }
                     }
+                    
+                    // Return all news items
+                    return new Response(JSON.stringify(newsItems), { headers });
                   }
                   
-                  // Return all news items
-                  return new Response(JSON.stringify(newsItems), { headers });
+                  // Default API response
+                  return new Response(JSON.stringify({ 
+                    success: true, 
+                    message: "Admin API endpoint",
+                    path: url.pathname
+                  }), { headers });
                 }
                 
                 // For UI routes, serve the index.html
-                return env.ASSETS.fetch(new Request(url.origin, request));
+                try {
+                  console.log("Serving index.html for admin route");
+                  // Create a new request for index.html from the root
+                  const indexUrl = new URL(url);
+                  indexUrl.pathname = "/index.html";
+                  const indexRequest = new Request(indexUrl.toString(), request);
+                  return env.ASSETS.fetch(indexRequest);
+                } catch (error) {
+                  console.error("Error serving admin route:", error);
+                  return new Response("Admin page error: " + error.message, { status: 500 });
+                }
               }
               
               // For all other routes, pass through to the static assets
