@@ -7,6 +7,8 @@ const nextConfig = {
   },
   // Remove experimental settings that cause errors
   trailingSlash: true,
+  // Skip certain routes during static export
+  distDir: '.next',
 };
 
 module.exports = nextConfig; 
