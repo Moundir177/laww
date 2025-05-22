@@ -1,7 +1,6 @@
-// Admin API handler for Cloudflare Pages Functions
+// Function to handle news items list
 export async function onRequest(context) {
   const { request } = context;
-  const url = new URL(request.url);
   
   // Add CORS headers
   const headers = new Headers({
@@ -16,7 +15,7 @@ export async function onRequest(context) {
     return new Response(null, { headers });
   }
   
-  // Mock data for news items
+  // Create mock data for news items
   const newsItems = [
     {
       id: 1,
@@ -47,6 +46,5 @@ export async function onRequest(context) {
     }
   ];
   
-  // Return all news items by default
   return new Response(JSON.stringify(newsItems), { headers });
 } 
