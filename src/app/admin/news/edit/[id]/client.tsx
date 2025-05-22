@@ -39,14 +39,44 @@ export default function EditNewsClient() {
       return;
     }
     
-    const item = getNewsItem(newsId);
-    if (!item) {
-      router.push('/admin/news');
-      return;
-    }
+    // Check if we're in production or development
+    const isProduction = typeof window !== 'undefined' && window.location.hostname !== 'localhost';
     
-    setNewsItem(item);
-    setIsLoading(false);
+    if (isProduction) {
+      // In production, fetch from API
+      setIsLoading(true);
+      fetch(`/admin/news/edit/${newsId}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Failed to fetch news item');
+          }
+          return response.json();
+        })
+        .then(data => {
+          setNewsItem(data);
+          setIsLoading(false);
+        })
+        .catch(error => {
+          console.error('Error fetching news item:', error);
+          // Fallback to local data
+          const item = getNewsItem(newsId);
+          if (!item) {
+            router.push('/admin/news');
+            return;
+          }
+          setNewsItem(item);
+          setIsLoading(false);
+        });
+    } else {
+      // In development, use local data
+      const item = getNewsItem(newsId);
+      if (!item) {
+        router.push('/admin/news');
+        return;
+      }
+      setNewsItem(item);
+      setIsLoading(false);
+    }
   }, [id, router]);
 
   const handleChange = (
@@ -124,12 +154,43 @@ export default function EditNewsClient() {
     
     setIsSaving(true);
     
-    // In a real application, this would be an API call
-    setTimeout(() => {
-      updateNewsItem(newsItem);
-      setIsSaving(false);
-      router.push('/admin/news');
-    }, 500);
+    // Check if we're in production or development
+    const isProduction = typeof window !== 'undefined' && window.location.hostname !== 'localhost';
+    
+    if (isProduction) {
+      // In production, call the API
+      fetch(`/admin/news/${newsItem.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newsItem),
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Failed to update news item');
+          }
+          return response.json();
+        })
+        .then(data => {
+          setIsSaving(false);
+          router.push('/admin/news');
+        })
+        .catch(error => {
+          console.error('Error updating news item:', error);
+          // Fallback to local update
+          updateNewsItem(newsItem);
+          setIsSaving(false);
+          router.push('/admin/news');
+        });
+    } else {
+      // In development, use local update
+      setTimeout(() => {
+        updateNewsItem(newsItem);
+        setIsSaving(false);
+        router.push('/admin/news');
+      }, 500);
+    }
   };
 
   // Only render on client side to avoid hydration issues
