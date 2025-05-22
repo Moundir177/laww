@@ -1,10 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Remove output: 'export' to allow server rendering
+  output: 'export',
   reactStrictMode: true,
   images: {
     unoptimized: true,
-  }
+  },
+  // Remove experimental settings that cause errors
+  trailingSlash: true,
 };
 
 module.exports = nextConfig; 
