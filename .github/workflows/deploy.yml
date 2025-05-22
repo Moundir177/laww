@@ -23,19 +23,34 @@ jobs:
       - name: Build
         run: npm run build
         
-      - name: Install Wrangler
-        run: npm install -g wrangler
-        
-      - name: Deploy to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages publish out --project-name droitfpra
+      - name: Prepare deployment
+        run: |
+          # Ensure functions directory is properly set up
+          mkdir -p out/_worker
+          cp -r functions/* out/_worker/
           
-      - name: Deploy Functions
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages functions deploy functions --project-name droitfpra 
+          # Create a Functions manifest file
+          echo '{"functions":[{"function":"admin/[[path]].js","pattern":"^/admin/.*$"},{"function":"index.js","pattern":"^/api$"}]}' > out/_worker/manifest.json
+          
+          # Zip the build output for upload
+          cd out
+          zip -r ../deploy.zip .
+          cd ..
+      
+      - name: Deploy to Cloudflare Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          # Install curl for API requests
+          sudo apt-get update
+          sudo apt-get install -y curl jq
+          
+          # Use Cloudflare API directly for deployment
+          echo "Creating Cloudflare Pages deployment..."
+          DEPLOY_URL=$(curl -s -X POST "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects/droitfpra/deployments" \
+            -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
+            -F "file=@deploy.zip" \
+            -F "branch=master" | jq -r '.result.url')
+            
+          echo "Deployment URL: $DEPLOY_URL" 
