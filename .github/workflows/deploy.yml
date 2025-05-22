@@ -23,14 +23,34 @@ jobs:
       - name: Build
         run: npm run build
         
-      - name: Install Wrangler
-        run: npm install -g wrangler
-        
+      - name: Prepare for Cloudflare Pages deployment
+        run: |
+          # Copy Functions to the correct location for Pages
+          mkdir -p out/_worker
+          cp functions/admin.js out/_worker/index.js
+          cp functions/_routes.json out/_worker/
+          
+          # Ensure _headers file exists with correct settings
+          cat > out/_headers << EOF
+          # Headers for all routes
+          /*
+            Cache-Control: public, max-age=3600
+          
+          # Don't cache admin routes
+          /admin/*
+            Cache-Control: no-store, no-cache, must-revalidate, proxy-revalidate
+            Pragma: no-cache
+            Expires: 0
+          EOF
+          
       - name: Deploy to Cloudflare Pages
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
-          # Deploy to Cloudflare Pages with Functions
+          # Install wrangler
+          npm install -g wrangler
+          
+          # Deploy to Cloudflare Pages
           echo "Deploying to Cloudflare Pages..."
-          wrangler pages deploy out --project-name droitfpra --branch production --functions-directory functions 
+          wrangler pages deploy out --project-name droitfpra --branch production 

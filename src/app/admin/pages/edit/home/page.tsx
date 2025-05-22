@@ -190,7 +190,7 @@ export default function EditHomePage() {
         
         // Dispatch a custom event to notify all components that content has been updated
         try {
-          window.dispatchEvent(new Event(CONTENT_UPDATED_EVENT));
+        window.dispatchEvent(new Event(CONTENT_UPDATED_EVENT));
           console.log(`EditHomePage: Dispatched ${CONTENT_UPDATED_EVENT} event`);
         } catch (error) {
           console.error(`Error dispatching ${CONTENT_UPDATED_EVENT} event:`, error);
@@ -199,8 +199,8 @@ export default function EditHomePage() {
         // Force re-rendering of other components by triggering localStorage events
         try {
           // First dispatch for the main page content
-          window.dispatchEvent(new StorageEvent('storage', {
-            key: `page_${content.id}`,
+        window.dispatchEvent(new StorageEvent('storage', {
+          key: `page_${content.id}`,
             newValue: contentString
           }));
           
@@ -208,8 +208,8 @@ export default function EditHomePage() {
           window.dispatchEvent(new StorageEvent('storage', {
             key: `editor_${content.id}`,
             newValue: contentString
-          }));
-          
+        }));
+        
           console.log(`EditHomePage: Dispatched storage events for page_${content.id} and editor_${content.id}`);
         } catch (error) {
           console.error('Error dispatching storage events:', error);

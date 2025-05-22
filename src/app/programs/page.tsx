@@ -617,7 +617,7 @@ export default function Programs() {
                         <span className="text-sm font-medium mt-2 text-gray-800">
                           {t(`cycle.${step}`) || step}
                         </span>
-                      </div>
+              </div>
                       
                       {index < 4 && (
                         <motion.div 

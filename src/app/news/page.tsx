@@ -435,7 +435,7 @@ export default function NewsPage() {
             <motion.div 
               className="lg:col-span-8 bg-white rounded-xl shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+                        animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
               <div className="relative h-96 overflow-hidden">
@@ -590,11 +590,11 @@ export default function NewsPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <input
-                type="text"
+                    <input
+                      type="text"
                 placeholder={language === 'fr' ? 'Rechercher des articles...' : 'البحث عن مقالات...'}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
                 className={`w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${textAlign}`}
               />
               <FaSearch className={`absolute top-3.5 ${language === 'ar' ? 'right-4' : 'left-4'} text-gray-400`} />
@@ -658,21 +658,21 @@ export default function NewsPage() {
               </div>
             </div>
           </motion.div>
-
+          
           {/* News Grid - improved layout with visual enhancements */}
-          <motion.div 
+            <motion.div 
             className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12"
             variants={staggerContainer}
-            initial="hidden"
+              initial="hidden"
             animate="visible"
-          >
-            {filteredNews.map((item, index) => (
-              <motion.div 
-                key={item.id}
+            >
+              {filteredNews.map((item, index) => (
+                <motion.div 
+                  key={item.id} 
                 className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 transition-all duration-300 hover:shadow-xl group flex flex-col h-full"
-                variants={itemVariant}
+                  variants={itemVariant}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
-              >
+                >
                 <div className="relative h-52 overflow-hidden">
                   {/* Category badge */}
                   <div className="absolute top-3 right-3 z-20">
@@ -689,72 +689,72 @@ export default function NewsPage() {
                   </div>
                   
                   {/* Image with hover effect */}
-                  <Image 
-                    src={item.image} 
-                    alt={item.title[language]}
-                    fill 
+                      <Image
+                        src={item.image}
+                        alt={item.title[language]}
+                        fill
                     style={{ objectFit: 'cover' }}
                     className="transition-transform duration-500 group-hover:scale-110"
-                  />
+                      />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
                   
                   {/* Date overlay */}
                   <div className="absolute bottom-0 left-0 right-0 p-4 z-20">
                     <div className="flex items-center text-white/90 text-xs">
-                      <FaRegCalendarAlt className={language === 'ar' ? 'ml-2' : 'mr-2'} />
+                            <FaRegCalendarAlt className={language === 'ar' ? 'ml-2' : 'mr-2'} />
                       <span>{item.date[language]}</span>
                     </div>
-                  </div>
-                </div>
-                
+                      </div>
+                    </div>
+                    
                 <div className="p-5 flex-grow flex flex-col">
                   <h3 className="text-lg font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-primary transition-colors">
                     <Link href={item.slug}>{item.title[language]}</Link>
                   </h3>
                   
                   <p className="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow">
-                    {item.excerpt[language]}
-                  </p>
-                  
+                      {item.excerpt[language]}
+                    </p>
+                    
                   <div className="flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
                     <span className="text-xs text-gray-500 flex items-center">
                       <FaUser className={language === 'ar' ? 'ml-1' : 'mr-1'} />
                       {item.author[language]}
                     </span>
                     
-                    <Link 
-                      href={item.slug}
+                      <Link 
+                        href={item.slug}
                       className="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors"
-                    >
+                      >
                       {language === 'fr' ? 'Lire' : 'قراءة'}
                       <svg xmlns="http://www.w3.org/2000/svg" className={`h-3 w-3 ${language === 'ar' ? 'mr-1 rotate-180' : 'ml-1'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    </Link>
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                      </Link>
                   </div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          
           {/* Load more button - enhanced */}
           <div className="text-center">
-            <motion.button
+              <motion.button
               className="px-8 py-3 bg-primary/10 border-2 border-primary text-primary rounded-full font-medium hover:bg-primary hover:text-white transition-all duration-300 shadow-sm hover:shadow-md group"
-              whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-            >
+              >
               <span className="flex items-center justify-center">
                 {language === 'fr' ? 'Charger plus d\'articles' : 'تحميل المزيد من المقالات'}
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2 transition-transform group-hover:translate-y-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                 </svg>
               </span>
-            </motion.button>
+              </motion.button>
           </div>
         </div>
       </section>
-
+      
       {/* Newsletter */}
       <Newsletter />
     </div>

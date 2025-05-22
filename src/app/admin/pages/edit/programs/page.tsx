@@ -161,7 +161,7 @@ export default function EditProgramsPage() {
       content = ensureAllSections(content);
       
       // Save the updated content to ensure all sections are available
-      setPageContent(content);
+        setPageContent(content);
       
       setPageData(content);
       setIsLoading(false);

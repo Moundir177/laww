@@ -376,18 +376,18 @@ export default function ResourcesPage() {
             transition={{ duration: 0.6 }}
           >
             <div className={`md:w-1/2 ${textAlign}`}>
-              <h2 className="text-4xl font-bold mb-6 relative inline-block">
-                {getSectionTitle('guides', 
-                  language === 'fr' ? 'Guides pratiques' : 'أدلة عملية')}
-                <div className="w-full h-1 bg-gradient-to-r from-primary to-orange absolute bottom-[-6px] left-0"></div>
-              </h2>
-              
+            <h2 className="text-4xl font-bold mb-6 relative inline-block">
+              {getSectionTitle('guides', 
+                language === 'fr' ? 'Guides pratiques' : 'أدلة عملية')}
+              <div className="w-full h-1 bg-gradient-to-r from-primary to-orange absolute bottom-[-6px] left-0"></div>
+            </h2>
+            
               <p className="text-lg text-gray-700">
-                {getSectionContent('guides', 
-                  language === 'fr' 
-                    ? 'Nos guides expliquent les droits fondamentaux dans un langage accessible à tous. Téléchargez-les gratuitement et partagez-les avec votre entourage.'
-                    : 'توضح أدلتنا الحقوق الأساسية بلغة يسهل فهمها للجميع. قم بتنزيلها مجانًا ومشاركتها مع من حولك.')}
-              </p>
+              {getSectionContent('guides', 
+                language === 'fr' 
+                  ? 'Nos guides expliquent les droits fondamentaux dans un langage accessible à tous. Téléchargez-les gratuitement et partagez-les avec votre entourage.'
+                  : 'توضح أدلتنا الحقوق الأساسية بلغة يسهل فهمها للجميع. قم بتنزيلها مجانًا ومشاركتها مع من حولك.')}
+            </p>
             </div>
             
             <div className="md:w-1/2">

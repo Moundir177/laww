@@ -302,27 +302,27 @@ export const setPageContent = (content: PageContent): boolean => {
     // Small delay to ensure removal completed
     setTimeout(() => {
       // Set new content
-      localStorage.setItem(editorKey, contentString);
-      localStorage.setItem(pageKey, contentString);
-      
-      console.log(`Database: Updated content for page ${content.id} with ${content.sections.length} sections`);
-      
+    localStorage.setItem(editorKey, contentString);
+    localStorage.setItem(pageKey, contentString);
+    
+    console.log(`Database: Updated content for page ${content.id} with ${content.sections.length} sections`);
+    
       // Dispatch events to notify all components that content has been updated
-      if (typeof window !== 'undefined') {
-        // First try to dispatch our custom event
-        try {
+    if (typeof window !== 'undefined') {
+      // First try to dispatch our custom event
+      try {
           const customEvent = new Event(CONTENT_UPDATED_EVENT);
           window.dispatchEvent(customEvent);
-          console.log(`Database: Dispatched ${CONTENT_UPDATED_EVENT} event`);
-        } catch (error) {
-          console.error(`Error dispatching ${CONTENT_UPDATED_EVENT} event:`, error);
-        }
-        
-        // Then dispatch storage events for both keys to ensure all components update
-        try {
+        console.log(`Database: Dispatched ${CONTENT_UPDATED_EVENT} event`);
+      } catch (error) {
+        console.error(`Error dispatching ${CONTENT_UPDATED_EVENT} event:`, error);
+      }
+      
+      // Then dispatch storage events for both keys to ensure all components update
+      try {
           // Dispatch event for page content
           const pageEvent = new StorageEvent('storage', {
-            key: pageKey,
+          key: pageKey,
             newValue: contentString,
             oldValue: null,
             storageArea: localStorage
@@ -331,18 +331,18 @@ export const setPageContent = (content: PageContent): boolean => {
           
           // Dispatch event for editor content
           const editorEvent = new StorageEvent('storage', {
-            key: editorKey,
+          key: editorKey,
             newValue: contentString,
             oldValue: null,
             storageArea: localStorage
           });
           window.dispatchEvent(editorEvent);
-          
-          console.log(`Database: Dispatched storage events for ${pageKey} and ${editorKey}`);
-        } catch (error) {
-          console.error('Error dispatching storage events:', error);
-        }
+        
+        console.log(`Database: Dispatched storage events for ${pageKey} and ${editorKey}`);
+      } catch (error) {
+        console.error('Error dispatching storage events:', error);
       }
+    }
     }, 50);
     
     return true;
@@ -2095,10 +2095,10 @@ export const initializeDatabase = () => {
         content: {
           fr: 'Notre rapport annuel présente un aperçu complet de l\'état des droits humains en Algérie.\n\nRapport annuel 2023\nMai 2023 | 120 pages\nCe rapport présente un aperçu complet de l\'état des droits humains en Algérie en 2023. Il aborde les avancées et défis dans différents domaines, notamment les libertés civiles, les droits économiques et sociaux, et l\'accès à la justice.',
           ar: 'يقدم تقريرنا السنوي نظرة شاملة عن حالة حقوق الإنسان في الجزائر.\n\nالتقرير السنوي 2023\nمايو 2023 | 120 صفحة\nيقدم هذا التقرير نظرة شاملة عن حالة حقوق الإنسان في الجزائر في عام 2023. ويتناول التقدم والتحديات في مختلف المجالات، بما في ذلك الحريات المدنية والحقوق الاقتصادية والاجتماعية والوصول إلى العدالة.'
-          }
         }
-      ]
-    };
+      }
+    ]
+  };
 
   // Initialize contact page content
   const contactPageContent: PageContent = {

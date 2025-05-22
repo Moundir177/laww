@@ -244,7 +244,7 @@ export default function History() {
                 </p>
               </div>
             </div>
-          </div>
+        </div>
         </motion.div>
         
         <motion.div 
@@ -303,7 +303,7 @@ export default function History() {
                       <h3 className="text-2xl font-bold text-gray-900 mb-3">{event.title}</h3>
                       <div className="w-16 h-1 bg-[#8FD694] mb-4"></div>
                       <p className="text-gray-700 leading-relaxed">{event.description}</p>
-                    </div>
+                  </div>
                   </motion.div>
                 </div>
                 
@@ -341,7 +341,7 @@ export default function History() {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center relative inline-block">
-              {language === 'fr' ? 'Notre Engagement Continu' : 'التزامنا المستمر'}
+            {language === 'fr' ? 'Notre Engagement Continu' : 'التزامنا المستمر'}
               <motion.div 
                 className="h-1 bg-gradient-to-r from-[#8FD694] to-[#2AA084] absolute -bottom-2 left-0"
                 initial={{ width: 0 }}
@@ -349,7 +349,7 @@ export default function History() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.4 }}
               />
-            </h2>
+          </h2>
           </motion.div>
           
           <div className="grid md:grid-cols-2 gap-8 relative z-10">
@@ -360,10 +360,10 @@ export default function History() {
               transition={{ duration: 0.5, delay: 0.4 }}
             >
               <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-                {language === 'fr'
-                  ? 'Tout au long de notre histoire, nous sommes restés fidèles à nos valeurs fondatrices d\'égalité, de justice et de dignité pour tous. En regardant vers l\'avenir, nous continuons à adapter nos approches pour répondre aux défis émergents en matière de droits humains tout en nous appuyant sur notre base établie d\'expertise et de confiance communautaire.'
-                  : 'على مدار تاريخنا، ظللنا ملتزمين بقيمنا التأسيسية المتمثلة في المساواة والعدالة والكرامة للجميع. وبينما نتطلع إلى المستقبل، نواصل تكييف نهجنا لمواجهة التحديات الناشئة في مجال حقوق الإنسان مع البناء على أساسنا الراسخ من الخبرة والثقة المجتمعية.'}
-              </p>
+            {language === 'fr'
+              ? 'Tout au long de notre histoire, nous sommes restés fidèles à nos valeurs fondatrices d\'égalité, de justice et de dignité pour tous. En regardant vers l\'avenir, nous continuons à adapter nos approches pour répondre aux défis émergents en matière de droits humains tout en nous appuyant sur notre base établie d\'expertise et de confiance communautaire.'
+              : 'على مدار تاريخنا، ظللنا ملتزمين بقيمنا التأسيسية المتمثلة في المساواة والعدالة والكرامة للجميع. وبينما نتطلع إلى المستقبل، نواصل تكييف نهجنا لمواجهة التحديات الناشئة في مجال حقوق الإنسان مع البناء على أساسنا الراسخ من الخبرة والثقة المجتمعية.'}
+          </p>
             </motion.div>
             
             <motion.div
@@ -373,10 +373,10 @@ export default function History() {
               transition={{ duration: 0.5, delay: 0.6 }}
             >
               <p className="text-lg text-gray-700 leading-relaxed">
-                {language === 'fr'
-                  ? 'Notre histoire témoigne de la puissance de l\'action collective et de l\'importance d\'un engagement soutenu envers les principes des droits humains. Nous honorons ceux qui ont contribué à notre parcours et nous nous réjouissons de travailler avec de nouveaux partenaires et soutiens alors que nous poursuivons notre mission.'
-                  : 'يشهد تاريخنا على قوة العمل الجماعي وأهمية الالتزام المستمر بمبادئ حقوق الإنسان. نحن نكرم أولئك الذين ساهموا في رحلتنا ونتطلع إلى العمل مع شركاء وداعمين جدد بينما نواصل مهمتنا.'}
-              </p>
+            {language === 'fr'
+              ? 'Notre histoire témoigne de la puissance de l\'action collective et de l\'importance d\'un engagement soutenu envers les principes des droits humains. Nous honorons ceux qui ont contribué à notre parcours et nous nous réjouissons de travailler avec de nouveaux partenaires et soutiens alors que nous poursuivons notre mission.'
+              : 'يشهد تاريخنا على قوة العمل الجماعي وأهمية الالتزام المستمر بمبادئ حقوق الإنسان. نحن نكرم أولئك الذين ساهموا في رحلتنا ونتطلع إلى العمل مع شركاء وداعمين جدد بينما نواصل مهمتنا.'}
+          </p>
             </motion.div>
           </div>
           
@@ -403,7 +403,7 @@ export default function History() {
                     : 'معًا، يمكننا إحداث فرق دائم'}
                 </p>
               </div>
-            </div>
+        </div>
           </motion.div>
         </motion.div>
         

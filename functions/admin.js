@@ -1,8 +1,13 @@
 // Admin API handler for Cloudflare Pages Functions
 export async function onRequest(context) {
-  const { request, env } = context;
+  const { request, env, next } = context;
   const url = new URL(request.url);
   const path = url.pathname;
+  
+  // Only handle admin routes, let everything else pass through
+  if (!path.startsWith('/admin')) {
+    return next();
+  }
   
   // Add CORS headers
   const headers = new Headers({
@@ -48,41 +53,39 @@ export async function onRequest(context) {
     }
   ];
   
-  // Handle admin routes for news
-  if (path.startsWith('/admin/news')) {
-    // Get a specific news item by ID
-    const idMatch = url.pathname.match(/\/admin\/news\/edit\/(\d+)/);
-    if (idMatch) {
-      const id = parseInt(idMatch[1]);
-      const newsItem = newsItems.find(item => item.id === id);
-      
-      if (newsItem) {
-        return new Response(JSON.stringify(newsItem), { headers });
-      } else {
-        return new Response(JSON.stringify({ error: 'News item not found' }), {
-          status: 404,
-          headers
-        });
+  // Check if this is an API call
+  if (path.includes('/api/')) {
+    // Handle admin routes for news API
+    if (path.startsWith('/admin/news')) {
+      // Get a specific news item by ID
+      const idMatch = url.pathname.match(/\/admin\/news\/edit\/(\d+)/);
+      if (idMatch) {
+        const id = parseInt(idMatch[1]);
+        const newsItem = newsItems.find(item => item.id === id);
+        
+        if (newsItem) {
+          return new Response(JSON.stringify(newsItem), { headers });
+        } else {
+          return new Response(JSON.stringify({ error: 'News item not found' }), {
+            status: 404,
+            headers
+          });
+        }
       }
+      
+      // Return all news items
+      return new Response(JSON.stringify(newsItems), { headers });
     }
     
-    // Return all news items
-    return new Response(JSON.stringify(newsItems), { headers });
+    // Default API response
+    return new Response(JSON.stringify({ 
+      success: true, 
+      message: "Admin API endpoint",
+      path: url.pathname
+    }), { headers });
   }
   
-  // For admin UI requests, serve index.html to enable client-side routing
-  if (path.startsWith('/admin')) {
-    const indexResponse = await context.next();
-    return indexResponse;
-  }
-  
-  // Default response for unhandled routes
-  return new Response(JSON.stringify({ 
-    error: 'Not found',
-    message: 'Admin API endpoint',
-    path: url.pathname
-  }), {
-    status: 404,
-    headers
-  });
+  // For non-API admin UI requests, serve index.html to enable client-side routing
+  const response = await context.env.ASSETS.fetch(new Request('https://fpra-droits.org/', request));
+  return new Response(response.body, response);
 } 

@@ -740,7 +740,7 @@ export default function ReviewPage() {
                   {language === 'fr' ? 'RESSOURCES AUDIOVISUELLES' : 'الموارد السمعية البصرية'}
                 </span>
                 <h2 className="text-4xl font-bold text-[#171717] mb-4 relative inline-block">
-                  {mediaLibraryTitle}
+              {mediaLibraryTitle}
                   <motion.div 
                     className="h-1.5 bg-gradient-to-r from-[#8FD694] to-[#2AA084] absolute -bottom-2 left-0"
                     initial={{ width: 0 }}
@@ -748,11 +748,11 @@ export default function ReviewPage() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.8, delay: 0.2 }}
                   />
-                </h2>
+            </h2>
                 <p className="text-lg text-gray-600 max-w-2xl mt-6">
-                  {mediaLibraryContent}
-                </p>
-              </div>
+                {mediaLibraryContent}
+              </p>
+            </div>
               
               {/* Search box with animation */}
               <motion.div 
@@ -776,7 +776,7 @@ export default function ReviewPage() {
                   <FaSearch size={18} />
                 </motion.span>
               </motion.div>
-            </div>
+          </div>
           </motion.div>
           
           {/* Media type tabs with animation */}
@@ -790,24 +790,24 @@ export default function ReviewPage() {
             <div className="bg-gray-50 p-2 rounded-2xl inline-flex flex-wrap justify-center shadow-sm">
               {mediaTypes.map((type, index) => (
                 <motion.button
-                  key={type.id}
-                  onClick={() => setActiveMediaType(type.id)}
+                key={type.id}
+                onClick={() => setActiveMediaType(type.id)}
                   className={`px-8 py-3 rounded-xl font-medium transition-all duration-300 flex items-center ${
-                    activeMediaType === type.id
+                  activeMediaType === type.id
                       ? 'bg-[#8FD694] text-white shadow-md'
                       : 'bg-transparent text-gray-600 hover:bg-white hover:shadow-sm'
-                  }`}
+                }`}
                   whileHover={{ scale: activeMediaType === type.id ? 1 : 1.05 }}
                   whileTap={{ scale: 0.98 }}
-                >
+              >
                   {type.icon && <span className={`${language === 'ar' ? 'ml-2' : 'mr-2'}`}>{type.icon}</span>}
-                  {language === 'fr' ? type.fr : type.ar}
+                {language === 'fr' ? type.fr : type.ar}
                   {activeMediaType === type.id && (
                     <span className="ml-2 bg-white w-2 h-2 rounded-full" />
                   )}
                 </motion.button>
-              ))}
-            </div>
+            ))}
+          </div>
           </motion.div>
           
           {/* Media Grid with staggered animation */}
@@ -935,13 +935,13 @@ export default function ReviewPage() {
                       whileHover={{ scale: 1.05, x: language === 'ar' ? -5 : 5 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <Link 
-                        href={media.slug}
+                    <Link 
+                      href={media.slug}
                         className="text-[#2AA084] hover:text-[#8FD694] font-medium flex items-center transition-colors duration-300"
-                      >
+                    >
                         <FaEye className={language === 'ar' ? 'ml-2' : 'mr-2'} />
                         {language === 'fr' ? 'Voir en détail' : 'عرض التفاصيل'}
-                      </Link>
+                    </Link>
                     </motion.div>
                     
                     <div className="flex items-center text-gray-400 text-sm">
@@ -992,15 +992,15 @@ export default function ReviewPage() {
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.2 }}
             >
-              <Link 
-                href="/review/media"
+            <Link 
+              href="/review/media"
                 className="bg-white border-2 border-[#8FD694] text-[#2AA084] hover:bg-[#f7fcf8] hover:shadow-md px-8 py-3.5 rounded-full inline-flex items-center transition-all duration-300 font-medium"
-              >
+            >
                 {language === 'fr' ? 'EXPLORER TOUTE LA MÉDIATHÈQUE' : 'استكشاف مكتبة الوسائط كاملةً'}
                 <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 ${language === 'ar' ? 'mr-2' : 'ml-2'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
-              </Link>
+            </Link>
             </motion.div>
           </motion.div>
         </div>
@@ -1053,7 +1053,7 @@ export default function ReviewPage() {
               </span>
               <h2 className="text-4xl font-bold text-[#171717] mb-4">
                 {featuredTitle}
-              </h2>
+            </h2>
               <motion.div 
                 className="h-1.5 bg-gradient-to-r from-orange to-[#FF9F5A] w-24 mx-auto mb-6"
                 initial={{ width: 0 }}
@@ -1088,22 +1088,22 @@ export default function ReviewPage() {
                   <div className="relative z-10">
                     <div className="mb-6 flex flex-wrap gap-3">
                       <span className="bg-orange text-white px-4 py-1.5 rounded-full text-sm font-medium shadow-sm">
-                        {publication.category[language]}
-                      </span>
+                      {publication.category[language]}
+                    </span>
                       <span className="bg-gray-100 text-gray-700 px-4 py-1.5 rounded-full text-sm font-medium">
                         {publication.type[language]}
                       </span>
-                    </div>
+                  </div>
                     
                     <h3 className="text-2xl font-bold mb-4 text-gray-800">
-                      {publication.title[language]}
-                    </h3>
+                    {publication.title[language]}
+                  </h3>
                     
                     <div className="flex items-center text-sm text-gray-500 mb-6">
                       <div className="flex items-center">
                         <FaRegCalendarAlt className={`text-orange ${language === 'ar' ? 'ml-2' : 'mr-2'}`} />
-                        <span>{publication.date[language]}</span>
-                      </div>
+                    <span>{publication.date[language]}</span>
+                  </div>
                       <span className="mx-3 text-gray-300">•</span>
                       <div className="flex items-center">
                         <FaRegFileAlt className={`text-orange ${language === 'ar' ? 'ml-2' : 'mr-2'}`} />
@@ -1112,38 +1112,38 @@ export default function ReviewPage() {
                     </div>
                     
                     <p className="text-gray-600 mb-8 leading-relaxed">
-                      {publication.excerpt[language]}
-                    </p>
+                    {publication.excerpt[language]}
+                  </p>
                     
                     <div className="flex flex-wrap gap-4">
                       <motion.div
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
-                        <Link 
-                          href={publication.slug}
+                    <Link 
+                      href={publication.slug}
                           className="bg-gradient-to-r from-orange to-[#FF9F5A] hover:from-orange/90 hover:to-[#FF9F5A]/90 text-white shadow-md hover:shadow-lg px-6 py-3 rounded-full inline-flex items-center transition-all duration-300 font-medium"
-                        >
+                    >
                           <FaEye className={language === 'ar' ? 'ml-2' : 'mr-2'} />
                           {language === 'fr' ? 'Lire le rapport' : 'قراءة التقرير'}
-                        </Link>
+                    </Link>
                       </motion.div>
                       
                       <motion.div
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
-                        <Link 
-                          href={publication.pdfUrl}
+                    <Link 
+                      href={publication.pdfUrl}
                           className="bg-white border-2 border-orange text-orange hover:bg-orange/5 px-6 py-3 rounded-full inline-flex items-center transition-colors duration-300"
-                          download
-                        >
+                      download
+                    >
                           <FaDownload className={language === 'ar' ? 'ml-2' : 'mr-2'} />
                           {language === 'fr' ? 'Télécharger PDF' : 'تحميل PDF'}
-                        </Link>
+                    </Link>
                       </motion.div>
-                    </div>
                   </div>
+                </div>
                 </motion.div>
               ))}
             </motion.div>
@@ -1202,7 +1202,7 @@ export default function ReviewPage() {
                     transition={{ duration: 0.6, delay: 0.4 }}
                   >
                     <span className="inline-block bg-white/90 text-[#171717] px-5 py-2 rounded-full text-sm font-bold mb-8 backdrop-blur-sm shadow-lg">
-                      {language === 'fr' ? 'RAPPORT ANNUEL 2023' : 'التقرير السنوي 2023'}
+                    {language === 'fr' ? 'RAPPORT ANNUEL 2023' : 'التقرير السنوي 2023'}
                     </span>
                   </motion.div>
                   
@@ -1216,7 +1216,7 @@ export default function ReviewPage() {
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                       </svg>
-                    </div>
+                  </div>
                   </motion.div>
                   
                   <motion.h2 
@@ -1254,27 +1254,27 @@ export default function ReviewPage() {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <Link 
-                        href="/review/rapport-annuel-2023"
+                    <Link 
+                      href="/review/rapport-annuel-2023"
                         className="bg-gradient-to-r from-orange to-[#FF9F5A] hover:from-orange/90 hover:to-[#FF9F5A]/90 text-white shadow-md hover:shadow-lg px-8 py-4 rounded-full inline-flex items-center transition-all duration-300 font-medium"
-                      >
+                    >
                         <FaEye className={language === 'ar' ? 'ml-2' : 'mr-2'} />
-                        {language === 'fr' ? 'Lire le rapport' : 'قراءة التقرير'}
-                      </Link>
+                      {language === 'fr' ? 'Lire le rapport' : 'قراءة التقرير'}
+                    </Link>
                     </motion.div>
                     
                     <motion.div
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <Link 
-                        href="/documents/rapport-annuel-2023.pdf"
+                    <Link 
+                      href="/documents/rapport-annuel-2023.pdf"
                         className="bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-sm px-8 py-4 rounded-full inline-flex items-center transition-all duration-300"
-                        download
-                      >
+                      download
+                    >
                         <FaDownload className={language === 'ar' ? 'ml-2' : 'mr-2'} />
-                        {language === 'fr' ? 'Télécharger (PDF)' : 'تحميل (PDF)'}
-                      </Link>
+                      {language === 'fr' ? 'Télécharger (PDF)' : 'تحميل (PDF)'}
+                    </Link>
                     </motion.div>
                   </motion.div>
                   
@@ -1289,17 +1289,17 @@ export default function ReviewPage() {
                     <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center">
                       <div className="text-2xl font-bold text-white">120+</div>
                       <div className="text-xs text-white/70">{language === 'fr' ? 'PAGES' : 'صفحات'}</div>
-                    </div>
+                  </div>
                     <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center">
                       <div className="text-2xl font-bold text-white">15+</div>
                       <div className="text-xs text-white/70">{language === 'fr' ? 'CHAPITRES' : 'فصول'}</div>
-                    </div>
+                </div>
                     <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center">
                       <div className="text-2xl font-bold text-white">30+</div>
                       <div className="text-xs text-white/70">{language === 'fr' ? 'EXPERTS' : 'خبراء'}</div>
-                    </div>
+              </div>
                   </motion.div>
-                </div>
+            </div>
               </div>
             </motion.div>
           </div>
