@@ -23,9 +23,19 @@ jobs:
       - name: Build
         run: npm run build
         
+      - name: Install Wrangler
+        run: npm install -g wrangler
+        
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy out --project-name droitfpra --functions-directory functions 
+          command: pages publish out --project-name droitfpra
+          
+      - name: Deploy Functions
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages functions deploy functions --project-name droitfpra 

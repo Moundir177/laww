@@ -15,7 +15,7 @@ include = ["_headers", "_redirects"]
 # Configure the Pages output directory
 pages_build_output_dir = "out"
 
-# Enable Cloudflare Pages Functions
+# Configure Cloudflare Pages Functions
 [functions]
 directory = "functions"
 
