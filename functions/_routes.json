@@ -1,15 +1,5 @@
 {
   "version": 1,
-  "include": ["/*"],
-  "exclude": [],
-  "routes": [
-    {
-      "pattern": "^/admin/.*$",
-      "function": "admin/[[path]]"
-    },
-    {
-      "pattern": "^/api$",
-      "function": "index"
-    }
-  ]
+  "include": ["/admin/*", "/api"],
+  "exclude": []
 } 
