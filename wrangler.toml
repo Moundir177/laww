@@ -1,15 +1,19 @@
 name = "droitfpra"
 compatibility_date = "2023-05-14"
 
-# Specify the directory of your built assets here
+# Specify the correct directory for the static export
 [site]
 bucket = "./out"
 
 [build]
 command = "npm run build"
 
+# Include static assets like headers and redirects
 [site.static]
 include = ["_headers", "_redirects"]
+
+# Configure the Pages output directory
+pages_build_output_dir = "out"
 
 [env.production]
 name = "droit-site"
@@ -23,7 +27,4 @@ output_directory = "out"
 
 [[env.production.routes]]
 pattern = "/*"
-script = ""
-
-# Add Pages configuration
-pages_build_output_dir = "out" 
+script = "" 
