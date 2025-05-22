@@ -23,155 +23,19 @@ jobs:
       - name: Build
         run: npm run build
         
-      - name: Prepare for Cloudflare Pages deployment
-        run: |
-          # Ensure index.html exists in the output directory
-          cp out/index.html out/404.html
-          
-          # Create _redirects file to handle client-side routing
-          cat > out/_redirects << EOF
-          # Redirect all requests to index.html for client-side routing
-          /admin/* /index.html 200
-          /* /index.html 200
-          EOF
-          
-          # Create _headers file for proper caching
-          cat > out/_headers << EOF
-          # Headers for all routes
-          /*
-            Cache-Control: public, max-age=3600
-          
-          # Don't cache admin routes
-          /admin/*
-            Cache-Control: no-store, no-cache, must-revalidate, proxy-revalidate
-            Pragma: no-cache
-            Expires: 0
-          EOF
-          
-          # Create _routes.json to ensure worker handles admin routes
-          cat > out/_routes.json << EOF
-          {
-            "version": 1,
-            "include": ["/admin", "/admin/*"],
-            "exclude": []
-          }
-          EOF
-          
-          # Copy Functions directly to the output directory as a worker script
-          cat > out/_worker.js << EOF
-          export default {
-            async fetch(request, env) {
-              const url = new URL(request.url);
-              
-              console.log("Request URL:", url.toString());
-              console.log("Request path:", url.pathname);
-              
-              // Handle admin routes
-              if (url.pathname.startsWith('/admin')) {
-                // Set headers for API responses
-                const headers = new Headers({
-                  'Access-Control-Allow-Origin': '*',
-                  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-                  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-                  'Content-Type': 'application/json'
-                });
-                
-                // Handle OPTIONS request for CORS preflight
-                if (request.method === 'OPTIONS') {
-                  return new Response(null, { headers });
-                }
-                
-                // Mock news data for demonstration
-                const newsItems = [
-                  {
-                    id: 1,
-                    title: { fr: 'Actualité 1', ar: 'الخبر 1' },
-                    excerpt: { fr: 'Extrait 1', ar: 'مقتطف 1' },
-                    content: { fr: 'Contenu 1', ar: 'محتوى 1' },
-                    image: 'https://via.placeholder.com/800x400',
-                    category: { fr: 'Catégorie 1', ar: 'الفئة 1' },
-                    date: new Date().toISOString()
-                  },
-                  {
-                    id: 2,
-                    title: { fr: 'Actualité 2', ar: 'الخبر 2' },
-                    excerpt: { fr: 'Extrait 2', ar: 'مقتطف 2' },
-                    content: { fr: 'Contenu 2', ar: 'محتوى 2' },
-                    image: 'https://via.placeholder.com/800x400',
-                    category: { fr: 'Catégorie 2', ar: 'الفئة 2' },
-                    date: new Date().toISOString()
-                  },
-                  {
-                    id: 3,
-                    title: { fr: 'Actualité 3', ar: 'الخبر 3' },
-                    excerpt: { fr: 'Extrait 3', ar: 'مقتطف 3' },
-                    content: { fr: 'Contenu 3', ar: 'محتوى 3' },
-                    image: 'https://via.placeholder.com/800x400',
-                    category: { fr: 'Catégorie 3', ar: 'الفئة 3' },
-                    date: new Date().toISOString()
-                  }
-                ];
-                
-                // Check if this is an API request
-                if (url.pathname.includes('/api/')) {
-                  // Handle news API endpoints
-                  if (url.pathname.includes('/news')) {
-                    // Get a specific news item by ID
-                    const idMatch = url.pathname.match(/\/news\/(\d+)/);
-                    if (idMatch) {
-                      const id = parseInt(idMatch[1]);
-                      const newsItem = newsItems.find(item => item.id === id);
-                      
-                      if (newsItem) {
-                        return new Response(JSON.stringify(newsItem), { headers });
-                      } else {
-                        return new Response(JSON.stringify({ error: 'News item not found' }), {
-                          status: 404,
-                          headers
-                        });
-                      }
-                    }
-                    
-                    // Return all news items
-                    return new Response(JSON.stringify(newsItems), { headers });
-                  }
-                  
-                  // Default API response
-                  return new Response(JSON.stringify({ 
-                    success: true, 
-                    message: "Admin API endpoint",
-                    path: url.pathname
-                  }), { headers });
-                }
-                
-                // For UI routes, serve the index.html
-                try {
-                  console.log("Serving index.html for admin route");
-                  // Create a new request for index.html from the root
-                  const indexUrl = new URL(url);
-                  indexUrl.pathname = "/index.html";
-                  const indexRequest = new Request(indexUrl.toString(), request);
-                  return env.ASSETS.fetch(indexRequest);
-                } catch (error) {
-                  console.error("Error serving admin route:", error);
-                  return new Response("Admin page error: " + error.message, { status: 500 });
-                }
-              }
-              
-              // For all other routes, pass through to the static assets
-              return env.ASSETS.fetch(request);
-            }
-          };
-          EOF
-          
+      - name: Install Wrangler
+        run: npm install -g wrangler
+        
       - name: Deploy to Cloudflare Pages
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: |
-          # Install wrangler
-          npm install -g wrangler
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages publish out --project-name droitfpra
           
-          # Deploy to Cloudflare Pages
-          echo "Deploying to Cloudflare Pages..."
-          wrangler pages deploy out --project-name droitfpra --branch production 
+      - name: Deploy Functions
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages functions deploy functions --project-name droitfpra 
