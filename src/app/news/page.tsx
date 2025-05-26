@@ -215,32 +215,6 @@ const newsItems: NewsItem[] = [
     image: '/images/pexels-pavel-danilyuk-8112172.jpg',
     slug: '/news/guide-acces-justice',
     content: 'Texte de contenu à remplir pour cet article. Ce guide pratique offre des informations essentielles sur le système judiciaire et les procédures à suivre pour accéder à la justice.'
-  },
-  {
-    id: 8,
-    title: {
-      fr: 'Atelier sur les Droits des Femmes',
-      ar: 'ورشة عمل حول حقوق المرأة'
-    },
-    date: {
-      fr: '28 juin 2023',
-      ar: '28 يونيو 2023'
-    },
-    author: {
-      fr: 'Équipe de formation',
-      ar: 'فريق التدريب'
-    },
-    category: {
-      fr: 'Formation',
-      ar: 'تدريب'
-    },
-    excerpt: {
-      fr: 'Un atelier axé sur les droits des femmes et les stratégies de lutte contre la discrimination fondée sur le genre.',
-      ar: 'ورشة عمل تركز على حقوق المرأة واستراتيجيات مكافحة التمييز القائم على النوع الاجتماعي.'
-    },
-    image: '/images/pexels-ekaterina-bolovtsova-6077861.jpg',
-    slug: '/news/atelier-droits-femmes',
-    content: 'Texte de contenu à remplir pour cet article. Cet atelier a réuni des experts et des participants pour discuter des stratégies efficaces de lutte contre la discrimination fondée sur le genre.'
   }
 ];
 
