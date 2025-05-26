@@ -79,7 +79,7 @@ export default function FormationPage() {
               </h3>
               
               <div className="flex flex-wrap gap-2">
-                {['Tous', 'Formation', 'Rapports', 'Partenariats', 'Événements'].map((category, idx) => (
+                {['Tous', 'Formation', 'Rapports', 'Événements'].map((category, idx) => (
                   <Link 
                     key={category}
                     href="/news"
@@ -111,15 +111,6 @@ export default function FormationPage() {
                   </h4>
                   <p className="text-gray-500 text-sm mt-1">
                     {language === 'fr' ? '18 décembre 2023' : '18 ديسمبر 2023'}
-                  </p>
-                </Link>
-                
-                <Link href="/news/collaboration-ong-internationales" className="block hover:bg-light p-3 rounded-lg transition-colors">
-                  <h4 className="font-semibold text-secondary hover:text-orange transition-colors">
-                    {language === 'fr' ? 'Collaboration avec des ONG Internationales' : 'التعاون مع المنظمات غير الحكومية الدولية'}
-                  </h4>
-                  <p className="text-gray-500 text-sm mt-1">
-                    {language === 'fr' ? '10 août 2023' : '10 أغسطس 2023'}
                   </p>
                 </Link>
               </div>

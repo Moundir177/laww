@@ -113,32 +113,6 @@ const newsItems: NewsItem[] = [
     content: 'Texte de contenu à remplir pour cet article.'
   },
   {
-    id: 3,
-    title: {
-      fr: 'Collaboration avec des ONG Internationales',
-      ar: 'التعاون مع المنظمات غير الحكومية الدولية'
-    },
-    date: {
-      fr: '10 août 2023',
-      ar: '10 أغسطس 2023'
-    },
-    author: {
-      fr: 'Équipe des partenariats',
-      ar: 'فريق الشراكات'
-    },
-    category: {
-      fr: 'Partenariats',
-      ar: 'شراكات'
-    },
-    excerpt: {
-      fr: 'Un nouveau partenariat stratégique avec des organisations internationales pour renforcer la promotion des droits.',
-      ar: 'شراكة استراتيجية جديدة مع منظمات دولية لتعزيز الحقوق.'
-    },
-    image: '/images/pexels-fauxels-3184292.jpg',
-    slug: '/news/collaboration-ong-internationales',
-    content: 'Texte de contenu à remplir pour cet article.'
-  },
-  {
     id: 4,
     title: {
       fr: 'Table Ronde sur les Réformes Juridiques',
@@ -274,7 +248,6 @@ const categories: Category[] = [
   { id: 'all', fr: 'Tous', ar: 'الكل' },
   { id: 'rapports', fr: 'Rapports', ar: 'تقارير' },
   { id: 'formation', fr: 'Formation', ar: 'تدريب' },
-  { id: 'partenariats', fr: 'Partenariats', ar: 'شراكات' },
   { id: 'événements', fr: 'Événements', ar: 'فعاليات' },
   { id: 'programmes', fr: 'Programmes', ar: 'برامج' },
   { id: 'publications', fr: 'Publications', ar: 'منشورات' },

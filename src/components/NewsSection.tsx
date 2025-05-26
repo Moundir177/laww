@@ -63,31 +63,6 @@ const newsItems = [
     slug: '/news/formation-droits-fondamentaux'
   },
   {
-    id: 3,
-    title: {
-      fr: 'Collaboration avec des ONG Internationales',
-      ar: 'التعاون مع المنظمات غير الحكومية الدولية'
-    },
-    date: {
-      fr: '10 août 2023',
-      ar: '10 أغسطس 2023'
-    },
-    author: {
-      fr: 'Équipe des Partenariats',
-      ar: 'فريق الشراكات'
-    },
-    category: {
-      fr: 'Partenariats',
-      ar: 'شراكات'
-    },
-    excerpt: {
-      fr: 'Un nouveau partenariat stratégique avec des organisations internationales pour renforcer la promotion des droits.',
-      ar: 'شراكة استراتيجية جديدة مع منظمات دولية لتعزيز تعزيز الحقوق.'
-    },
-    image: '/images/pexels-fauxels-3184292.jpg',
-    slug: '/news/collaboration-ong-internationales'
-  },
-  {
     id: 4,
     title: {
       fr: 'Table Ronde sur les Réformes Juridiques',
@@ -143,7 +118,6 @@ const categories = [
   { fr: 'Tous', ar: 'الكل' },
   { fr: 'Formation', ar: 'تدريب' },
   { fr: 'Rapports', ar: 'تقارير' },
-  { fr: 'Partenariats', ar: 'شراكات' },
   { fr: 'Événements', ar: 'فعاليات' },
   { fr: 'Publications', ar: 'منشورات' },
   { fr: 'Analyses', ar: 'تحليلات' }
@@ -539,11 +513,9 @@ export default function NewsSection() {
                   src={
                     newsItem.category.fr === 'Formation' 
                       ? '/images/pexels-rdne-7414214.jpg' 
-                      : newsItem.category.fr === 'Partenariats' 
-                        ? '/images/pexels-ekaterina-bolovtsova-6077326.jpg' 
-                        : newsItem.category.fr === 'Événements'
-                          ? '/images/pexels-pavel-danilyuk-8112172.jpg'
-                          : '/images/gavel-7499911_1280.jpg'
+                      : newsItem.category.fr === 'Événements'
+                        ? '/images/pexels-pavel-danilyuk-8112172.jpg'
+                        : '/images/gavel-7499911_1280.jpg'
                   }
                   alt={language === 'ar' ? newsItem.title.ar : newsItem.title.fr}
                   fill
