@@ -31,8 +31,8 @@ const newsItems = [
       ar: 'تحليلات'
     },
     excerpt: {
-      fr: 'Notre équipe a réalisé une analyse approfondie du projet de loi sur les associations, examinant ses implications pour la société civile et les droits fondamentaux.',
-      ar: 'قام فريقنا بإجراء تحليل متعمق لمشروع قانون الجمعيات، مع دراسة آثاره على المجتمع المدني والحقوق الأساسية.'
+      fr: 'À l\'occasion de la journée internationale des droits des migrants, nous annonçons la création d\'une cellule juridique pour les migrants et les familles des disparus en mer en Algérie.',
+      ar: 'بمناسبة اليوم العالمي لحقوق المهاجرين، نعلن عن إنشاء خلية قانونية للمهاجرين وعائلات المفقودين في البحر في الجزائر.'
     },
     image: '/images/justice-law-scales.jpg',
     slug: '/news/analyse-projet-loi-associations'

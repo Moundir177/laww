@@ -29,8 +29,8 @@ const articleContent = {
     { fr: 'Recommandations pour améliorer le projet de loi', ar: 'توصيات لتحسين مشروع القانون' }
   ],
   content: {
-    fr: 'Notre équipe a réalisé une analyse approfondie du projet de loi sur les associations, examinant ses implications pour la société civile et les droits fondamentaux. Cette étude détaillée met en lumière les points forts et les limitations du texte proposé, tout en formulant des recommandations concrètes pour son amélioration. L\'analyse s\'appuie sur les standards internationaux en matière de liberté d\'association et sur les meilleures pratiques observées dans différents contextes.',
-    ar: 'قام فريقنا بإجراء تحليل متعمق لمشروع قانون الجمعيات، مع دراسة آثاره على المجتمع المدني والحقوق الأساسية. تسلط هذه الدراسة التفصيلية الضوء على نقاط القوة والقيود في النص المقترح، مع تقديم توصيات ملموسة لتحسينه. يستند التحليل إلى المعايير الدولية لحرية تكوين الجمعيات وأفضل الممارسات الملاحظة في سياقات مختلفة.'
+    fr: 'À l\'occasion de la journée internationale des droits des migrants, nous annonçons la création d\'une cellule juridique pour les migrants et les familles des disparus en mer en Algérie. N\'hésitez pas à visiter notre page Facebook et nous contacter.',
+    ar: 'بمناسبة اليوم العالمي لحقوق المهاجرين، نعلن عن إنشاء خلية قانونية للمهاجرين وعائلات المفقودين في البحر في الجزائر. لا تترددوا في زيارة صفحتنا على فيسبوك والاتصال بنا.'
   },
   slug: '/news/analyse-projet-loi-associations'
 };
