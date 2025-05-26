@@ -320,12 +320,9 @@ export default function AboutPage() {
               {/* Main image with overlay gradient */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent z-10"></div>
               
-              {/* Faceless Man Icon */}
+              {/* Foundation Logo */}
               <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
-                <svg className="w-48 h-48 text-white/80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2C9.38 2 7.25 4.13 7.25 6.75C7.25 9.32 9.26 11.4 11.88 11.49C11.96 11.48 12.04 11.48 12.1 11.49C12.12 11.49 12.13 11.49 12.15 11.49C12.16 11.49 12.16 11.49 12.17 11.49C14.73 11.4 16.74 9.32 16.75 6.75C16.75 4.13 14.62 2 12 2Z" fill="currentColor"/>
-                  <path d="M17.08 14.15C14.29 12.29 9.74 12.29 6.93 14.15C5.66 15 4.96 16.15 4.96 17.38C4.96 18.61 5.66 19.75 6.92 20.59C8.32 21.53 10.16 22 12 22C13.84 22 15.68 21.53 17.08 20.59C18.34 19.74 19.04 18.6 19.04 17.36C19.03 16.13 18.34 14.99 17.08 14.15Z" fill="currentColor"/>
-                </svg>
+                <img src="/images/logo.png" alt="Logo Fondation" className="w-64 h-64 object-contain" />
               </div>
               
               {/* Legal symbols overlay */}
@@ -388,26 +385,37 @@ export default function AboutPage() {
               {/* Decorative element */}
               <div className="absolute -top-10 -right-10 w-24 h-24 bg-[#8FD694]/10 rounded-full"></div>
               
-              <motion.p 
-                className="text-xl text-gray-700 italic relative z-10"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.8 }}
-              >
-                {language === 'fr'
-                  ? 'La justice n\'est pas seulement ce que la loi nous dicte, mais ce que l\'humanité exige de nous.'
-                  : 'العدالة ليست فقط ما يمليه علينا القانون، بل ما تتطلبه الإنسانية منا.'}
-              </motion.p>
-              <motion.p 
-                className="text-right mt-4 text-gray-600 font-medium"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 1 }}
-              >
-                — Nelson Mandela
-              </motion.p>
+              <div className="flex flex-col md:flex-row gap-6 items-center">
+                <div className="w-full md:w-1/4">
+                  <img 
+                    src="/images/nelson-mandela.jpg" 
+                    alt="Nelson Mandela"
+                    className="rounded-lg shadow-md mx-auto max-w-[150px]"
+                  />
+                </div>
+                <div className="w-full md:w-3/4">
+                  <motion.p 
+                    className="text-xl text-gray-700 italic relative z-10"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.8 }}
+                  >
+                    {language === 'fr'
+                      ? 'La justice n\'est pas seulement ce que la loi nous dicte, mais ce que l\'humanité exige de nous.'
+                      : 'العدالة ليست فقط ما يمليه علينا القانون، بل ما تتطلبه الإنسانية منا.'}
+                  </motion.p>
+                  <motion.p 
+                    className="text-right mt-4 text-gray-600 font-medium"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 1 }}
+                  >
+                    — Nelson Mandela
+                  </motion.p>
+                </div>
+              </div>
             </motion.div>
           </div>
         </div>
