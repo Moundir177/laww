@@ -83,7 +83,7 @@ const newsItems: NewsItem[] = [
       ar: 'قام فريقنا بإجراء تحليل متعمق لمشروع قانون الجمعيات، مع دراسة آثاره على المجتمع المدني والحقوق الأساسية.'
     },
     image: '/images/gavel-7499911_1280.jpg',
-    slug: '/images/analyse-projet-loi-associations',
+    slug: '/news/analyse-projet-loi-associations',
     content: 'Cette note d\'analyse présente un examen critique du projet de loi sur les associations en Algérie.'
   },
   {
@@ -161,7 +161,7 @@ const newsItems: NewsItem[] = [
       ar: 'مبادرة جديدة تهدف إلى تثقيف الشباب حول حقوقهم وتشجيع مشاركتهم المدنية.'
     },
     image: '/images/rights-education.jpg',
-    slug: '/news/initiative-droits-jeunes',
+    slug: '/news/lancement-initiative-droits-jeunes',
     content: 'Texte de contenu à remplir pour cet article.'
   },
   {
