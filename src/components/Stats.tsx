@@ -156,7 +156,7 @@ export default function Stats() {
               key={index}
               className={`card bg-white rounded-xl md:rounded-2xl shadow-lg p-6 sm:p-8 md:p-10 text-center transform transition-all hover:shadow-xl
                 ${index === 1 ? 'border-t-4 border-[#FF8A00]' : 'border-t-4 border-primary'} 
-                relative overflow-hidden group sm:col-span-1 ${index === 1 && 'sm:col-span-2 lg:col-span-1'}`}
+                relative overflow-hidden group h-full w-full flex flex-col`}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.5, delay: 0.2 * index }}
@@ -188,7 +188,7 @@ export default function Stats() {
               
               <div className={`font-semibold text-base md:text-lg mb-4 md:mb-6 relative z-10 ${index === 1 ? 'text-[#FF8A00]/90' : 'text-secondary'}`}>{item.label}</div>
               
-              <div className="h-1.5 md:h-2 bg-gray-100 rounded-full overflow-hidden">
+              <div className="h-1.5 md:h-2 bg-gray-100 rounded-full overflow-hidden mt-auto">
                 <motion.div 
                   className={`h-full rounded-full ${index === 1 ? 'bg-[#FF8A00]' : 'bg-gradient-to-r from-primary to-accent'}`}
                   initial={{ width: 0 }}

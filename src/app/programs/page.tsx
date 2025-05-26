@@ -561,18 +561,11 @@ export default function Programs() {
               </motion.div>
             </div>
           </motion.div>
-          
-          {/* Newsletter section */}
-          <motion.div
-            className="rounded-xl overflow-hidden shadow-lg"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-          >
-            <Newsletter />
-          </motion.div>
         </div>
       </div>
+      
+      {/* Newsletter section - Placed outside of container, directly like on homepage */}
+      <Newsletter />
     </div>
   );
 } 
