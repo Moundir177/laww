@@ -816,45 +816,7 @@ export default function AboutPage() {
       </section>
 
       {/* Newsletter Section */}
-      <section className="py-16 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
-        {/* Decorative elements */}
-        <motion.div 
-          className="absolute left-1/3 bottom-1/3 w-40 h-40 rounded-full bg-[#8FD694]/10 blur-xl"
-          animate={{ 
-            scale: [1, 1.2, 1],
-            opacity: [0.2, 0.3, 0.2],
-          }}
-          transition={{ 
-            duration: 8, 
-            repeat: Infinity,
-            repeatType: "mirror" 
-          }}
-        />
-        <motion.div 
-          className="absolute right-1/4 top-1/3 w-32 h-32 rounded-full bg-[#FF8A00]/10 blur-xl"
-          animate={{ 
-            scale: [1.2, 1, 1.2],
-            opacity: [0.1, 0.2, 0.1],
-          }}
-          transition={{ 
-            duration: 7, 
-            repeat: Infinity,
-            repeatType: "mirror",
-            delay: 1
-          }}
-        />
-        
-        <div className="container mx-auto px-4 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true, amount: 0.3 }}
-          >
-            <Newsletter />
-          </motion.div>
-        </div>
-      </section>
+      <Newsletter />
     </div>
   );
 } 
