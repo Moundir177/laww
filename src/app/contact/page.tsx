@@ -238,16 +238,16 @@ export default function ContactPage() {
                 __html: getSectionContent('email', 'info@fpra-droits.org').replace(/\n/g, '<br />') 
               }} />
               <div className="flex justify-center space-x-4">
-                <a href="https://www.facebook.com/fondationpourlespromotiondesdroits" className="text-gray-400 hover:text-[#4267B2] transition-colors duration-300 transform hover:scale-110">
+                <a href="https://web.facebook.com/profile.php?id=61566611772758&sk=about" className="text-gray-400 hover:text-[#4267B2] transition-colors duration-300 transform hover:scale-110">
                   <FaFacebook size={22} />
                 </a>
-                <a href="https://twitter.com/fpdroits" className="text-gray-400 hover:text-[#1DA1F2] transition-colors duration-300 transform hover:scale-110">
+                <a href="https://x.com/FondationDZ" className="text-gray-400 hover:text-[#1DA1F2] transition-colors duration-300 transform hover:scale-110">
                   <FaTwitter size={22} />
                 </a>
-                <a href="https://www.instagram.com/fondationpdroits" className="text-gray-400 hover:text-[#E1306C] transition-colors duration-300 transform hover:scale-110">
+                <a href="https://www.instagram.com/fondationdz/" className="text-gray-400 hover:text-[#E1306C] transition-colors duration-300 transform hover:scale-110">
                   <FaInstagram size={22} />
                 </a>
-                <a href="https://www.youtube.com/channel/UCxI8qyP4Ma_V3Q9Y84QUO3g" className="text-gray-400 hover:text-[#FF0000] transition-colors duration-300 transform hover:scale-110">
+                <a href="https://youtube.com/@fondationpourlapromotiondesdro?si=ahO0gXnJ1OIYThab" className="text-gray-400 hover:text-[#FF0000] transition-colors duration-300 transform hover:scale-110">
                   <FaYoutube size={22} />
                 </a>
               </div>

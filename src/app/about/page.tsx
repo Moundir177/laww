@@ -322,7 +322,7 @@ export default function AboutPage() {
               
               {/* Background image */}
               <img 
-                src={justiceSection?.image || "/images/law/justice-law-scales.jpg"}
+                src={justiceSection?.image || "/images/justice-law-scales.jpg"}
                 alt={justiceSection?.title?.[language as 'fr' | 'ar'] || (language === 'fr' ? "Justice et droits" : "العدالة والحقوق")} 
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
