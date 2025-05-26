@@ -6,36 +6,36 @@ import Link from 'next/link';
 import Newsletter from '@/components/Newsletter';
 
 const articleContent = {
-  id: 2,
+  id: 5,
   title: {
-    fr: 'Formation sur les Droits Fondamentaux',
-    ar: 'تدريب على الحقوق الأساسية'
+    fr: 'Guide sur l\'Accès à la Justice',
+    ar: 'دليل حول الوصول إلى العدالة'
   },
   date: {
-    fr: '25 août 2023',
-    ar: '25 أغسطس 2023'
+    fr: '5 juillet 2023',
+    ar: '5 يوليو 2023'
   },
   author: {
-    fr: 'Équipe de Formation',
-    ar: 'فريق التدريب'
+    fr: 'Équipe des Publications',
+    ar: 'فريق المنشورات'
   },
   category: {
-    fr: 'Formation',
-    ar: 'تدريب'
+    fr: 'Publications',
+    ar: 'منشورات'
   },
   keyPoints: [
-    { fr: 'Mécanismes de protection internationale des droits', ar: 'آليات الحماية الدولية للحقوق' },
-    { fr: 'Techniques de plaidoyer et de sensibilisation', ar: 'تقنيات المناصرة والتوعية' },
-    { fr: 'Documentation des violations des droits', ar: 'توثيق انتهاكات الحقوق' }
+    { fr: 'Procédures judiciaires expliquées simplement', ar: 'شرح الإجراءات القضائية بطريقة مبسطة' },
+    { fr: 'Droits et recours disponibles pour les citoyens', ar: 'الحقوق وسبل الانتصاف المتاحة للمواطنين' },
+    { fr: 'Ressources et contacts utiles', ar: 'الموارد وجهات الاتصال المفيدة' }
   ],
   content: {
-    fr: 'Nouvelle session de formation prévue à Alger pour les défenseurs des droits, axée sur les mécanismes de protection internationale. Cette formation intensive de trois jours permettra aux participants de renforcer leurs compétences en matière de défense des droits et d\'acquérir des outils pratiques pour leurs activités. Des experts nationaux et internationaux animeront les différentes sessions thématiques.',
-    ar: 'دورة تدريبية جديدة مخططة في الجزائر العاصمة للمدافعين عن الحقوق، تركز على آليات الحماية الدولية. ستتيح هذه الدورة التدريبية المكثفة التي تستمر ثلاثة أيام للمشاركين تعزيز مهاراتهم في الدفاع عن الحقوق واكتساب أدوات عملية لأنشطتهم. سيقوم خبراء وطنيون ودوليون بتنشيط مختلف الجلسات المواضيعية.'
+    fr: 'Publication d\'un guide pratique pour aider les citoyens à comprendre et à naviguer dans le système judiciaire. Ce document, disponible en format papier et numérique, présente de manière claire et accessible les différentes procédures judiciaires, les droits des justiciables et les recours possibles. Il comprend également des conseils pratiques et des contacts utiles pour faciliter l\'accès à la justice pour tous.',
+    ar: 'نشر دليل عملي لمساعدة المواطنين على فهم نظام العدالة والتنقل فيه. تقدم هذه الوثيقة، المتوفرة بنسخة ورقية ورقمية، بطريقة واضحة وسهلة الوصول مختلف الإجراءات القضائية، وحقوق المتقاضين، وسبل الانتصاف الممكنة. كما يتضمن نصائح عملية وجهات اتصال مفيدة لتسهيل الوصول إلى العدالة للجميع.'
   },
-  slug: '/news/formation-droits-fondamentaux'
+  slug: '/news/guide-acces-justice'
 };
 
-export default function FormationDroitsFondamentauxPage() {
+export default function GuideAccesJusticePage() {
   const { language } = useLanguage();
   
   return (
@@ -79,12 +79,12 @@ export default function FormationDroitsFondamentauxPage() {
               </h3>
               
               <div className="flex flex-wrap gap-2">
-                {['Tous', 'Formation', 'Rapports', 'Événements'].map((category, idx) => (
+                {['Tous', 'Publications', 'Rapports', 'Événements'].map((category, idx) => (
                   <Link 
                     key={category}
                     href="/news"
                     className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                      category === 'Formation'
+                      category === 'Publications'
                         ? 'bg-gradient-to-r from-orange to-orange-light text-white shadow-md'
                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
@@ -114,12 +114,12 @@ export default function FormationDroitsFondamentauxPage() {
                   </p>
                 </Link>
                 
-                <Link href="/news/analyse-projet-loi-associations" className="block hover:bg-light p-3 rounded-lg transition-colors">
+                <Link href="/news/formation-droits-fondamentaux" className="block hover:bg-light p-3 rounded-lg transition-colors">
                   <h4 className="font-semibold text-secondary hover:text-orange transition-colors">
-                    {language === 'fr' ? 'Note d\'analyse sur le projet de loi sur les associations' : 'مذكرة تحليلية حول مشروع قانون الجمعيات'}
+                    {language === 'fr' ? 'Formation sur les Droits Fondamentaux' : 'تدريب على الحقوق الأساسية'}
                   </h4>
                   <p className="text-gray-500 text-sm mt-1">
-                    {language === 'fr' ? '18 décembre 2024' : '18 ديسمبر 2024'}
+                    {language === 'fr' ? '25 août 2023' : '25 أغسطس 2023'}
                   </p>
                 </Link>
               </div>

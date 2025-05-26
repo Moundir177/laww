@@ -23,8 +23,8 @@ const newsItems = [
       ar: '18 ديسمبر 2024'
     },
     author: {
-      fr: 'Équipe de Sensibilisation',
-      ar: 'فريق التوعية'
+      fr: 'Équipe de recherche',
+      ar: 'فريق البحث'
     },
     category: {
       fr: 'Analyses',
@@ -63,7 +63,7 @@ const newsItems = [
     slug: '/news/formation-droits-fondamentaux'
   },
   {
-    id: 4,
+    id: 3,
     title: {
       fr: 'Table Ronde sur les Réformes Juridiques',
       ar: 'طاولة مستديرة حول الإصلاحات القانونية'
@@ -88,7 +88,57 @@ const newsItems = [
     slug: '/news/table-ronde-reformes-juridiques'
   },
   {
+    id: 4,
+    title: {
+      fr: 'Lancement de l\'Initiative Droits des Jeunes',
+      ar: 'إطلاق مبادرة حقوق الشباب'
+    },
+    date: {
+      fr: '28 juillet 2023',
+      ar: '28 يوليو 2023'
+    },
+    author: {
+      fr: 'Équipe des programmes',
+      ar: 'فريق البرامج'
+    },
+    category: {
+      fr: 'Programmes',
+      ar: 'برامج'
+    },
+    excerpt: {
+      fr: 'Une nouvelle initiative visant à éduquer les jeunes sur leurs droits et à encourager leur engagement...',
+      ar: 'مبادرة جديدة تهدف إلى تثقيف الشباب حول حقوقهم وتشجيع مشاركتهم...'
+    },
+    image: '/images/pexels-rdne-7414214.jpg',
+    slug: '/news/lancement-initiative-droits-jeunes'
+  },
+  {
     id: 5,
+    title: {
+      fr: 'Conférence sur les Droits Numériques',
+      ar: 'مؤتمر حول الحقوق الرقمية'
+    },
+    date: {
+      fr: '15 juillet 2023',
+      ar: '15 يوليو 2023'
+    },
+    author: {
+      fr: 'Équipe des événements',
+      ar: 'فريق الفعاليات'
+    },
+    category: {
+      fr: 'Événements',
+      ar: 'فعاليات'
+    },
+    excerpt: {
+      fr: 'Une conférence abordant les défis et les opportunités de la protection des droits à l\'ère numérique.',
+      ar: 'مؤتمر يتناول تحديات وفرص حماية الحقوق في العصر الرقمي.'
+    },
+    image: '/images/pexels-pavel-danilyuk-8112172.jpg',
+    slug: '/news/conference-droits-numeriques'
+  },
+  {
+    id: 6,
     title: {
       fr: 'Guide sur l\'Accès à la Justice',
       ar: 'دليل حول الوصول إلى العدالة'
@@ -120,7 +170,8 @@ const categories = [
   { fr: 'Rapports', ar: 'تقارير' },
   { fr: 'Événements', ar: 'فعاليات' },
   { fr: 'Publications', ar: 'منشورات' },
-  { fr: 'Analyses', ar: 'تحليلات' }
+  { fr: 'Analyses', ar: 'تحليلات' },
+  { fr: 'Programmes', ar: 'برامج' }
 ];
 
 const keyPoints = [

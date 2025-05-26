@@ -6,36 +6,36 @@ import Link from 'next/link';
 import Newsletter from '@/components/Newsletter';
 
 const articleContent = {
-  id: 2,
+  id: 6,
   title: {
-    fr: 'Formation sur les Droits Fondamentaux',
-    ar: 'تدريب على الحقوق الأساسية'
+    fr: 'Conférence sur les Droits Numériques',
+    ar: 'مؤتمر حول الحقوق الرقمية'
   },
   date: {
-    fr: '25 août 2023',
-    ar: '25 أغسطس 2023'
+    fr: '15 juillet 2023',
+    ar: '15 يوليو 2023'
   },
   author: {
-    fr: 'Équipe de Formation',
-    ar: 'فريق التدريب'
+    fr: 'Équipe des événements',
+    ar: 'فريق الفعاليات'
   },
   category: {
-    fr: 'Formation',
-    ar: 'تدريب'
+    fr: 'Événements',
+    ar: 'فعاليات'
   },
   keyPoints: [
-    { fr: 'Mécanismes de protection internationale des droits', ar: 'آليات الحماية الدولية للحقوق' },
-    { fr: 'Techniques de plaidoyer et de sensibilisation', ar: 'تقنيات المناصرة والتوعية' },
-    { fr: 'Documentation des violations des droits', ar: 'توثيق انتهاكات الحقوق' }
+    { fr: 'Protection des données personnelles', ar: 'حماية البيانات الشخصية' },
+    { fr: 'Liberté d\'expression en ligne', ar: 'حرية التعبير عبر الإنترنت' },
+    { fr: 'Accès équitable aux technologies numériques', ar: 'وصول عادل إلى التقنيات الرقمية' }
   ],
   content: {
-    fr: 'Nouvelle session de formation prévue à Alger pour les défenseurs des droits, axée sur les mécanismes de protection internationale. Cette formation intensive de trois jours permettra aux participants de renforcer leurs compétences en matière de défense des droits et d\'acquérir des outils pratiques pour leurs activités. Des experts nationaux et internationaux animeront les différentes sessions thématiques.',
-    ar: 'دورة تدريبية جديدة مخططة في الجزائر العاصمة للمدافعين عن الحقوق، تركز على آليات الحماية الدولية. ستتيح هذه الدورة التدريبية المكثفة التي تستمر ثلاثة أيام للمشاركين تعزيز مهاراتهم في الدفاع عن الحقوق واكتساب أدوات عملية لأنشطتهم. سيقوم خبراء وطنيون ودوليون بتنشيط مختلف الجلسات المواضيعية.'
+    fr: 'Une conférence abordant les défis et les opportunités de la protection des droits à l\'ère numérique. Cet événement a réuni des experts en droit numérique, des défenseurs des droits humains et des professionnels des technologies pour discuter de l\'impact de la révolution numérique sur les droits fondamentaux. Des sessions thématiques ont porté sur la protection des données personnelles, la liberté d\'expression en ligne et l\'accès équitable aux technologies numériques.',
+    ar: 'مؤتمر يتناول تحديات وفرص حماية الحقوق في العصر الرقمي. جمع هذا الحدث خبراء في القانون الرقمي، ومدافعين عن حقوق الإنسان، ومتخصصين في التكنولوجيا لمناقشة تأثير الثورة الرقمية على الحقوق الأساسية. تناولت الجلسات المواضيعية حماية البيانات الشخصية، وحرية التعبير عبر الإنترنت، والوصول العادل إلى التقنيات الرقمية.'
   },
-  slug: '/news/formation-droits-fondamentaux'
+  slug: '/news/conference-droits-numeriques'
 };
 
-export default function FormationDroitsFondamentauxPage() {
+export default function ConferenceDroitsNumeriquesPage() {
   const { language } = useLanguage();
   
   return (
@@ -79,12 +79,12 @@ export default function FormationDroitsFondamentauxPage() {
               </h3>
               
               <div className="flex flex-wrap gap-2">
-                {['Tous', 'Formation', 'Rapports', 'Événements'].map((category, idx) => (
+                {['Tous', 'Événements', 'Rapports', 'Publications'].map((category, idx) => (
                   <Link 
                     key={category}
                     href="/news"
                     className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                      category === 'Formation'
+                      category === 'Événements'
                         ? 'bg-gradient-to-r from-orange to-orange-light text-white shadow-md'
                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
@@ -114,12 +114,12 @@ export default function FormationDroitsFondamentauxPage() {
                   </p>
                 </Link>
                 
-                <Link href="/news/analyse-projet-loi-associations" className="block hover:bg-light p-3 rounded-lg transition-colors">
+                <Link href="/news/guide-acces-justice" className="block hover:bg-light p-3 rounded-lg transition-colors">
                   <h4 className="font-semibold text-secondary hover:text-orange transition-colors">
-                    {language === 'fr' ? 'Note d\'analyse sur le projet de loi sur les associations' : 'مذكرة تحليلية حول مشروع قانون الجمعيات'}
+                    {language === 'fr' ? 'Guide sur l\'Accès à la Justice' : 'دليل حول الوصول إلى العدالة'}
                   </h4>
                   <p className="text-gray-500 text-sm mt-1">
-                    {language === 'fr' ? '18 décembre 2024' : '18 ديسمبر 2024'}
+                    {language === 'fr' ? '5 juillet 2023' : '5 يوليو 2023'}
                   </p>
                 </Link>
               </div>

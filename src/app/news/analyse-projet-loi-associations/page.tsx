@@ -6,36 +6,36 @@ import Link from 'next/link';
 import Newsletter from '@/components/Newsletter';
 
 const articleContent = {
-  id: 2,
+  id: 1,
   title: {
-    fr: 'Formation sur les Droits Fondamentaux',
-    ar: 'تدريب على الحقوق الأساسية'
+    fr: 'Note d\'analyse sur le projet de loi sur les associations',
+    ar: 'مذكرة تحليلية حول مشروع قانون الجمعيات'
   },
   date: {
-    fr: '25 août 2023',
-    ar: '25 أغسطس 2023'
+    fr: '18 décembre 2024',
+    ar: '18 ديسمبر 2024'
   },
   author: {
-    fr: 'Équipe de Formation',
-    ar: 'فريق التدريب'
+    fr: 'Équipe de recherche',
+    ar: 'فريق البحث'
   },
   category: {
-    fr: 'Formation',
-    ar: 'تدريب'
+    fr: 'Analyses',
+    ar: 'تحليلات'
   },
   keyPoints: [
-    { fr: 'Mécanismes de protection internationale des droits', ar: 'آليات الحماية الدولية للحقوق' },
-    { fr: 'Techniques de plaidoyer et de sensibilisation', ar: 'تقنيات المناصرة والتوعية' },
-    { fr: 'Documentation des violations des droits', ar: 'توثيق انتهاكات الحقوق' }
+    { fr: 'Analyse des implications pour la société civile', ar: 'تحليل الآثار المترتبة على المجتمع المدني' },
+    { fr: 'Évaluation de la conformité aux standards internationaux', ar: 'تقييم التوافق مع المعايير الدولية' },
+    { fr: 'Recommandations pour améliorer le projet de loi', ar: 'توصيات لتحسين مشروع القانون' }
   ],
   content: {
-    fr: 'Nouvelle session de formation prévue à Alger pour les défenseurs des droits, axée sur les mécanismes de protection internationale. Cette formation intensive de trois jours permettra aux participants de renforcer leurs compétences en matière de défense des droits et d\'acquérir des outils pratiques pour leurs activités. Des experts nationaux et internationaux animeront les différentes sessions thématiques.',
-    ar: 'دورة تدريبية جديدة مخططة في الجزائر العاصمة للمدافعين عن الحقوق، تركز على آليات الحماية الدولية. ستتيح هذه الدورة التدريبية المكثفة التي تستمر ثلاثة أيام للمشاركين تعزيز مهاراتهم في الدفاع عن الحقوق واكتساب أدوات عملية لأنشطتهم. سيقوم خبراء وطنيون ودوليون بتنشيط مختلف الجلسات المواضيعية.'
+    fr: 'Notre équipe a réalisé une analyse approfondie du projet de loi sur les associations, examinant ses implications pour la société civile et les droits fondamentaux. Cette étude détaillée met en lumière les points forts et les limitations du texte proposé, tout en formulant des recommandations concrètes pour son amélioration. L\'analyse s\'appuie sur les standards internationaux en matière de liberté d\'association et sur les meilleures pratiques observées dans différents contextes.',
+    ar: 'قام فريقنا بإجراء تحليل متعمق لمشروع قانون الجمعيات، مع دراسة آثاره على المجتمع المدني والحقوق الأساسية. تسلط هذه الدراسة التفصيلية الضوء على نقاط القوة والقيود في النص المقترح، مع تقديم توصيات ملموسة لتحسينه. يستند التحليل إلى المعايير الدولية لحرية تكوين الجمعيات وأفضل الممارسات الملاحظة في سياقات مختلفة.'
   },
-  slug: '/news/formation-droits-fondamentaux'
+  slug: '/news/analyse-projet-loi-associations'
 };
 
-export default function FormationDroitsFondamentauxPage() {
+export default function AnalyseProjetLoiPage() {
   const { language } = useLanguage();
   
   return (
@@ -79,12 +79,12 @@ export default function FormationDroitsFondamentauxPage() {
               </h3>
               
               <div className="flex flex-wrap gap-2">
-                {['Tous', 'Formation', 'Rapports', 'Événements'].map((category, idx) => (
+                {['Tous', 'Analyses', 'Rapports', 'Événements'].map((category, idx) => (
                   <Link 
                     key={category}
                     href="/news"
                     className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                      category === 'Formation'
+                      category === 'Analyses'
                         ? 'bg-gradient-to-r from-orange to-orange-light text-white shadow-md'
                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
@@ -105,21 +105,21 @@ export default function FormationDroitsFondamentauxPage() {
               </h3>
               
               <div className="space-y-4">
+                <Link href="/news/formation-droits-fondamentaux" className="block hover:bg-light p-3 rounded-lg transition-colors">
+                  <h4 className="font-semibold text-secondary hover:text-orange transition-colors">
+                    {language === 'fr' ? 'Formation sur les Droits Fondamentaux' : 'تدريب على الحقوق الأساسية'}
+                  </h4>
+                  <p className="text-gray-500 text-sm mt-1">
+                    {language === 'fr' ? '25 août 2023' : '25 أغسطس 2023'}
+                  </p>
+                </Link>
+                
                 <Link href="/news/table-ronde-reformes-juridiques" className="block hover:bg-light p-3 rounded-lg transition-colors">
                   <h4 className="font-semibold text-secondary hover:text-orange transition-colors">
                     {language === 'fr' ? 'Table Ronde sur les Réformes Juridiques' : 'طاولة مستديرة حول الإصلاحات القانونية'}
                   </h4>
                   <p className="text-gray-500 text-sm mt-1">
                     {language === 'fr' ? '5 août 2023' : '5 أغسطس 2023'}
-                  </p>
-                </Link>
-                
-                <Link href="/news/analyse-projet-loi-associations" className="block hover:bg-light p-3 rounded-lg transition-colors">
-                  <h4 className="font-semibold text-secondary hover:text-orange transition-colors">
-                    {language === 'fr' ? 'Note d\'analyse sur le projet de loi sur les associations' : 'مذكرة تحليلية حول مشروع قانون الجمعيات'}
-                  </h4>
-                  <p className="text-gray-500 text-sm mt-1">
-                    {language === 'fr' ? '18 décembre 2024' : '18 ديسمبر 2024'}
                   </p>
                 </Link>
               </div>
