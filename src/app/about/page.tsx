@@ -713,8 +713,12 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <div className="md:col-span-1">
               <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-                <div className="h-72 bg-gradient-to-b from-gray-100 to-gray-300 flex items-center justify-center">
-                  <img src="/images/zakaria.jpg" alt="Zakaria Benlahrech" className="w-full h-full object-cover" />
+                <div className="h-72 bg-gradient-to-b from-gray-700 to-gray-900 flex items-center justify-center">
+                  {/* Faceless Man Icon */}
+                  <svg className="w-40 h-40 text-white/80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C9.38 2 7.25 4.13 7.25 6.75C7.25 9.32 9.26 11.4 11.88 11.49C11.96 11.48 12.04 11.48 12.1 11.49C12.12 11.49 12.13 11.49 12.15 11.49C12.16 11.49 12.16 11.49 12.17 11.49C14.73 11.4 16.74 9.32 16.75 6.75C16.75 4.13 14.62 2 12 2Z" fill="currentColor"/>
+                    <path d="M17.08 14.15C14.29 12.29 9.74 12.29 6.93 14.15C5.66 15 4.96 16.15 4.96 17.38C4.96 18.61 5.66 19.75 6.92 20.59C8.32 21.53 10.16 22 12 22C13.84 22 15.68 21.53 17.08 20.59C18.34 19.74 19.04 18.6 19.04 17.36C19.03 16.13 18.34 14.99 17.08 14.15Z" fill="currentColor"/>
+                  </svg>
                 </div>
                 <div className="p-6 text-center">
                   <h3 className="text-2xl font-bold text-gray-800 mb-2">Zakaria Benlahrech</h3>
