@@ -56,7 +56,7 @@ export default function TestimonialsPage() {
       const content = getPageContent('testimonials');
       if (content) {
         console.log('Testimonials page - Content loaded with sections:', 
-          content.sections.map(s => `${s.id}: ${s.title?.fr}`).join(', '));
+          content.sections ? content.sections.map(s => `${s.id}: ${s.title?.fr}`).join(', ') : 'No sections found');
         setPageContent(content);
         // Force re-render by incrementing the refresh counter
         setForceRefresh(prev => prev + 1);

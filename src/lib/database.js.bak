@@ -1,0 +1,232 @@
+// Simple database implementation with localStorage
+console.log("Loading database.js implementation");
+
+// Helper functions for localStorage
+export const getItem = (key) => {
+  if (typeof window === 'undefined') return null;
+  
+  try {
+    const item = localStorage.getItem(key);
+    return item ? JSON.parse(item) : null;
+  } catch (e) {
+    console.error(`Error getting item '${key}' from localStorage:`, e);
+    return null;
+  }
+};
+
+export const setItem = (key, value) => {
+  if (typeof window === 'undefined') return false;
+  
+  try {
+    const valueString = JSON.stringify(value);
+    localStorage.setItem(key, valueString);
+    
+    // Dispatch event for other components
+    window.dispatchEvent(new StorageEvent('storage', {
+      key: key,
+      newValue: valueString
+    }));
+    
+    return true;
+  } catch (e) {
+    console.error(`Error setting item '${key}' in localStorage:`, e);
+    return false;
+  }
+};
+
+export const removeItem = (key) => {
+  if (typeof window === 'undefined') return false;
+  
+  try {
+    localStorage.removeItem(key);
+    return true;
+  } catch (e) {
+    console.error('Error removing item from localStorage:', e);
+    return false;
+  }
+};
+
+// Page content related functions
+export const getPageContent = (pageId) => {
+  console.log("getPageContent called for:", pageId);
+  if (typeof window === 'undefined') return null;
+  
+  try {
+    // First try to get from direct key (for pages edited in the admin panel)
+    const content = getItem(`page_${pageId}`);
+    if (content) {
+      console.log(`Found content in page_${pageId}`);
+      // Ensure sections is initialized
+      if (!content.sections) content.sections = [];
+      return content;
+    }
+    
+    // Otherwise try to get from the "editor" version
+    const editorContent = getItem(`editor_${pageId}`);
+    if (editorContent) {
+      console.log(`Found content in editor_${pageId}`);
+      // Ensure sections is initialized
+      if (!editorContent.sections) editorContent.sections = [];
+      return editorContent;
+    }
+    
+    // Finally, try to get from the initial data
+    const allContent = getItem('initialData');
+    if (allContent && allContent.pages) {
+      const page = allContent.pages.find(p => p.id === pageId);
+      if (page) {
+        console.log(`Found content in initialData for ${pageId}`);
+        // Ensure sections is initialized
+        if (!page.sections) page.sections = [];
+        return page;
+      }
+    }
+    
+    console.log(`No content found for ${pageId}, returning default object`);
+    // Return default object with sections as an empty array
+    return PageContent.createDefault(pageId);
+  } catch (e) {
+    console.error(`Error getting page content for '${pageId}':`, e);
+    return PageContent.createDefault(pageId);
+  }
+};
+
+export const setPageContent = (content) => {
+  if (!content || !content.id) return false;
+  return setItem(`page_${content.id}`, content);
+};
+
+// Minimal implementations of other functions
+export const getNews = () => getItem('news') || [];
+export const setNews = (news) => setItem('news', news);
+export const getNewsItem = (id) => (getNews().find(item => item.id === id) || null);
+export const updateNewsItem = (item) => {
+  const news = getNews();
+  const index = news.findIndex(i => i.id === item.id);
+  if (index !== -1) {
+    news[index] = item;
+    return setNews(news);
+  }
+  return false;
+};
+export const deleteNewsItem = (id) => setNews(getNews().filter(item => item.id !== id));
+
+export const getResources = () => getItem('resources') || [];
+export const setResources = (resources) => setItem('resources', resources);
+export const getResource = (id) => (getResources().find(item => item.id === id) || null);
+export const updateResource = (item) => {
+  const resources = getResources();
+  const index = resources.findIndex(i => i.id === item.id);
+  if (index !== -1) {
+    resources[index] = item;
+    return setResources(resources);
+  }
+  return false;
+};
+export const deleteResource = (id) => setResources(getResources().filter(item => item.id !== id));
+
+export const getAllPages = () => {
+  const allContent = getItem('initialData');
+  return (allContent && allContent.pages) ? allContent.pages : [];
+};
+export const getAllPageIds = () => getAllPages().map(page => page.id);
+export const getGlobalContent = () => getItem('globalContent') || [];
+export const setGlobalContent = (content) => setItem('globalContent', content);
+export const getGlobalContentItem = (category, key) => {
+  const content = getGlobalContent();
+  return content.find(item => item.category === category && item.key === key) || null;
+};
+export const updateGlobalContentItem = (item) => {
+  const content = getGlobalContent();
+  const index = content.findIndex(i => i.category === item.category && i.key === item.key);
+  if (index !== -1) {
+    content[index] = item;
+    return setGlobalContent(content);
+  }
+  return false;
+};
+export const getCategoryContent = (category) => getGlobalContent().filter(item => item.category === category);
+export const getMediaLibrary = () => getItem('mediaLibrary') || [];
+export const setMediaLibrary = (media) => setItem('mediaLibrary', media);
+export const getMediaItem = (id) => (getMediaLibrary().find(item => item.id === id) || null);
+export const updateMediaItem = (item) => {
+  const media = getMediaLibrary();
+  const index = media.findIndex(i => i.id === item.id);
+  if (index !== -1) {
+    media[index] = item;
+    return setMediaLibrary(media);
+  }
+  return false;
+};
+export const deleteMediaItem = (id) => setMediaLibrary(getMediaLibrary().filter(item => item.id !== id));
+export const syncContentToEditor = () => {
+  try {
+    getAllPageIds().forEach(id => {
+      const content = getPageContent(id);
+      if (content) setItem(`editor_${id}`, content);
+    });
+    return true;
+  } catch (e) {
+    console.error('Error syncing content to editor:', e);
+    return false;
+  }
+};
+export const applyEditorChanges = (pageId) => {
+  try {
+    const editorContent = getItem(`editor_${pageId}`);
+    if (editorContent) {
+      setPageContent(editorContent);
+      return true;
+    }
+    return false;
+  } catch (e) {
+    console.error(`Error applying editor changes for '${pageId}':`, e);
+    return false;
+  }
+};
+export const getExactPageContent = (pageId) => getPageContent(pageId);
+export const initializeDatabase = () => true;
+export const updateHomePageWithAllSections = () => {
+  const content = getPageContent('home');
+  return content ? setPageContent(content) : false;
+};
+export const updateAboutPageWithAllSections = () => {
+  const content = getPageContent('about');
+  return content ? setPageContent(content) : false;
+};
+export const updateProgramsPageWithAllSections = () => {
+  const content = getPageContent('programs');
+  return content ? setPageContent(content) : false;
+};
+
+// Export PageContent type definition for TypeScript
+/**
+ * @typedef {Object} TranslatedText
+ * @property {string} fr - French text
+ * @property {string} ar - Arabic text
+ */
+
+/**
+ * @typedef {Object} PageSection
+ * @property {string} id - Section ID
+ * @property {TranslatedText} [title] - Section title
+ * @property {TranslatedText} [content] - Section content
+ * @property {string} [image] - Optional image URL
+ * @property {Object} [metadata] - Additional metadata
+ */
+
+/**
+ * @typedef {Object} PageContent
+ * @property {string} id - Page ID
+ * @property {TranslatedText} title - Page title
+ * @property {PageSection[]} sections - Page sections
+ */
+
+// Export a concrete object instead of an empty one
+export const PageContent = {
+  createDefault: (id) => ({
+    id,
+    title: { fr: id, ar: id },
+    sections: []
+  })
+}; 

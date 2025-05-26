@@ -90,22 +90,22 @@ const publications: Publication[] = [
   {
     id: 1,
     title: {
-      fr: 'Rapport annuel 2023',
-      ar: 'التقرير السنوي 2023'
+      fr: 'Note d\'analyse sur le projet de loi sur les associations',
+      ar: 'مذكرة تحليلية حول مشروع قانون الجمعيات'
     },
     date: {
-      fr: 'Mai 2023',
-      ar: 'مايو 2023'
+      fr: 'Mai 2024',
+      ar: 'مايو 2024'
     },
     excerpt: {
-      fr: 'Ce rapport présente un aperçu complet de l\'état des droits humains en Algérie en 2023. Il aborde les avancées et défis dans différents domaines, notamment les libertés civiles, les droits économiques et sociaux, et l\'accès à la justice.',
-      ar: 'يقدم هذا التقرير نظرة شاملة عن حالة حقوق الإنسان في الجزائر في عام 2023. ويتناول التقدم والتحديات في مختلف المجالات، بما في ذلك الحريات المدنية والحقوق الاقتصادية والاجتماعية والوصول إلى العدالة.'
+      fr: 'Cette note d\'analyse présente un examen critique du projet de loi sur les associations en Algérie. Elle aborde les implications pour la société civile, les droits et libertés associatifs, et propose des recommandations pour améliorer le cadre juridique.',
+      ar: 'تقدم هذه المذكرة التحليلية فحصاً نقدياً لمشروع قانون الجمعيات في الجزائر. وتتناول الآثار المترتبة على المجتمع المدني وحقوق وحريات الجمعيات، وتقدم توصيات لتحسين الإطار القانوني.'
     },
-    category: { id: 'droits-humains', fr: 'Rapport annuel', ar: 'التقرير السنوي' },
-    type: { id: 'reports', fr: 'Rapport', ar: 'تقرير' },
-    pages: 120,
-    slug: '/review/rapport-annuel-2023',
-    pdfUrl: '/documents/rapport-annuel-2023.pdf',
+    category: { id: 'juridique', fr: 'Analyse juridique', ar: 'تحليل قانوني' },
+    type: { id: 'analyses', fr: 'Analyse', ar: 'تحليل' },
+    pages: 45,
+    slug: '/review/note-analyse-projet-loi-associations',
+    pdfUrl: '/documents/note-analyse-projet-loi-associations.pdf',
     featured: true
   },
   {
@@ -279,7 +279,7 @@ export default function ReviewPage() {
       const content = getPageContent('review');
       if (content) {
         console.log('Review page - Content loaded with sections:', 
-          content.sections.map(s => `${s.id}: ${s.title?.fr}`).join(', '));
+          content.sections ? content.sections.map(s => `${s.id}: ${s.title?.fr}`).join(', ') : 'No sections found');
         setPageContent(content);
         // Force re-render by incrementing the refresh counter
         setForceRefresh(prev => prev + 1);
@@ -1092,7 +1092,7 @@ export default function ReviewPage() {
                     </span>
                       <span className="bg-gray-100 text-gray-700 px-4 py-1.5 rounded-full text-sm font-medium">
                         {publication.type[language]}
-                      </span>
+                    </span>
                   </div>
                     
                     <h3 className="text-2xl font-bold mb-4 text-gray-800">
@@ -1273,7 +1273,7 @@ export default function ReviewPage() {
                       download
                     >
                         <FaDownload className={language === 'ar' ? 'ml-2' : 'mr-2'} />
-                      {language === 'fr' ? 'Télécharger (PDF)' : 'تحميل (PDF)'}
+                      {language === 'fr' ? 'Télécharger PDF' : 'تحميل PDF'}
                     </Link>
                     </motion.div>
                   </motion.div>

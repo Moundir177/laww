@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 interface PageHeaderProps {
   title: string;
@@ -96,22 +97,58 @@ export default function PageHeader({ title, subtitle, language = 'fr' }: PageHea
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 1.2 }}
         style={{ 
-          backgroundImage: "url('/images/hero-background.jpg')", 
           backgroundPosition: 'center',
         }}
       >
-        {/* Modern gradient overlay with green, orange and black */}
+        {/* Modern gradient overlay with black and green - match the Hero component */}
         <div 
-          className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/70 to-orange/50"
+          className="absolute inset-0 bg-secondary"
+        ></div>
+        
+        <motion.div 
+          className="absolute inset-0 bg-gradient-to-r from-black/30 to-[#2AA084]/50"
+          initial={{ opacity: 0.5 }}
+          animate={{ opacity: 0.9 }}
+          transition={{ duration: 1.5 }}
           style={{
             backgroundPosition: `${mousePosition.x / 100}px ${mousePosition.y / 100}px`
           }}
-        ></div>
+        ></motion.div>
+        
+        {/* Orange lighting effect on the top right */}
+        <motion.div
+          className="absolute top-0 right-0 w-1/3 h-1/2 bg-gradient-to-bl from-orange/30 to-transparent"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ 
+            opacity: [0.2, 0.4, 0.2], 
+            scale: [0.8, 1.1, 0.8]
+          }}
+          transition={{ 
+            duration: 8, 
+            repeat: Infinity, 
+            repeatType: "reverse" 
+          }}
+        ></motion.div>
+        
+        {/* Additional orange glow on right side */}
+        <div className="absolute right-0 inset-y-0 w-1/4 bg-gradient-to-l from-orange/20 to-transparent z-0"></div>
         
         {/* Secondary gradient overlay to create depth */}
         <div 
           className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-primary/30"
         ></div>
+        
+        {/* Centered logo */}
+        <div className="absolute inset-0 flex items-center justify-center z-0">
+          <div className="relative w-[250px] h-[250px] opacity-15">
+            <Image 
+              src="/images/logo.png" 
+              alt="Foundation Logo" 
+              fill
+              className="object-contain"
+            />
+          </div>
+        </div>
         
         {/* Particle overlay - Now client-only */}
         <div className="absolute inset-0">

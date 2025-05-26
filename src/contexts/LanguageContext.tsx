@@ -85,6 +85,9 @@ const translations: Record<Language, Record<string, string>> = {
     
     'contact.hours': 'Heures d\'Ouverture',
     'contact.faq': 'Questions Fréquentes',
+    'contact.weekdays': 'Jours Ouvrables',
+    'contact.weekend': 'Week-end',
+    'contact.closed': 'Fermé',
     
     // Programs pages
     'programs.training': 'Formation & Renforcement',
@@ -175,6 +178,9 @@ const translations: Record<Language, Record<string, string>> = {
     
     'contact.hours': 'ساعات العمل',
     'contact.faq': 'الأسئلة الشائعة',
+    'contact.weekdays': 'الأيام الموظفة',
+    'contact.weekend': 'الأسبوع النهاري',
+    'contact.closed': 'مغلق',
     
     // Programs pages
     'programs.training': 'التدريب وبناء القدرات',

@@ -7,7 +7,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { FaArrowRight, FaGraduationCap, FaBalanceScale, FaBullhorn } from 'react-icons/fa';
-import { getPageContent, PageContent } from '@/lib/database';
+import { getPageContent } from '@/lib/database';
 
 // Custom event name for content updates
 const CONTENT_UPDATED_EVENT = 'content_updated';
@@ -30,7 +30,7 @@ export default function Programs() {
       description: language === 'ar'
         ? 'التوعية والتدريب على مبادئ الحقوق الأساسية لمختلف الفئات.'
         : 'Sensibilisation et formation aux principes des droits fondamentaux pour différents publics.',
-      image: "/images/programs/rights-education.jpg",
+      image: "/images/rights-education.jpg",
       link: "/training/programs",
       icon: <FaGraduationCap className="text-white group-hover:text-accent transition-colors duration-300" size={24} />
     },
@@ -39,7 +39,7 @@ export default function Programs() {
       description: language === 'ar'
         ? 'الدعم القانوني للأفراد والمنظمات في الدفاع عن حقوقهم.'
         : 'Soutien juridique aux individus et organisations dans la défense de leurs droits.',
-      image: "/images/programs/legal-assistance.jpg",
+      image: "/images/justice-law-scales.jpg",
       link: "/resources/guides",
       icon: <FaBalanceScale className="text-white group-hover:text-accent transition-colors duration-300" size={24} />
     },
@@ -48,7 +48,7 @@ export default function Programs() {
       description: language === 'ar'
         ? 'أنشطة المناصرة مع صناع القرار لتحسين السياسات المتعلقة بالحقوق.'
         : 'Actions de plaidoyer auprès des décideurs pour l\'amélioration des politiques liées aux droits.',
-      image: "/images/programs/advocacy.jpg",
+      image: "/images/human-rights.jpg",
       link: "/news/projects",
       icon: <FaBullhorn className="text-white group-hover:text-accent transition-colors duration-300" size={24} />
     }
@@ -123,7 +123,7 @@ export default function Programs() {
                     return {
                       title: item.title || programData[index % programData.length]?.title || '',
                       description: item.description || programData[index % programData.length]?.description || '',
-                      image: item.image || programData[index % programData.length]?.image || "/images/programs/rights-education.jpg",
+                      image: item.image || programData[index % programData.length]?.image || "/images/rights-education.jpg",
                       link: item.link || programData[index % programData.length]?.link || "/",
                       icon: originalIcon
                     };
@@ -183,7 +183,7 @@ export default function Programs() {
               programItems.push({
                 title,
                 description,
-                image: programData[programItems.length % programData.length]?.image || "/images/programs/rights-education.jpg",
+                image: programData[programItems.length % programData.length]?.image || "/images/rights-education.jpg",
                 link: programData[programItems.length % programData.length]?.link || "/"
               });
             }
@@ -262,47 +262,8 @@ export default function Programs() {
   };
   
   return (
-    <section ref={ref} className="py-10 sm:py-16 md:py-24 bg-light relative overflow-hidden" id="section_9">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        <svg className="absolute top-0 left-0 w-full h-full opacity-40" preserveAspectRatio="none">
-          <pattern id="programs-pattern" width="60" height="60" patternUnits="userSpaceOnUse">
-            <path d="M10 10L50 50M50 10L10 50" stroke="#2AA084" strokeWidth="0.5" strokeOpacity="0.1" />
-          </pattern>
-          <rect width="100%" height="100%" fill="url(#programs-pattern)" />
-        </svg>
-        
-        {/* Animated background shapes */}
-        <motion.div 
-          className="absolute top-20 right-10 w-64 h-64 rounded-full bg-primary/5 blur-3xl"
-          animate={{ 
-            scale: [1, 1.2, 1], 
-            opacity: [0.2, 0.3, 0.2],
-            x: [0, 20, 0]
-          }}
-          transition={{ 
-            duration: 12, 
-            repeat: Infinity, 
-            ease: "easeInOut" 
-          }}
-        />
-        <motion.div 
-          className="absolute bottom-40 left-20 w-80 h-80 rounded-full bg-accent/5 blur-3xl"
-          animate={{ 
-            scale: [1, 1.3, 1], 
-            opacity: [0.1, 0.2, 0.1],
-            y: [0, -30, 0]
-          }}
-          transition={{ 
-            duration: 15, 
-            repeat: Infinity, 
-            ease: "easeInOut",
-            delay: 1
-          }}
-        />
-      </div>
-
-      <div className="container mx-auto px-4 relative z-10">
+    <section ref={ref} className="py-10 sm:py-16 md:py-24 bg-light" id="section_9">
+      <div className="container mx-auto px-4">
         <motion.div 
           className="text-center mb-8 sm:mb-12 md:mb-16"
           variants={containerVariants}

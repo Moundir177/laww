@@ -174,7 +174,7 @@ export default function EditHomePage() {
   const handleSave = async (content: PageContent): Promise<boolean> => {
     try {
       console.log('EditHomePage: Saving home page content with sections:', 
-        content.sections.map(s => `${s.id}: ${s.title?.fr}`).join(', '));
+        content.sections ? content.sections.map(s => `${s.id}: ${s.title?.fr}`).join(', ') : 'No sections found');
       
       // Save the content to localStorage
       const success = setPageContent(content);

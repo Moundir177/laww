@@ -17,20 +17,20 @@ export default function Objectives() {
     {
       id: "formations",
       icon: <FaGraduationCap />,
-      title: "Formations et recherches",
+      title: "Formation et Recherche",
       content: "Organiser des formations continues et des forums et réaliser des recherches et des études dans le domaine de la promotion des droits."
     },
     {
       id: "sensibilisation",
       icon: <FaBullhorn />,
-      title: "Sensibilisation et médias",
+      title: "Sensibilisation et Médias",
       content: "Réaliser toute activité de sensibilisation et médiatique liée à la promotion des droits pour informer et éduquer le public."
     },
     {
       id: "droit",
       icon: <FaBalanceScale />,
-      title: "Construction d'un État de droit",
-      content: "Contribuer et œuvrer à la construction d'un État de droit en exhortant les citoyens à s'engager à faire appliquer et respecter la loi et à promouvoir les droits."
+      title: "Construire un État de Droit",
+      content: "Contribuer et œuvrer à la construction d'un État de droit en encourageant les citoyens à s'engager à faire respecter et à promouvoir les droits."
     }
   ]);
 
@@ -146,7 +146,7 @@ export default function Objectives() {
           {sectionDesc}
         </motion.p>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
           {objectiveItems.map((item, index) => (
             <motion.div
               key={item.id}
@@ -154,22 +154,22 @@ export default function Objectives() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 + (index * 0.2) }}
               whileHover={{ y: -10, transition: { duration: 0.3 } }}
-              className={`relative ${index === 2 ? 'sm:col-span-2 md:col-span-1 sm:max-w-md sm:mx-auto md:max-w-none md:mx-0' : ''}`}
+              className="relative h-full"
             >
               {/* 3D Shadow Effect */}
               <div className={`absolute inset-0 ${index === 1 ? 'bg-orange/10' : 'bg-[#2AA084]/10'} rounded-lg blur-xl transform translate-y-4 scale-95 z-0`}></div>
               
               <motion.div 
-                className={`relative border-t-[3px] ${index === 1 ? 'border-t-orange' : 'border-t-[#2AA084]'} bg-white shadow-lg hover:shadow-2xl transition-all duration-300 z-10`}
+                className={`relative border-t-[3px] ${index === 1 ? 'border-t-orange' : 'border-t-[#2AA084]'} bg-white shadow-lg hover:shadow-2xl transition-all duration-300 z-10 h-full`}
                 animate={{ 
-                  y: [0, -10, 0], 
+                  y: [0, -5, 0], 
                 }}
                 transition={{ 
-                  duration: 6, 
+                  duration: 4, 
                   repeat: Infinity,
                   repeatType: "mirror",
                   ease: "easeInOut",
-                  delay: index
+                  delay: index * 0.5
                 }}
                 style={{
                   transformStyle: "preserve-3d",
@@ -177,9 +177,9 @@ export default function Objectives() {
                   backfaceVisibility: "hidden"
                 }}
               >
-                <div className="p-4 sm:p-6 md:p-8 text-center">
+                <div className="p-6 sm:p-8 text-center h-full flex flex-col items-center">
                   <motion.div 
-                    className={`w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 ${index === 1 ? 'bg-orange' : 'bg-[#2AA084]'} rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 md:mb-8 shadow-xl`}
+                    className={`w-16 h-16 sm:w-20 sm:h-20 ${index === 1 ? 'bg-orange' : 'bg-[#2AA084]'} rounded-full flex items-center justify-center mb-6 sm:mb-8 shadow-xl`}
                     whileHover={{ scale: 1.1, rotate: 5 }}
                     transition={{ duration: 0.3 }}
                     style={{
@@ -191,12 +191,16 @@ export default function Objectives() {
                     {icons[index]}
                   </motion.div>
                   
-                  <h3 className="text-xl sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 md:mb-6 text-secondary">
-                    {item.title.split(' et').join(' et<br/>')}
+                  <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-secondary">
+                    {index === 0 ? "Formation et Recherche" : 
+                     index === 1 ? "Sensibilisation et Médias" : 
+                     "Construire un État de Droit"}
                   </h3>
                   
-                  <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
-                    {item.content.split('. ').join('.<br/>')}
+                  <p className="text-gray-600 leading-relaxed text-base">
+                    {index === 0 ? "Organiser des formations continues et des forums et réaliser des recherches et des études dans le domaine de la promotion des droits." : 
+                     index === 1 ? "Réaliser toute activité de sensibilisation et médiatique liée à la promotion des droits pour informer et éduquer le public." : 
+                     "Contribuer et œuvrer à la construction d'un État de droit en encourageant les citoyens à s'engager à faire respecter et à promouvoir les droits."}
                   </p>
                 </div>
               </motion.div>

@@ -35,7 +35,7 @@ export default function ContactPage() {
       const content = getPageContent('contact');
       if (content) {
         console.log('Contact page - Content loaded with sections:', 
-          content.sections.map(s => `${s.id}: ${s.title?.fr}`).join(', '));
+          content.sections ? content.sections.map(s => `${s.id}: ${s.title?.fr}`).join(', ') : 'No sections found');
         setPageContent(content);
         // Force re-render by incrementing the refresh counter
         setForceRefresh(prev => prev + 1);
@@ -200,9 +200,7 @@ export default function ContactPage() {
                 <FaMapMarkerAlt className="text-primary text-3xl" />
               </div>
               <h2 className="text-xl font-bold text-gray-900 mb-4">{getSectionTitle('address', t('contact.office'))}</h2>
-              <p className="text-gray-700" dangerouslySetInnerHTML={{ 
-                __html: getSectionContent('address', 'No address available').replace(/\n/g, '<br />') 
-              }} />
+              <p className="text-gray-700">Alger, Algérie</p>
             </motion.div>
             
             {/* Phone Card */}
@@ -219,9 +217,7 @@ export default function ContactPage() {
                 <FaPhone className="text-[#8FD694] text-3xl" />
               </div>
               <h2 className="text-xl font-bold text-gray-900 mb-4">{getSectionTitle('phone', t('contact.phone'))}</h2>
-              <p className="text-gray-700" dangerouslySetInnerHTML={{ 
-                __html: getSectionContent('phone', 'No phone available').replace(/\n/g, '<br />') 
-              }} />
+              <p className="text-gray-700">00213 560 66 71 20</p>
             </motion.div>
             
             {/* Email Card */}
@@ -239,19 +235,19 @@ export default function ContactPage() {
               </div>
               <h2 className="text-xl font-bold text-gray-900 mb-4">{getSectionTitle('email', t('contact.email'))}</h2>
               <p className="text-gray-700 mb-4" dangerouslySetInnerHTML={{ 
-                __html: getSectionContent('email', 'No email available').replace(/\n/g, '<br />') 
+                __html: getSectionContent('email', 'info@fpra-droits.org').replace(/\n/g, '<br />') 
               }} />
               <div className="flex justify-center space-x-4">
-                <a href="#" className="text-gray-400 hover:text-[#4267B2] transition-colors duration-300 transform hover:scale-110">
+                <a href="https://www.facebook.com/fondationpourlespromotiondesdroits" className="text-gray-400 hover:text-[#4267B2] transition-colors duration-300 transform hover:scale-110">
                   <FaFacebook size={22} />
                 </a>
-                <a href="#" className="text-gray-400 hover:text-[#1DA1F2] transition-colors duration-300 transform hover:scale-110">
+                <a href="https://twitter.com/fpdroits" className="text-gray-400 hover:text-[#1DA1F2] transition-colors duration-300 transform hover:scale-110">
                   <FaTwitter size={22} />
                 </a>
-                <a href="#" className="text-gray-400 hover:text-[#E1306C] transition-colors duration-300 transform hover:scale-110">
+                <a href="https://www.instagram.com/fondationpdroits" className="text-gray-400 hover:text-[#E1306C] transition-colors duration-300 transform hover:scale-110">
                   <FaInstagram size={22} />
                 </a>
-                <a href="#" className="text-gray-400 hover:text-[#FF0000] transition-colors duration-300 transform hover:scale-110">
+                <a href="https://www.youtube.com/channel/UCxI8qyP4Ma_V3Q9Y84QUO3g" className="text-gray-400 hover:text-[#FF0000] transition-colors duration-300 transform hover:scale-110">
                   <FaYoutube size={22} />
                 </a>
               </div>
@@ -405,7 +401,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-lg">{t('contact.weekdays')}</h3>
-                    <p className="text-gray-600">8:30 AM - 4:30 PM</p>
+                    <p className="text-gray-600">{language === 'fr' ? '8h30 - 16h30' : '8:30 AM - 4:30 PM'}</p>
                   </div>
                 </div>
                 <div className="flex items-center">

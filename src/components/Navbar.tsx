@@ -17,7 +17,6 @@ export default function Navbar() {
     { name: t('programs'), href: '/programs', highlight: 'orange' },
     { name: t('news'), href: '/news', highlight: 'orange' },
     { name: t('review'), href: '/review' },
-    { name: t('resources'), href: '/resources' },
     { name: t('testimonials'), href: '/testimonials' },
     { name: t('contact'), href: '/contact', highlight: 'orange' },
   ];
@@ -32,12 +31,12 @@ export default function Navbar() {
         <div className={`flex justify-between items-center py-2 ${flexDirection}`}>
           {/* Logo */}
           <Link href="/" className={`flex items-center ${language === 'ar' ? 'flex-row-reverse' : 'flex-row'} ${language === 'ar' ? 'space-x-0' : 'space-x-2'}`}>
-            <div className="relative h-8 w-8 md:h-10 md:w-10 flex items-center justify-center">
+            <div className="relative h-10 w-10 md:h-12 md:w-12 flex items-center justify-center">
               <Image 
-                src="/images/logo.png" 
+                src="/images/g19.png" 
                 alt="Foundation Logo" 
-                width={80} 
-                height={80} 
+                width={96} 
+                height={96} 
                 className="object-contain absolute transform -translate-y-1"
               />
             </div>

@@ -6,7 +6,7 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, useScroll, useInView, useSpring, useTransform } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { FaCalendarAlt, FaUser, FaArrowRight, FaRegNewspaper, FaCheckCircle } from 'react-icons/fa';
-import { getPageContent, PageContent } from '@/lib/database';
+import { getPageContent } from '@/lib/database';
 
 // Custom event name for content updates
 const CONTENT_UPDATED_EVENT = 'content_updated';
@@ -15,27 +15,27 @@ const newsItems = [
   {
     id: 1,
     title: {
-      fr: 'Journée internationale des droits des migrants',
-      ar: 'اليوم العالمي لحقوق المهاجرين'
+      fr: 'Note d\'analyse sur le projet de loi sur les associations',
+      ar: 'مذكرة تحليلية حول مشروع قانون الجمعيات'
     },
     date: {
-      fr: '18 décembre 2023',
-      ar: '18 ديسمبر 2023'
+      fr: '18 décembre 2024',
+      ar: '18 ديسمبر 2024'
     },
     author: {
       fr: 'Équipe de Sensibilisation',
       ar: 'فريق التوعية'
     },
     category: {
-      fr: 'Rapports',
-      ar: 'تقارير'
+      fr: 'Analyses',
+      ar: 'تحليلات'
     },
     excerpt: {
-      fr: 'À l\'occasion de la Journée internationale des droits des migrants, nous mettons en lumière les défis et les avancées concernant la protection des droits des personnes migrantes en Algérie et dans la région.',
-      ar: 'بمناسبة اليوم العالمي لحقوق المهاجرين، نسلط الضوء على التحديات والتقدم المحرز في حماية حقوق المهاجرين في الجزائر والمنطقة.'
+      fr: 'Notre équipe a réalisé une analyse approfondie du projet de loi sur les associations, examinant ses implications pour la société civile et les droits fondamentaux.',
+      ar: 'قام فريقنا بإجراء تحليل متعمق لمشروع قانون الجمعيات، مع دراسة آثاره على المجتمع المدني والحقوق الأساسية.'
     },
-    image: '/images/report/report.jpg',
-    slug: '/news/journee-internationale-droits-migrants'
+    image: '/images/justice-law-scales.jpg',
+    slug: '/news/analyse-projet-loi-associations'
   },
   {
     id: 2,
@@ -59,7 +59,7 @@ const newsItems = [
       fr: 'Nouvelle session de formation prévue à Alger pour les défenseurs des droits, axée sur les mécanismes de protection internationale.',
       ar: 'دورة تدريبية جديدة مخططة في الجزائر العاصمة للمدافعين عن الحقوق، تركز على آليات الحماية الدولية.'
     },
-    image: '/images/programs/rights-education.jpg',
+    image: '/images/pexels-august-de-richelieu-4427630.jpg',
     slug: '/news/formation-droits-fondamentaux'
   },
   {
@@ -84,7 +84,7 @@ const newsItems = [
       fr: 'Un nouveau partenariat stratégique avec des organisations internationales pour renforcer la promotion des droits.',
       ar: 'شراكة استراتيجية جديدة مع منظمات دولية لتعزيز تعزيز الحقوق.'
     },
-    image: '/images/programs/advocacy.jpg',
+    image: '/images/pexels-fauxels-3184292.jpg',
     slug: '/news/collaboration-ong-internationales'
   },
   {
@@ -109,8 +109,33 @@ const newsItems = [
       fr: 'Une journée d\'étude consacrée aux récentes réformes juridiques et à leur impact sur les droits des citoyens.',
       ar: 'يوم دراسي مخصص للإصلاحات القانونية الأخيرة وتأثيرها على حقوق المواطنين.'
     },
-    image: '/images/law/justice-law-scales.jpg',
+    image: '/images/pexels-mikhail-nilov-8730987.jpg',
     slug: '/news/table-ronde-reformes-juridiques'
+  },
+  {
+    id: 5,
+    title: {
+      fr: 'Guide sur l\'Accès à la Justice',
+      ar: 'دليل حول الوصول إلى العدالة'
+    },
+    date: {
+      fr: '5 juillet 2023',
+      ar: '5 يوليو 2023'
+    },
+    author: {
+      fr: 'Équipe des Publications',
+      ar: 'فريق المنشورات'
+    },
+    category: {
+      fr: 'Publications',
+      ar: 'منشورات'
+    },
+    excerpt: {
+      fr: 'Publication d\'un guide pratique pour aider les citoyens à comprendre et à naviguer dans le système judiciaire.',
+      ar: 'نشر دليل عملي لمساعدة المواطنين على فهم نظام العدالة والتنقل فيه.'
+    },
+    image: '/images/pexels-pavel-danilyuk-8112172.jpg',
+    slug: '/news/guide-acces-justice'
   }
 ];
 
@@ -119,7 +144,9 @@ const categories = [
   { fr: 'Formation', ar: 'تدريب' },
   { fr: 'Rapports', ar: 'تقارير' },
   { fr: 'Partenariats', ar: 'شراكات' },
-  { fr: 'Événements', ar: 'فعاليات' }
+  { fr: 'Événements', ar: 'فعاليات' },
+  { fr: 'Publications', ar: 'منشورات' },
+  { fr: 'Analyses', ar: 'تحليلات' }
 ];
 
 const keyPoints = [
@@ -148,10 +175,11 @@ export default function NewsSection() {
   const loadContent = () => {
     const content = getPageContent('home');
     if (content) {
-      console.log('NewsSection - Loading content, available sections:', content.sections.map(s => s.id));
+      console.log('NewsSection - Loading content, available sections:', 
+        content.sections ? content.sections.map(s => s.id).join(', ') : 'No sections');
       
       // Find the actualites section by checking multiple possible IDs
-      const actualitesSection = content.sections.find(section => 
+      const actualitesSection = content.sections && content.sections.find(section => 
         section.id === '10' || 
         section.id === 'section_10' || 
         section.id === 'actualites' ||
@@ -162,7 +190,9 @@ export default function NewsSection() {
       );
       
       if (actualitesSection) {
-        console.log('NewsSection - Found section:', actualitesSection.title, actualitesSection.content);
+        console.log('NewsSection - Found section:', 
+          actualitesSection.title ? JSON.stringify(actualitesSection.title) : 'No title', 
+          actualitesSection.content ? JSON.stringify(actualitesSection.content) : 'No content');
         
         // Set the section title and description
         setSectionTitle(actualitesSection.title?.[language] || (language === 'ar' ? 'أخبار حديثة' : 'Actualités Récentes'));
@@ -262,50 +292,10 @@ export default function NewsSection() {
   return (
     <section 
       ref={ref} 
-      className="py-24 relative overflow-hidden bg-light" 
+      className="py-24 bg-light" 
       id="section_10"
     >
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <svg className="absolute -top-10 right-0 w-full h-full opacity-20" preserveAspectRatio="none">
-          <pattern id="news-pattern" width="70" height="70" patternUnits="userSpaceOnUse" patternTransform="rotate(10)">
-            <rect width="1" height="70" fill="#2AA084" fillOpacity="0.3" x="0" y="0"></rect>
-            <rect width="70" height="1" fill="#2AA084" fillOpacity="0.3" x="0" y="0"></rect>
-          </pattern>
-          <rect width="100%" height="100%" fill="url(#news-pattern)" />
-        </svg>
-        
-        {/* Animated background shapes */}
-        <motion.div 
-          className="absolute -top-40 left-0 w-96 h-96 rounded-full bg-primary/5 blur-3xl"
-          animate={{ 
-            scale: [1, 1.2, 1], 
-            opacity: [0.2, 0.3, 0.2],
-            y: [0, 30, 0]
-          }}
-          transition={{ 
-            duration: 15, 
-            repeat: Infinity, 
-            ease: "easeInOut" 
-          }}
-        />
-        <motion.div 
-          className="absolute -bottom-40 right-0 w-80 h-80 rounded-full bg-accent/5 blur-3xl"
-          animate={{ 
-            scale: [1, 1.3, 1], 
-            opacity: [0.1, 0.2, 0.1],
-            x: [0, -20, 0]
-          }}
-          transition={{ 
-            duration: 18, 
-            repeat: Infinity, 
-            ease: "easeInOut",
-            delay: 2
-          }}
-        />
-      </div>
-      
-      <div className="container mx-auto px-4 relative z-10" ref={scrollRef}>
+      <div className="container mx-auto px-4">
         {/* Section Header */}
         <motion.div
           variants={containerVariants}
@@ -379,10 +369,7 @@ export default function NewsSection() {
                 </div>
               </div>
               
-              <div className="p-8 relative">
-                {/* Decorative corner accent */}
-                <div className="absolute w-32 h-32 -right-16 -bottom-16 rounded-full bg-primary/5"></div>
-                
+              <div className="p-8">
                 <h3 className="text-3xl font-bold mb-4 text-secondary group-hover:text-primary transition-colors duration-300">
                   {language === 'ar' ? newsItems[0].title.ar : newsItems[0].title.fr}
                 </h3>
@@ -492,27 +479,23 @@ export default function NewsSection() {
               
               {/* Newsletter */}
               <motion.div 
-                className="bg-gradient-to-br from-secondary to-secondary/90 p-7 rounded-2xl text-white shadow-xl relative overflow-hidden"
+                className="bg-gradient-to-br from-secondary to-secondary/90 p-7 rounded-2xl text-white shadow-xl"
                 variants={itemVariants}
                 initial="hidden"
                 animate={isInView ? "visible" : "hidden"}
                 whileHover={{ scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 300, damping: 15 }}
               >
-                {/* Decorative elements */}
-                <div className="absolute -right-12 -top-12 w-32 h-32 rounded-full bg-accent/10 blur-xl"></div>
-                <div className="absolute -left-8 -bottom-8 w-24 h-24 rounded-full bg-primary/10 blur-xl"></div>
-                
-                <h3 className="font-bold text-xl mb-2 text-white relative z-10">
+                <h3 className="font-bold text-xl mb-2 text-white">
                   {language === 'ar' ? 'اشترك في نشرتنا الإخبارية' : 'Abonnez-vous à notre newsletter'}
                 </h3>
                 
-                <p className="text-white/90 mb-5 relative z-10">
+                <p className="text-white/90 mb-5">
                   {language === 'ar' ? 'ابق على اطلاع بأحدث أخبارنا وفعالياتنا' : 'Restez informé de nos dernières actualités et événements'}
                 </p>
                 
-                <div className="relative z-10">
-                  <div className="flex rounded-full overflow-hidden border-2 border-white/20 bg-white/10 backdrop-blur-sm p-1">
+                <div>
+                  <div className="flex rounded-full overflow-hidden border-2 border-white/20 bg-white/10 p-1">
                     <input 
                       type="email" 
                       placeholder={language === 'ar' ? 'بريدك الإلكتروني' : 'Votre email'} 
@@ -555,12 +538,12 @@ export default function NewsSection() {
                 <Image
                   src={
                     newsItem.category.fr === 'Formation' 
-                      ? '/images/news/formation.jpg' 
+                      ? '/images/pexels-rdne-7414214.jpg' 
                       : newsItem.category.fr === 'Partenariats' 
-                        ? '/images/news/partenariats.jpg' 
+                        ? '/images/pexels-ekaterina-bolovtsova-6077326.jpg' 
                         : newsItem.category.fr === 'Événements'
-                          ? '/images/news/evenements.jpg'
-                          : '/images/law/justice-law-scales.jpg'
+                          ? '/images/pexels-pavel-danilyuk-8112172.jpg'
+                          : '/images/gavel-7499911_1280.jpg'
                   }
                   alt={language === 'ar' ? newsItem.title.ar : newsItem.title.fr}
                   fill
@@ -585,9 +568,7 @@ export default function NewsSection() {
                 </div>
               </div>
               
-              <div className="p-6 relative">
-                {/* Decorative corner accent */}
-                <div className="absolute w-24 h-24 -right-12 -bottom-12 rounded-full bg-primary/5"></div>
+              <div className="p-6">
                 
                 <h3 className="text-xl font-bold mb-4 text-secondary group-hover:text-primary transition-colors duration-300">
                   {language === 'ar' ? newsItem.title.ar : newsItem.title.fr}

@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { FaEnvelope, FaArrowRight, FaCheckCircle, FaPaperPlane } from 'react-icons/fa';
+import { FaEnvelope, FaArrowRight, FaCheckCircle, FaPaperPlane, FaPhone } from 'react-icons/fa';
 import Image from 'next/image';
 
 export default function Newsletter() {
@@ -339,11 +339,19 @@ export default function Newsletter() {
             className="flex justify-center mt-6 sm:mt-8 md:mt-10"
           >
             <div className="text-center">
-              <p className="text-white/70 text-xs sm:text-sm">
+              <p className="text-white/70 text-xs sm:text-sm mb-3">
                 {language === 'fr' 
-                  ? 'Nous respectons votre vie privée. Désabonnez-vous à tout moment.'
-                  : 'نحن نحترم خصوصيتك. يمكنك إلغاء الاشتراك في أي وقت.'}
+                  ? 'Nous respectons votre vie privée. Désabonnez-vous à tout moment. | Tél: 00213 560 66 71 20'
+                  : 'نحن نحترم خصوصيتك. يمكنك إلغاء الاشتراك في أي وقت. | هاتف: 00213 560 66 71 20'}
               </p>
+              <div className="flex justify-center space-x-4">
+                <a href="#" className="text-white/60 hover:text-white transition-colors duration-300">
+                  <FaPhone className="text-lg" />
+                </a>
+                <a href="#" className="text-white/60 hover:text-white transition-colors duration-300">
+                  <FaEnvelope className="text-lg" />
+                </a>
+              </div>
             </div>
           </motion.div>
         </motion.div>

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { FaUsers, FaBullhorn, FaBook, FaChalkboardTeacher, FaHandsHelping, FaUniversity } from 'react-icons/fa';
+import { FaUsers, FaBullhorn, FaBook, FaChalkboardTeacher, FaHandsHelping, FaUniversity, FaArrowRight } from 'react-icons/fa';
 import { useLanguage } from '@/contexts/LanguageContext';
 import PageHeader from '@/components/PageHeader';
 import { getPageContent, PageContent } from '@/lib/database';
@@ -66,45 +66,6 @@ const programs = [
       'تقييم الأثر',
       'تحليل السياسات'
     ]
-  }
-];
-
-const partners = [
-  {
-    nameFr: 'Droits de l\'Homme des Nations Unies',
-    nameAr: 'حقوق الإنسان بالأمم المتحدة',
-    typeFr: 'Organisation Internationale',
-    typeAr: 'منظمة دولية'
-  },
-  {
-    nameFr: 'Commission Nationale des Droits de l\'Homme',
-    nameAr: 'اللجنة الوطنية لحقوق الإنسان',
-    typeFr: 'Institution Gouvernementale',
-    typeAr: 'مؤسسة حكومية'
-  },
-  {
-    nameFr: 'Réseau de la Société Civile Algérienne',
-    nameAr: 'شبكة المجتمع المدني الجزائري',
-    typeFr: 'Réseau Local',
-    typeAr: 'شبكة محلية'
-  },
-  {
-    nameFr: 'Groupe des Droits MENA',
-    nameAr: 'مجموعة حقوق الشرق الأوسط وشمال أفريقيا',
-    typeFr: 'ONG Régionale',
-    typeAr: 'منظمة غير حكومية إقليمية'
-  },
-  {
-    nameFr: 'Faculté de Droit de l\'Université d\'Alger',
-    nameAr: 'كلية الحقوق بجامعة الجزائر',
-    typeFr: 'Institution Académique',
-    typeAr: 'مؤسسة أكاديمية'
-  },
-  {
-    nameFr: 'Fondation des Droits Numériques',
-    nameAr: 'مؤسسة الحقوق الرقمية',
-    typeFr: 'ONG Internationale',
-    typeAr: 'منظمة غير حكومية دولية'
   }
 ];
 
@@ -282,7 +243,7 @@ export default function Programs() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">{t('our.program.areas')}</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">{language === 'fr' ? 'Nos domaines de programmes' : 'مجالات برامجنا'}</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-primary to-orange mx-auto"></div>
           </motion.div>
           
@@ -294,37 +255,117 @@ export default function Programs() {
           >
             {programs.map((program, index) => (
               <motion.div 
-                key={program.id} 
-                className="bg-white rounded-lg shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl"
+                key={program.id}
+                className="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-xl transition-shadow duration-300 border border-gray-100"
                 variants={itemVariants}
+                whileHover={{ y: -5, transition: { duration: 0.2 } }}
               >
-                <div className={`${program.color} p-6`}>
-                  <div className="flex items-center">
-                  <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center mr-4">
+                <div className="relative overflow-hidden h-48">
+                  <div className="h-12 w-full absolute top-0 left-0 bg-gradient-to-r from-primary to-[#8FD694] opacity-90 z-10 flex items-center justify-start pl-6">
+                    <h3 className="text-xl font-bold text-white">
+                      {program.titleKey === 'programs.training' 
+                        ? (language === 'fr' ? 'Formation & Renforcement' : 'التدريب والتعزيز')
+                        : program.titleKey === 'programs.advocacy'
+                          ? (language === 'fr' ? 'Plaidoyer & Sensibilisation' : 'المناصرة والتوعية')
+                          : (language === 'fr' ? 'Recherche & Documentation' : 'البحث والتوثيق')
+                      }
+                    </h3>
+                  </div>
+                  <div className="absolute inset-0 bg-gray-100 flex items-center justify-center">
+                    <div className={`rounded-full p-5 ${program.id === 'training' ? 'bg-[#8FD694]' : program.id === 'advocacy' ? 'bg-orange' : 'bg-primary'} text-3xl`}>
                     {program.icon}
+                    </div>
                   </div>
-                  <h2 className="text-xl font-bold text-white">{t(program.titleKey)}</h2>
-                  </div>
-                  <div className="w-16 h-1 bg-white/20 mt-4"></div>
                 </div>
-                <div className="p-6">
-                  <p className="text-gray-700 mb-6">
+                
+                <div className="p-6 relative">
+                  <div className="prose prose-lg max-w-none" dir={language === 'ar' ? 'rtl' : 'ltr'}>
+                    {program.id === 'training' ? (
+                      <div>
+                        {language === 'fr' ? (
+                          <div className="space-y-4">
+                            <p className="text-gray-700">Dans le cadre de notre engagement pour la promotion, la diffusion et la protection des droits humains en Algérie, la Fondation pour la promotion des droits a organisé une formation nationale intitulée :</p>
+                            
+                            <blockquote className="pl-4 border-l-4 border-[#8FD694] italic font-medium text-gray-800">
+                              "Les mécanismes nationaux de défense des droits humains"
+                            </blockquote>
+                            
+                            <p className="text-gray-700">Destinée aux jeunes activistes et étudiants en droit issus de toutes les wilayas du pays.</p>
+                            
+                            <p className="text-gray-700">Cette initiative s'inscrit dans notre plan stratégique de renforcement des capacités de la jeunesse algérienne engagée, en leur offrant des outils pratiques pour défendre efficacement les droits humains, conformément à la Constitution algérienne de novembre 2020 et aux traités internationaux en vigueur.</p>
+                            
+                            <div className="bg-gray-50 p-4 rounded-lg border-l-4 border-primary">
+                              <h4 className="font-bold text-gray-800 mb-2">La session a été marquée par plusieurs volets importants :</h4>
+                              <ul className="list-disc list-inside space-y-1 text-gray-700">
+                                <li>Une analyse approfondie de la Constitution ainsi que des textes législatifs en vigueur</li>
+                                <li>Un examen des accords internationaux ratifiés par l'Algérie</li>
+                                <li>Des ateliers pratiques visant à maîtriser l'utilisation de ces instruments juridiques dans les contextes professionnels et militants</li>
+                              </ul>
+                            </div>
+                            
+                            <div className="bg-[#8FD694]/10 p-4 rounded-lg">
+                              <p className="text-gray-700"><span className="font-bold">Formations à venir :</span> Nous aurons des formations tout au long de l'année. La prochaine formation sera sur le thème de la protection digitale, programmée pour le mois de juin. Plus de détails seront fournis les jours à venir.</p>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="space-y-4 text-right">
+                            <p className="text-gray-700">في إطار التزامنا بتعزيز ونشر وحماية حقوق الإنسان في الجزائر، نظمت المؤسسة من أجل ترقية الحقوق تدريبًا وطنيًا بعنوان:</p>
+                            
+                            <blockquote className="pr-4 border-r-4 border-[#8FD694] italic font-medium text-gray-800 text-right">
+                              "الآليات الوطنية للدفاع عن حقوق الإنسان"
+                            </blockquote>
+                            
+                            <p className="text-gray-700">موجه للناشطين الشباب وطلاب القانون من جميع ولايات البلاد.</p>
+                            
+                            <p className="text-gray-700">تندرج هذه المبادرة ضمن خطتنا الاستراتيجية لتعزيز قدرات الشباب الجزائري الملتزم، من خلال تزويدهم بأدوات عملية للدفاع الفعال عن حقوق الإنسان، وفقًا لدستور نوفمبر 2020 والاتفاقيات الدولية السارية.</p>
+                            
+                            <div className="bg-gray-50 p-4 rounded-lg border-r-4 border-primary">
+                              <h4 className="font-bold text-gray-800 mb-2">تميزت الدورة بعدة محاور هامة منها:</h4>
+                              <ul className="list-disc list-inside space-y-1 text-gray-700">
+                                <li>تحليل معمق للدستور والنصوص التشريعية السارية</li>
+                                <li>دراسة الاتفاقيات الدولية التي صادقت عليها الجزائر</li>
+                                <li>ورشات تطبيقية لإتقان استخدام هذه الأدوات القانونية في السياقات المهنية والنضالية</li>
+                              </ul>
+                            </div>
+                            
+                            <div className="bg-[#8FD694]/10 p-4 rounded-lg">
+                              <p className="text-gray-700"><span className="font-bold">الدورات القادمة:</span> ستتواصل الدورات التدريبية على مدار السنة، وستكون الدورة القادمة حول موضوع الحماية الرقمية مبرمجة لشهر جوان، وسيتم تقديم تفاصيل أكثر في الأيام القادمة.</p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <div>
+                        <p className={`text-gray-700 ${language === 'ar' ? 'text-right' : ''}`}>
                     {language === 'fr' ? program.descriptionFr : program.descriptionAr}
                   </p>
-                  <h3 className="font-bold text-gray-900 mb-3">{t('key.components')}</h3>
-                  <ul className="space-y-2 mb-6">
-                    {(language === 'fr' ? program.featuresFr : program.featuresAr).map((feature, index) => (
-                      <li key={index} className="flex items-start">
-                        <span className={`text-[#8FD694] mr-2`}>•</span>
-                        <span className="text-gray-700">{feature}</span>
-                      </li>
-                    ))}
+                        
+                        {program.featuresFr.length > 0 && (
+                          <div className={`mt-4 ${language === 'ar' ? 'text-right' : ''}`}>
+                            <h4 className="font-bold text-gray-800 mb-2">
+                              {language === 'fr' ? 'Composantes Clés:' : 'المكونات الرئيسية:'}
+                            </h4>
+                            <ul className="list-disc list-inside space-y-1 text-gray-700">
+                              {language === 'fr' 
+                                ? program.featuresFr.map((feature, i) => (
+                                    <li key={i}>{feature}</li>
+                                  ))
+                                : program.featuresAr.map((feature, i) => (
+                                    <li key={i}>{feature}</li>
+                                  ))
+                              }
                   </ul>
-                  <Link 
-                    href={`/programs/${program.id}`} 
-                    className={`inline-block ${program.color} hover:opacity-90 text-white font-bold py-2 px-6 rounded-lg transition duration-300 hover:shadow-lg`}
-                  >
-                    {t('learn.more')}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                  
+                  <Link href={`/programs#${program.id}`} className="mt-6 inline-flex items-center gap-2 text-primary hover:text-[#8FD694] transition-colors font-medium">
+                    {language === 'fr' ? 'En Savoir Plus' : 'اقرأ المزيد'}
+                    <span className={`${language === 'ar' ? 'rotate-180' : ''}`}>
+                      <FaArrowRight />
+                    </span>
                   </Link>
                 </div>
               </motion.div>
@@ -332,88 +373,7 @@ export default function Programs() {
           </motion.div>
           
           <motion.div 
-            className="bg-white rounded-lg shadow-xl p-8 mb-24 relative overflow-hidden"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            {/* Decorative accent */}
-            <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-[#2AA084]/10 to-orange/5 rounded-bl-[100px]"></div>
-            
-            <h2 className="text-2xl font-bold text-gray-900 mb-10 text-center relative">
-              {t('program.impact')}
-              <div className="w-20 h-1 bg-gradient-to-r from-primary to-orange mx-auto mt-3"></div>
-            </h2>
-            
-            <div className="grid md:grid-cols-3 gap-8 mb-8">
-              <motion.div 
-                className="text-center relative"
-                whileHover={{ y: -5 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-b from-[#8FD694]/5 to-transparent rounded-xl transform -translate-y-6 scale-90 opacity-70"></div>
-                <div className="w-24 h-24 rounded-full bg-[#8FD694] flex items-center justify-center mx-auto mb-4 shadow-lg">
-                  <FaUsers className="text-white text-3xl" />
-                </div>
-                <motion.h3 
-                  className="text-2xl font-bold text-gray-900 mb-2"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                >
-                  760+
-                </motion.h3>
-                <p className="text-gray-700">{t('individuals.trained')}</p>
-              </motion.div>
-              
-              <motion.div 
-                className="text-center relative"
-                whileHover={{ y: -5 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-b from-[#171717]/5 to-transparent rounded-xl transform -translate-y-6 scale-90 opacity-70"></div>
-                <div className="w-24 h-24 rounded-full bg-[#171717] flex items-center justify-center mx-auto mb-4 shadow-lg">
-                  <FaHandsHelping className="text-white text-3xl" />
-                </div>
-                <motion.h3 
-                  className="text-2xl font-bold text-gray-900 mb-2"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: 0.4 }}
-                >
-                  25+
-                </motion.h3>
-                <p className="text-gray-700">{t('partner.organizations')}</p>
-              </motion.div>
-              
-              <motion.div 
-                className="text-center relative"
-                whileHover={{ y: -5 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-b from-[#8FD694]/5 to-transparent rounded-xl transform -translate-y-6 scale-90 opacity-70"></div>
-                <div className="w-24 h-24 rounded-full bg-[#8FD694] flex items-center justify-center mx-auto mb-4 shadow-lg">
-                  <FaUniversity className="text-white text-3xl" />
-                </div>
-                <motion.h3 
-                  className="text-2xl font-bold text-gray-900 mb-2"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: 0.5 }}
-                >
-                  38+
-                </motion.h3>
-                <p className="text-gray-700">{t('training.workshops')}</p>
-              </motion.div>
-            </div>
-            
-            <p className="text-center text-gray-700 relative z-10">
-              {t('programs.reached')}
-            </p>
-          </motion.div>
-          
-          <motion.div 
-            className="bg-white rounded-lg shadow-xl p-8 mb-24 relative overflow-hidden"
+            className="bg-white rounded-xl shadow-xl p-8 mb-24 relative overflow-hidden"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
@@ -455,7 +415,7 @@ export default function Programs() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7 }}
               >
-                {t('our.implementation')}
+                {language === 'fr' ? 'Notre Approche de Mise en Œuvre' : 'نهجنا في التنفيذ'}
               </motion.h2>
               <motion.p 
                 className="text-center text-gray-600 mb-6 max-w-2xl mx-auto"
@@ -463,7 +423,7 @@ export default function Programs() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.7, delay: 0.2 }}
               >
-                {t('implementation.subtitle') || "Notre méthodologie assure que nos programmes sont efficaces, inclusifs et adaptés aux besoins locaux."}
+                {language === 'fr' ? 'Notre méthodologie assure que nos programmes sont efficaces, inclusifs et adaptés aux besoins locaux.' : 'تضمن منهجيتنا أن برامجنا فعالة وشاملة ومكيفة للاحتياجات المحلية.'}
               </motion.p>
               <motion.div 
                 className="w-28 h-1.5 bg-gradient-to-r from-orange to-primary mx-auto mb-12"
@@ -501,15 +461,20 @@ export default function Programs() {
                 </motion.div>
                 
                 <h3 className="text-xl font-bold text-gray-900 mb-4">
-                  {t('participatory.methodology')}
+                  {language === 'fr' ? 'Méthodologie Participative' : 'المنهجية التشاركية'}
                 </h3>
                 
                 <p className="text-gray-700 mb-6 leading-relaxed">
-                  {t('participatory.description')}
+                  {language === 'fr' ? 'Nous utilisons des approches participatives qui impliquent les bénéficiaires dans la conception et la mise en œuvre des programmes, assurant la pertinence, l\'appropriation et la durabilité. Nos méthodes comprennent:' : 'نستخدم نهجًا تشاركيًا يشرك المستفيدين في تصميم وتنفيذ البرامج، مما يضمن الملاءمة والملكية والاستدامة. تشمل طرقنا:'}
                 </p>
                 
                 <ul className="space-y-4">
-                  {['needs.assessments', 'collaborative.design', 'feedback.mechanisms', 'adaptive.strategies'].map((item, index) => (
+                  {[
+                    {fr: 'Évaluations des besoins avec les groupes cibles', ar: 'تقييمات الاحتياجات مع المجموعات المستهدفة'},
+                    {fr: 'Conception collaborative des programmes', ar: 'التصميم التعاوني للبرامج'},
+                    {fr: 'Mécanismes de retour d\'information réguliers', ar: 'آليات التغذية الراجعة المنتظمة'},
+                    {fr: 'Stratégies de mise en œuvre adaptatives', ar: 'استراتيجيات التنفيذ التكيفية'}
+                  ].map((item, index) => (
                     <motion.li 
                       key={index} 
                       className="flex items-start bg-white p-3 rounded-lg shadow-sm border border-gray-50"
@@ -526,7 +491,7 @@ export default function Programs() {
                       <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#8FD694]/20 flex items-center justify-center mr-3">
                         <span className="w-2 h-2 rounded-full bg-[#8FD694]"></span>
                       </span>
-                      <span className="text-gray-700">{t(item)}</span>
+                      <span className="text-gray-700">{language === 'fr' ? item.fr : item.ar}</span>
                     </motion.li>
                   ))}
                 </ul>
@@ -559,15 +524,20 @@ export default function Programs() {
                 </motion.div>
                 
                 <h3 className="text-xl font-bold text-gray-900 mb-4">
-                  {t('results.based')}
+                  {language === 'fr' ? 'Gestion Axée sur les Résultats' : 'الإدارة القائمة على النتائج'}
                 </h3>
                 
                 <p className="text-gray-700 mb-6 leading-relaxed">
-                  {t('results.description')}
+                  {language === 'fr' ? 'Nous mettons en œuvre un cadre de gestion axée sur les résultats pour assurer l\'efficacité et l\'impact des programmes. Notre approche comprend:' : 'نطبق إطار الإدارة القائمة على النتائج لضمان فعالية وتأثير البرامج. يتضمن نهجنا:'}
                 </p>
                 
                 <ul className="space-y-4">
-                  {['clear.objectives', 'monitoring.evaluation', 'lessons.learned', 'improvement.processes'].map((item, index) => (
+                  {[
+                    {fr: 'Objectifs clairs et indicateurs mesurables', ar: 'أهداف واضحة ومؤشرات قابلة للقياس'},
+                    {fr: 'Suivi et évaluation systématiques', ar: 'الرصد والتقييم المنهجي'},
+                    {fr: 'Documentation des leçons apprises', ar: 'توثيق الدروس المستفادة'},
+                    {fr: 'Processus d\'amélioration continue', ar: 'عمليات التحسين المستمر'}
+                  ].map((item, index) => (
                     <motion.li 
                       key={index} 
                       className="flex items-start bg-white p-3 rounded-lg shadow-sm border border-gray-50"
@@ -584,332 +554,25 @@ export default function Programs() {
                       <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#171717]/10 flex items-center justify-center mr-3">
                         <span className="w-2 h-2 rounded-full bg-[#171717]"></span>
                       </span>
-                      <span className="text-gray-700">{t(item)}</span>
+                      <span className="text-gray-700">{language === 'fr' ? item.fr : item.ar}</span>
                     </motion.li>
                   ))}
                 </ul>
               </motion.div>
             </div>
-            
-            {/* Added cycle diagram */}
-            <motion.div 
-              className="mt-16 flex justify-center"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-            >
-              <div className="relative w-full max-w-2xl">
-                <div className="absolute inset-0 bg-gradient-to-r from-[#8FD694]/5 to-[#2AA084]/5 rounded-xl"></div>
-                <div className="relative flex flex-wrap justify-center items-center gap-4 p-6 bg-white/80 backdrop-blur-sm rounded-xl border border-gray-100 shadow-md">
-                  <h4 className="w-full text-center text-lg font-bold text-gray-900 mb-4">{t('implementation.cycle') || "Notre cycle de mise en œuvre"}</h4>
-                  
-                  {['plan', 'implement', 'monitor', 'evaluate', 'improve'].map((step, index) => (
-                    <motion.div 
-                      key={index}
-                      className="flex items-center"
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <div className="flex flex-col items-center">
-                        <div className={`w-12 h-12 rounded-full ${index % 2 === 0 ? 'bg-[#8FD694]' : 'bg-[#171717]'} flex items-center justify-center text-white shadow-md`}>
-                          {index + 1}
-                        </div>
-                        <span className="text-sm font-medium mt-2 text-gray-800">
-                          {t(`cycle.${step}`) || step}
-                        </span>
-              </div>
-                      
-                      {index < 4 && (
-                        <motion.div 
-                          className="w-4 h-0.5 bg-gray-300 mx-1"
-                          initial={{ width: 0 }}
-                          animate={{ width: 16 }}
-                          transition={{ duration: 0.4, delay: 1 + (index * 0.2) }}
-                        />
-                      )}
-                    </motion.div>
-                  ))}
-            </div>
-          </div>
-            </motion.div>
           </motion.div>
           
-          <motion.div 
-            className="bg-white rounded-lg shadow-xl p-8 relative overflow-hidden"
+          {/* Newsletter section */}
+          <motion.div
+            className="rounded-xl overflow-hidden shadow-lg"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
           >
-            {/* Enhanced decorative elements */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-[#2AA084]/5 to-transparent rounded-bl-full"></div>
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-[#8FD694]/5 to-transparent rounded-tr-full"></div>
-            
-            <motion.div 
-              className="absolute top-1/4 right-1/4 w-4 h-4 rounded-full bg-[#8FD694]/20"
-              animate={{
-                scale: [1, 1.5, 1],
-                opacity: [0.2, 0.5, 0.2],
-              }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            />
-            
-            <motion.div 
-              className="absolute bottom-1/4 left-1/4 w-6 h-6 rounded-full bg-[#2AA084]/20"
-              animate={{
-                scale: [1, 1.3, 1],
-                opacity: [0.3, 0.6, 0.3],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            />
-            
-            <div className="relative">
-              <motion.h2 
-                className="text-3xl font-bold text-gray-900 mb-2 text-center"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7 }}
-              >
-                {t('our.partners')}
-              </motion.h2>
-              <motion.p 
-                className="text-center text-gray-600 mb-6 max-w-2xl mx-auto"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.7, delay: 0.2 }}
-              >
-              {t('partners.collaborate')}
-              </motion.p>
-              <motion.div 
-                className="w-28 h-1.5 bg-gradient-to-r from-primary to-[#8FD694] mx-auto mb-12"
-                initial={{ width: 0 }}
-                animate={{ width: "7rem" }}
-                transition={{ duration: 0.7, delay: 0.4 }}
-              />
-            </div>
-            
-            {/* Partner type filters */}
-            <motion.div 
-              className="flex flex-wrap justify-center gap-3 mb-10"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-            >
-              <div className="bg-[#8FD694]/10 text-[#2AA084] font-medium px-4 py-2 rounded-full text-sm">
-                {t('all.partners') || "Tous les partenaires"}
-              </div>
-              <div className="hover:bg-gray-100 text-gray-600 font-medium px-4 py-2 rounded-full text-sm transition-colors cursor-pointer">
-                {t('international') || "Internationaux"}
-              </div>
-              <div className="hover:bg-gray-100 text-gray-600 font-medium px-4 py-2 rounded-full text-sm transition-colors cursor-pointer">
-                {t('governmental') || "Gouvernementaux"}
-              </div>
-              <div className="hover:bg-gray-100 text-gray-600 font-medium px-4 py-2 rounded-full text-sm transition-colors cursor-pointer">
-                {t('academic') || "Académiques"}
-              </div>
-              <div className="hover:bg-gray-100 text-gray-600 font-medium px-4 py-2 rounded-full text-sm transition-colors cursor-pointer">
-                {t('civil.society') || "Société civile"}
-              </div>
-            </motion.div>
-            
-            <motion.div 
-              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              {partners.map((partner, index) => (
-                <motion.div 
-                  key={index} 
-                  className="relative group"
-                  variants={itemVariants}
-                  whileHover={{ 
-                    scale: 1.02,
-                    transition: { duration: 0.2 }
-                  }}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#2AA084]/5 via-[#8FD694]/5 to-orange/5 rounded-xl transform translate-y-2 scale-[0.97] blur-sm group-hover:translate-y-3 group-hover:scale-[0.94] transition-all duration-300"></div>
-                  
-                  <div className="relative bg-white border border-gray-100 hover:border-[#8FD694]/30 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col items-center">
-                    <div className="w-16 h-16 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center mb-4 group-hover:border-[#8FD694]/20 transition-colors duration-300">
-                      <span className="text-2xl text-gray-400 group-hover:text-[#2AA084]">{index % 3 === 0 ? '🌍' : index % 3 === 1 ? '🏛️' : '🎓'}</span>
-                    </div>
-                    
-                    <h3 className="font-bold text-gray-900 mb-2 text-center">{language === 'fr' ? partner.nameFr : partner.nameAr}</h3>
-                    <div className="mt-1 px-3 py-1 bg-gray-50 rounded-full text-xs text-gray-600 mb-4 group-hover:bg-[#8FD694]/10 group-hover:text-[#2AA084] transition-colors duration-300">
-                      {language === 'fr' ? partner.typeFr : partner.typeAr}
-                    </div>
-                    
-                    <motion.div 
-                      className="mt-auto text-sm font-medium text-[#2AA084] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      {t('view.details') || "Voir les détails"}
-                    </motion.div>
-                </div>
-                </motion.div>
-              ))}
-            </motion.div>
-            
-            {/* Global partnership map */}
-            <motion.div 
-              className="mt-16 p-6 bg-gray-50 rounded-xl border border-gray-100 relative overflow-hidden"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.9 }}
-            >
-              <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">
-                {t('global.presence') || "Notre présence globale"}
-              </h3>
-              
-              <div className="relative h-[200px] md:h-[300px] bg-white rounded-lg overflow-hidden">
-                <div className="absolute inset-0 bg-[#2AA084]/5 flex items-center justify-center">
-                  <div className="text-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto text-gray-300 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <p className="text-gray-500">
-                      {t('partners.across.world') || "Nos partenaires à travers le monde"}
-                    </p>
-                  </div>
-                </div>
-                
-                {/* Animated map dots */}
-                <motion.div 
-                  className="absolute top-1/3 left-1/4 w-3 h-3 rounded-full bg-[#2AA084]"
-                  animate={{ 
-                    scale: [1, 1.5, 1],
-                    opacity: [0.7, 1, 0.7],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                />
-                <motion.div 
-                  className="absolute top-2/3 left-1/2 w-2 h-2 rounded-full bg-[#8FD694]"
-                  animate={{ 
-                    scale: [1, 1.5, 1],
-                    opacity: [0.7, 1, 0.7],
-                  }}
-                  transition={{
-                    duration: 2.5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 0.3
-                  }}
-                />
-                <motion.div 
-                  className="absolute top-1/4 right-1/3 w-2.5 h-2.5 rounded-full bg-orange"
-                  animate={{ 
-                    scale: [1, 1.5, 1],
-                    opacity: [0.7, 1, 0.7],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 0.7
-                  }}
-                />
-              </div>
-              
-              <div className="flex justify-center mt-6">
-                <div className="inline-flex items-center px-4 py-2 bg-white text-sm font-medium text-gray-700 rounded-md shadow-sm border border-gray-200 hover:bg-gray-50 transition-colors cursor-pointer">
-                  {t('see.all.locations') || "Voir toutes les localisations"}
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-            </div>
-          </div>
-            </motion.div>
+            <Newsletter />
           </motion.div>
         </div>
       </div>
-      
-      {/* Program Impact Section */}
-      <section className="py-16 bg-white relative overflow-hidden">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold">
-              {language === 'fr' ? 'Impact du Programme' : 'تأثير البرنامج'}
-            </h2>
-            <div className="flex justify-center mt-4 mb-6">
-              <div className="h-1 w-16 bg-[#8FD694] rounded-full"></div>
-              <div className="h-1 w-16 bg-[#FF8A00] ml-1 rounded-full"></div>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            {/* Stats Card 1 */}
-            <motion.div 
-              className="bg-white p-8 rounded-lg shadow-lg text-center hover:shadow-xl transition-shadow"
-              whileHover={{ y: -10 }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              <h3 className="text-5xl font-bold text-[#8FD694] mb-4">760+</h3>
-              <p className="text-gray-700">
-                {language === 'fr' 
-                  ? 'Personnes formées par nos programmes de renforcement des capacités' 
-                  : 'شخص تم تدريبهم من خلال برامجنا لبناء القدرات'}
-              </p>
-            </motion.div>
-            
-            {/* Stats Card 2 */}
-            <motion.div 
-              className="bg-white p-8 rounded-lg shadow-lg text-center hover:shadow-xl transition-shadow"
-              whileHover={{ y: -10 }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <h3 className="text-5xl font-bold text-[#FF8A00] mb-4">25+</h3>
-              <p className="text-gray-700">
-                {language === 'fr' 
-                  ? 'Organisations partenaires collaborant à la mise en œuvre du programme' 
-                  : 'منظمة شريكة تتعاون في تنفيذ البرنامج'}
-              </p>
-            </motion.div>
-            
-            {/* Stats Card 3 */}
-            <motion.div 
-              className="bg-white p-8 rounded-lg shadow-lg text-center hover:shadow-xl transition-shadow"
-              whileHover={{ y: -10 }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-            >
-              <h3 className="text-5xl font-bold text-[#2AA084] mb-4">38+</h3>
-              <p className="text-gray-700">
-                {language === 'fr' 
-                  ? 'Ateliers de formation organisés dans différentes régions' 
-                  : 'ورشة عمل تدريبية منظمة في مناطق مختلفة'}
-              </p>
-            </motion.div>
-          </div>
-          
-          <div className="text-center max-w-3xl mx-auto">
-            <p className="text-gray-700 text-lg">
-              {language === 'fr' 
-                ? 'Nos programmes ont atteint diverses régions d\'Algérie, permettant aux individus et aux organisations de devenir des défenseurs efficaces des droits humains et des valeurs démocratiques.' 
-                : 'وصلت برامجنا إلى مناطق مختلفة من الجزائر، مما مكّن الأفراد والمنظمات من أن يصبحوا مدافعين فعالين عن حقوق الإنسان والقيم الديمقراطية.'}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Newsletter */}
-      <Newsletter />
     </div>
   );
 } 

@@ -14,11 +14,33 @@ export default function Footer() {
   const flexDirection = language === 'ar' ? 'flex-row-reverse' : 'flex-row';
   
   return (
-    <footer className="bg-secondary text-white pt-10 sm:pt-12 md:pt-16 pb-6 sm:pb-8 relative overflow-hidden">
-      {/* Decorative elements */}
-      <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-primary/5 blur-3xl"></div>
-      <div className="absolute -bottom-20 -left-20 w-60 h-60 rounded-full bg-accent/5 blur-3xl"></div>
-      <div className="absolute top-1/4 left-1/3 w-40 h-40 rounded-full bg-primary/5 blur-2xl"></div>
+    <footer className="bg-secondary text-white pt-10 sm:pt-12 md:pt-16 pb-6 sm:pb-8 relative">
+      {/* Main gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-[#2AA084]/50 z-0"></div>
+      
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-black/50 z-0"></div>
+      
+      {/* Orange lighting effect */}
+      <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-gradient-to-bl from-orange/30 to-transparent z-0"></div>
+      
+      {/* Additional orange glow on right side */}
+      <div className="absolute right-0 inset-y-0 w-1/4 bg-gradient-to-l from-orange/20 to-transparent z-0"></div>
+      
+      {/* Bottom orange accent */}
+      <div className="absolute bottom-0 right-0 w-1/2 h-1/4 bg-gradient-to-tl from-orange/15 to-transparent z-0"></div>
+      
+      {/* Centered logo */}
+      <div className="absolute inset-0 flex items-center justify-center z-0">
+        <div className="relative w-[200px] h-[200px] opacity-10">
+          <Image 
+            src="/images/logo.png" 
+            alt="Foundation Logo" 
+            fill
+            className="object-contain"
+          />
+        </div>
+      </div>
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
@@ -71,7 +93,7 @@ export default function Footer() {
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 sm:h-5 w-4 sm:w-5 text-primary mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
-                <span>+213 21 00 00 00</span>
+                <span>00213 560 66 71 20</span>
               </div>
             </div>
           </motion.div>
@@ -144,27 +166,11 @@ export default function Footer() {
             </h3>
             <ul className="space-y-2 sm:space-y-3">
               <li>
-                <Link href="/resources" className="text-gray-300 hover:text-primary text-sm transition-colors flex items-center gap-2">
-                  <svg className="w-1.5 h-1.5 text-primary" fill="currentColor" viewBox="0 0 8 8">
-                    <circle cx="4" cy="4" r="3" />
-                  </svg>
-                  {t('resources')}
-                </Link>
-              </li>
-              <li>
                 <Link href="/testimonials" className="text-gray-300 hover:text-primary text-sm transition-colors flex items-center gap-2">
                   <svg className="w-1.5 h-1.5 text-primary" fill="currentColor" viewBox="0 0 8 8">
                     <circle cx="4" cy="4" r="3" />
                   </svg>
                   {t('testimonials')}
-                </Link>
-              </li>
-              <li>
-                <Link href="/civil-society" className="text-gray-300 hover:text-primary text-sm transition-colors flex items-center gap-2">
-                  <svg className="w-1.5 h-1.5 text-primary" fill="currentColor" viewBox="0 0 8 8">
-                    <circle cx="4" cy="4" r="3" />
-                  </svg>
-                  {t('civil-society')}
                 </Link>
               </li>
               <li>

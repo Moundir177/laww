@@ -1412,8 +1412,8 @@ export const initializeDatabase = () => {
         id: 'contact',
         title: { fr: 'Contact', ar: 'اتصل بنا' },
         content: { 
-          fr: 'Email: contact@fondation-droits.org\nAdresse: 123 Avenue de la République, Alger, Algérie', 
-          ar: 'البريد الإلكتروني: contact@fondation-droits.org\nالعنوان: 123 شارع الجمهورية، الجزائر، الجزائر'
+          fr: 'Email: contact@fondation-droits.org\nAdresse: Alger, Algérie', 
+          ar: 'البريد الإلكتروني: contact@fondation-droits.org\nالعنوان: الجزائر، الجزائر'
         }
       }
     ]
@@ -2094,11 +2094,11 @@ export const initializeDatabase = () => {
         },
         content: {
           fr: 'Notre rapport annuel présente un aperçu complet de l\'état des droits humains en Algérie.\n\nRapport annuel 2023\nMai 2023 | 120 pages\nCe rapport présente un aperçu complet de l\'état des droits humains en Algérie en 2023. Il aborde les avancées et défis dans différents domaines, notamment les libertés civiles, les droits économiques et sociaux, et l\'accès à la justice.',
-          ar: 'يقدم تقريرنا السنوي نظرة شاملة عن حالة حقوق الإنسان في الجزائر.\n\nالتقرير السنوي 2023\nمايو 2023 | 120 صفحة\nيقدم هذا التقرير نظرة شاملة عن حالة حقوق الإنسان في الجزائر في عام 2023. ويتناول التقدم والتحديات في مختلف المجالات، بما في ذلك الحريات المدنية والحقوق الاقتصادية والاجتماعية والوصول إلى العدالة.'
+            ar: 'يقدم تقريرنا السنوي نظرة شاملة عن حالة حقوق الإنسان في الجزائر.\n\nالتقرير السنوي 2023\nمايو 2023 | 120 صفحة\nيقدم هذا التقرير نظرة شاملة عن حالة حقوق الإنسان في الجزائر في عام 2023. ويتناول التقدم والتحديات في مختلف المجالات، بما في ذلك الحريات المدنية والحقوق الاقتصادية والاجتماعية والوصول إلى العدالة.'
+          }
         }
-      }
-    ]
-  };
+      ]
+    };
 
   // Initialize contact page content
   const contactPageContent: PageContent = {
@@ -2111,23 +2111,23 @@ export const initializeDatabase = () => {
       {
         id: 'contact_info',
         title: {
-          fr: 'Nos coordonnées',
-          ar: 'معلومات الاتصال'
+          fr: 'Contactez-nous',
+          ar: 'اتصل بنا'
         },
         content: {
-          fr: 'Pour toute question ou information complémentaire, n\'hésitez pas à nous contacter par email, téléphone ou en remplissant le formulaire ci-dessous.',
-          ar: 'لأي استفسار أو معلومات إضافية، لا تتردد في التواصل معنا عبر البريد الإلكتروني أو الهاتف أو عن طريق ملء النموذج أدناه.'
+          fr: 'Email: contact@fondation-droits.org\nAdresse: Alger, Algérie',
+          ar: 'البريد الإلكتروني: contact@fondation-droits.org\nالعنوان: الجزائر، الجزائر'
         }
       },
       {
         id: 'address',
         title: {
-          fr: 'Adresse',
-          ar: 'العنوان'
+          fr: 'Notre Bureau',
+          ar: 'مكتبنا'
         },
         content: {
-          fr: '123 Avenue de la République\nAlger, Algérie',
-          ar: '123 شارع الجمهورية\nالجزائر، الجزائر'
+          fr: 'Alger, Algérie',
+          ar: 'الجزائر، الجزائر'
         }
       },
       {
@@ -2148,8 +2148,8 @@ export const initializeDatabase = () => {
           ar: 'الهاتف'
         },
         content: {
-          fr: '+213 12 345 6789',
-          ar: '+213 12 345 6789'
+          fr: '00213 560 66 71 20',
+          ar: '00213 560 66 71 20'
         }
       },
       {
@@ -2167,176 +2167,29 @@ export const initializeDatabase = () => {
   };
 
   // Save the page content
-  setPageContent(homePageContent);
-  setPageContent(aboutPageContent);
-  setPageContent(programsPageContent);
-  setPageContent(contactPageContent);
-  setPageContent(testimonialsPageContent);
-  setPageContent(reviewPageContent);
+  if (typeof window !== 'undefined') {
+    // Déclaration des variables pour éviter les erreurs de référence
+    const homePageContent = createDefaultPageContent('home');
+    const aboutPageContent = createDefaultPageContent('about');
+    const programsPageContent = createDefaultPageContent('programs');
+    const testimonialsPageContent = createDefaultPageContent('testimonials');
+    const reviewPageContent = createDefaultPageContent('review');
+    
+    if (homePageContent) setPageContent(homePageContent);
+    if (aboutPageContent) setPageContent(aboutPageContent);
+    if (programsPageContent) setPageContent(programsPageContent);
+    if (contactPageContent) setPageContent(contactPageContent);
+    if (testimonialsPageContent) setPageContent(testimonialsPageContent);
+    if (reviewPageContent) setPageContent(reviewPageContent);
 
-  // Create editor copies
-  setItem('editor_home', homePageContent);
-  setItem('editor_about', aboutPageContent);
-  setItem('editor_programs', programsPageContent);
-  setItem('editor_contact', contactPageContent);
-  setItem('editor_testimonials', testimonialsPageContent);
-  setItem('editor_review', reviewPageContent);
-
-  // Sample news items (to match exactly what's on the website)
-  const newsItems: NewsItem[] = [
-    {
-      id: 1,
-      title: {
-        fr: 'Lancement de notre nouvelle plateforme de formation en ligne',
-        ar: 'إطلاق منصة التدريب عبر الإنترنت الجديدة'
-      },
-      date: {
-        fr: '15 mai 2023',
-        ar: '15 مايو 2023'
-      },
-      author: {
-        fr: 'Équipe de la Fondation',
-        ar: 'فريق المؤسسة'
-      },
-      category: {
-        fr: 'Formation',
-        ar: 'تدريب'
-      },
-      excerpt: {
-        fr: 'Notre nouvelle plateforme permet désormais d\'accéder à des formations de qualité sur les droits fondamentaux, partout et à tout moment.',
-        ar: 'تتيح منصتنا الجديدة الآن الوصول إلى تدريب عالي الجودة حول الحقوق الأساسية، في أي مكان وفي أي وقت.'
-      },
-      image: '/images/news/elearning.jpg',
-      slug: 'lancement-plateforme-formation',
-      content: 'Contenu détaillé de l\'article de blog...'
-    },
-    {
-      id: 2,
-      title: {
-        fr: 'Rapport annuel 2023 sur les droits et libertés',
-        ar: 'التقرير السنوي 2023 عن الحقوق والحريات'
-      },
-      date: {
-        fr: '20 avril 2023',
-        ar: '20 أبريل 2023'
-      },
-      author: {
-        fr: 'Service de recherche',
-        ar: 'قسم البحث'
-      },
-      category: {
-        fr: 'Rapport',
-        ar: 'تقرير'
-      },
-      excerpt: {
-        fr: 'Notre rapport annuel présente une analyse détaillée de la situation des droits et des libertés au cours de l\'année écoulée.',
-        ar: 'يقدم تقريرنا السنوي تحليلاً مفصلاً لحالة الحقوق والحريات خلال العام الماضي.'
-      },
-      image: '/images/news/report.jpg',
-      slug: 'rapport-annuel-2023',
-      content: 'Contenu détaillé du rapport annuel...'
-    },
-    {
-      id: 3,
-      title: {
-        fr: 'Conférence internationale sur les droits des femmes',
-        ar: 'المؤتمر الدولي لحقوق المرأة'
-      },
-      date: {
-        fr: '8 mars 2023',
-        ar: '8 مارس 2023'
-      },
-      author: {
-        fr: 'Département événements',
-        ar: 'قسم الفعاليات'
-      },
-      category: {
-        fr: 'Événement',
-        ar: 'حدث'
-      },
-      excerpt: {
-        fr: 'Notre fondation a participé à la conférence internationale sur les droits des femmes, présentant nos dernières recherches et initiatives.',
-        ar: 'شاركت مؤسستنا في المؤتمر الدولي لحقوق المرأة، حيث قدمت أحدث أبحاثنا ومبادراتنا.'
-      },
-      image: '/images/news/women-rights.jpg',
-      slug: 'conference-droits-femmes',
-      content: 'Compte rendu détaillé de la conférence...'
-    }
-  ];
-
-  // Save news items
-  setNews(newsItems);
-  setItem('editor_news', newsItems);
-
-  // Sample resources (to match exactly what's on the website)
-  const resources: Resource[] = [
-    {
-      id: 1,
-      title: {
-        fr: 'Guide des droits fondamentaux',
-        ar: 'دليل الحقوق الأساسية'
-      },
-      description: {
-        fr: 'Un guide complet expliquant les droits fondamentaux dans un langage accessible à tous.',
-        ar: 'دليل شامل يشرح الحقوق الأساسية بلغة يسهل فهمها للجميع.'
-      },
-      type: 'guide',
-      format: 'pdf',
-      thumbnail: '/images/resources/guide-thumbnail.jpg',
-      downloadUrl: '/downloads/guide-droits-fondamentaux.pdf',
-      date: {
-        fr: '10 janvier 2023',
-        ar: '10 يناير 2023'
-      },
-      fileSize: '2.4 MB',
-      featured: true
-    },
-    {
-      id: 2,
-      title: {
-        fr: 'Modèles de lettres juridiques',
-        ar: 'نماذج الرسائل القانونية'
-      },
-      description: {
-        fr: 'Ensemble de modèles de lettres pour différentes situations juridiques courantes.',
-        ar: 'مجموعة من نماذج الرسائل للمواقف القانونية المختلفة الشائعة.'
-      },
-      type: 'template',
-      format: 'docx',
-      thumbnail: '/images/resources/templates-thumbnail.jpg',
-      downloadUrl: '/downloads/modeles-lettres-juridiques.zip',
-      date: {
-        fr: '15 février 2023',
-        ar: '15 فبراير 2023'
-      },
-      fileSize: '1.8 MB'
-    },
-    {
-      id: 3,
-      title: {
-        fr: 'Rapport sur la liberté d\'expression',
-        ar: 'تقرير عن حرية التعبير'
-      },
-      description: {
-        fr: 'Analyse approfondie de l\'état de la liberté d\'expression et des défis actuels.',
-        ar: 'تحليل متعمق لحالة حرية التعبير والتحديات الحالية.'
-      },
-      type: 'report',
-      format: 'pdf',
-      thumbnail: '/images/resources/report-thumbnail.jpg',
-      downloadUrl: '/downloads/rapport-liberte-expression.pdf',
-      date: {
-        fr: '22 mars 2023',
-        ar: '22 مارس 2023'
-      },
-      fileSize: '3.6 MB',
-      featured: true
-    }
-  ];
-
-  // Save resources
-  setResources(resources);
-  setItem('editor_resources', resources);
+    // Create editor copies
+    if (homePageContent) setItem('editor_home', homePageContent);
+    if (aboutPageContent) setItem('editor_about', aboutPageContent);
+    if (programsPageContent) setItem('editor_programs', programsPageContent);
+    if (contactPageContent) setItem('editor_contact', contactPageContent);
+    if (testimonialsPageContent) setItem('editor_testimonials', testimonialsPageContent);
+    if (reviewPageContent) setItem('editor_review', reviewPageContent);
+  }
 
   // Mark database as initialized
   localStorage.setItem('dbInitialized', 'true');

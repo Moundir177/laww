@@ -63,28 +63,28 @@ const newsItems: NewsItem[] = [
   {
     id: 1,
     title: {
-      fr: 'Publication du Rapport Annuel 2023',
-      ar: 'نشر التقرير السنوي 2023'
+      fr: 'Note d\'analyse sur le projet de loi sur les associations',
+      ar: 'مذكرة تحليلية حول مشروع قانون الجمعيات'
     },
     date: {
-      fr: '18 août 2023',
-      ar: '18 أغسطس 2023'
+      fr: '18 décembre 2024',
+      ar: '18 ديسمبر 2024'
     },
     author: {
       fr: 'Équipe de recherche',
       ar: 'فريق البحث'
     },
     category: {
-      fr: 'Rapports',
-      ar: 'تقارير'
+      fr: 'Analyses',
+      ar: 'تحليلات'
     },
     excerpt: {
-      fr: 'Notre rapport annuel sur l\'état des droits est désormais disponible. Ce document de référence présente une analyse détaillée des avancées et des défis en matière de droits humains au cours de l\'année écoulée.',
-      ar: 'تقريرنا السنوي عن حالة الحقوق متاح الآن. تقدم هذه الوثيقة المرجعية تحليلاً مفصلاً للتقدم والتحديات في مجال حقوق الإنسان خلال العام الماضي.'
+      fr: 'Notre équipe a réalisé une analyse approfondie du projet de loi sur les associations, examinant ses implications pour la société civile et les droits fondamentaux.',
+      ar: 'قام فريقنا بإجراء تحليل متعمق لمشروع قانون الجمعيات، مع دراسة آثاره على المجتمع المدني والحقوق الأساسية.'
     },
-    image: '/images/report/report.jpg',
-    slug: '/news/rapport-annuel-2023',
-    content: 'Texte de contenu à remplir pour cet article.'
+    image: '/images/gavel-7499911_1280.jpg',
+    slug: '/images/analyse-projet-loi-associations',
+    content: 'Cette note d\'analyse présente un examen critique du projet de loi sur les associations en Algérie.'
   },
   {
     id: 2,
@@ -108,7 +108,7 @@ const newsItems: NewsItem[] = [
       fr: 'Nouvelle session de formation prévue dans la ville pour les défenseurs des droits, axée sur les mécanismes de protection internationaux.',
       ar: 'دورة تدريبية جديدة مخططة في المدينة للمدافعين عن الحقوق، تركز على آليات الحماية الدولية.'
     },
-    image: '/images/news/formation.jpg',
+    image: '/images/pexels-mikhail-nilov-8731031.jpg',
     slug: '/news/formation-droits-fondamentaux',
     content: 'Texte de contenu à remplir pour cet article.'
   },
@@ -134,7 +134,7 @@ const newsItems: NewsItem[] = [
       fr: 'Un nouveau partenariat stratégique avec des organisations internationales pour renforcer la promotion des droits.',
       ar: 'شراكة استراتيجية جديدة مع منظمات دولية لتعزيز الحقوق.'
     },
-    image: '/images/news/partenariats.jpg',
+    image: '/images/pexels-fauxels-3184292.jpg',
     slug: '/news/collaboration-ong-internationales',
     content: 'Texte de contenu à remplir pour cet article.'
   },
@@ -160,7 +160,7 @@ const newsItems: NewsItem[] = [
       fr: 'Une journée d\'étude dédiée aux récentes réformes juridiques et à leur impact sur les droits des citoyens.',
       ar: 'يوم دراسي مخصص للإصلاحات القانونية الأخيرة وتأثيرها على حقوق المواطنين.'
     },
-    image: '/images/news/evenements.jpg',
+    image: '/images/pexels-august-de-richelieu-4427630.jpg',
     slug: '/news/table-ronde-reformes-juridiques',
     content: 'Texte de contenu à remplir pour cet article.'
   },
@@ -186,7 +186,7 @@ const newsItems: NewsItem[] = [
       fr: 'Une nouvelle initiative visant à éduquer les jeunes sur leurs droits et à encourager leur engagement civique.',
       ar: 'مبادرة جديدة تهدف إلى تثقيف الشباب حول حقوقهم وتشجيع مشاركتهم المدنية.'
     },
-    image: '/images/programs/rights-education.jpg',
+    image: '/images/rights-education.jpg',
     slug: '/news/initiative-droits-jeunes',
     content: 'Texte de contenu à remplir pour cet article.'
   },
@@ -212,7 +212,7 @@ const newsItems: NewsItem[] = [
       fr: 'Une conférence abordant les défis et les opportunités de la protection des droits à l\'ère numérique.',
       ar: 'مؤتمر يتناول تحديات وفرص حماية الحقوق في العصر الرقمي.'
     },
-    image: '/images/law/justice-law-scales.jpg',
+    image: '/images/pexels-mikhail-nilov-8730987.jpg',
     slug: '/news/conference-droits-numeriques',
     content: 'Texte de contenu à remplir pour cet article.'
   },
@@ -238,7 +238,7 @@ const newsItems: NewsItem[] = [
       fr: 'Publication d\'un guide pratique pour aider les citoyens à comprendre et à naviguer dans le système judiciaire.',
       ar: 'نشر دليل عملي لمساعدة المواطنين على فهم نظام العدالة والتنقل فيه.'
     },
-    image: '/images/law-books-library.jpg',
+    image: '/images/pexels-pavel-danilyuk-8112172.jpg',
     slug: '/news/guide-acces-justice',
     content: 'Texte de contenu à remplir pour cet article. Ce guide pratique offre des informations essentielles sur le système judiciaire et les procédures à suivre pour accéder à la justice.'
   },
@@ -264,7 +264,7 @@ const newsItems: NewsItem[] = [
       fr: 'Un atelier axé sur les droits des femmes et les stratégies de lutte contre la discrimination fondée sur le genre.',
       ar: 'ورشة عمل تركز على حقوق المرأة واستراتيجيات مكافحة التمييز القائم على النوع الاجتماعي.'
     },
-    image: '/images/programs/foundation-image.jpg',
+    image: '/images/pexels-ekaterina-bolovtsova-6077861.jpg',
     slug: '/news/atelier-droits-femmes',
     content: 'Texte de contenu à remplir pour cet article. Cet atelier a réuni des experts et des participants pour discuter des stratégies efficaces de lutte contre la discrimination fondée sur le genre.'
   }
@@ -293,7 +293,7 @@ export default function NewsPage() {
       const content = getPageContent('news');
       if (content) {
         console.log('News page - Content loaded with sections:', 
-          content.sections.map(s => `${s.id}: ${s.title?.fr}`).join(', '));
+          content.sections ? content.sections.map(s => `${s.id}: ${s.title?.fr}`).join(', ') : 'No sections found');
         setPageContent(content);
         // Force re-render by incrementing the refresh counter
         setForceRefresh(prev => prev + 1);
@@ -435,7 +435,7 @@ export default function NewsPage() {
             <motion.div 
               className="lg:col-span-8 bg-white rounded-xl shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
               initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
               <div className="relative h-96 overflow-hidden">
@@ -479,7 +479,7 @@ export default function NewsPage() {
               </div>
             </motion.div>
             
-            {/* Secondary featured articles */}
+            {/* Secondary featured articles - Improved visibility */}
             <div className="lg:col-span-4">
               <div className="grid grid-cols-1 gap-6">
                 {newsItems.slice(1, 3).map((item, index) => (
@@ -487,11 +487,11 @@ export default function NewsPage() {
                     key={item.id}
                     className="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
                     initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                        animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: (index + 1) * 0.1 }}
                   >
                     <div className="flex flex-col sm:flex-row h-full">
-                      <div className="relative sm:w-1/3 h-32 sm:h-auto">
+                      <div className="relative sm:w-2/5 h-36 sm:h-auto">
                         <Image 
                           src={item.image} 
                           alt={item.title[language]} 
@@ -501,15 +501,27 @@ export default function NewsPage() {
                         />
                         <div className="absolute inset-0 bg-black/20"></div>
                       </div>
-                      <div className="sm:w-2/3 p-4 flex flex-col">
-                        <span className="text-primary text-xs font-medium mb-1">{item.category[language]}</span>
-                        <h3 className="text-lg font-bold text-gray-800 mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+                      <div className="sm:w-3/5 p-5 flex flex-col">
+                        <span className="inline-block bg-primary/10 text-primary text-sm font-bold px-3 py-1 rounded-full mb-2">
+                          {item.category[language]}
+                        </span>
+                        <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-2 group-hover:text-primary transition-colors">
                           <Link href={item.slug}>{item.title[language]}</Link>
                         </h3>
-                        <div className="flex items-center text-gray-500 text-xs mb-2 mt-auto">
+                        <div className="flex items-center text-gray-500 text-sm font-medium mb-2 mt-auto">
                           <FaRegCalendarAlt className="mr-1" />
-                          <span>{item.date[language]}</span>
+                          <span className="text-base">{item.date[language]}</span>
                         </div>
+                        
+                        <Link 
+                          href={item.slug}
+                          className="inline-flex items-center text-primary hover:text-primary/80 transition-colors font-medium mt-1 text-sm"
+                        >
+                          {language === 'fr' ? 'Lire plus' : 'قراءة المزيد'}
+                          <svg xmlns="http://www.w3.org/2000/svg" className={`h-3 w-3 ${language === 'ar' ? 'mr-1 rotate-180' : 'ml-1'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                          </svg>
+                        </Link>
                       </div>
                     </div>
                   </motion.div>
@@ -537,21 +549,28 @@ export default function NewsPage() {
                     style={{ objectFit: 'cover' }}
                     className="transition-transform duration-500 hover:scale-110"
                   />
-                  <div className="absolute top-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-xs font-medium z-20">
+                  <div className="absolute top-4 left-4 bg-primary text-white px-3 py-1.5 rounded-full text-sm font-bold z-20">
                     {item.category[language]}
+                  </div>
+                  
+                  {/* Date added at the bottom of the image for better visibility */}
+                  <div className="absolute bottom-4 left-4 z-20">
+                    <div className="flex items-center bg-black/40 text-white text-sm px-3 py-1.5 rounded-full">
+                      <FaRegCalendarAlt className="mr-2" />
+                      <span className="font-medium">{item.date[language]}</span>
+                    </div>
                   </div>
                 </div>
                 
                 <div className="p-6 flex-1 flex flex-col">
-                  <div className="flex items-center text-gray-500 text-xs mb-3">
-                    <FaRegCalendarAlt className="mr-1" />
-                    <span>{item.date[language]}</span>
-                    <span className="mx-2">•</span>
-                    <FaUser className="mr-1" />
-                    <span>{item.author[language]}</span>
+                  <div className="mb-2">
+                    <div className="flex items-center text-gray-500 text-sm">
+                      <FaUser className="mr-2" />
+                      <span>{item.author[language]}</span>
+                    </div>
                   </div>
                   
-                  <h3 className="text-xl font-bold text-gray-800 mb-3 line-clamp-2 hover:text-primary transition-colors">
+                  <h3 className="text-xl font-bold text-gray-800 mb-3 hover:text-primary transition-colors">
                     <Link href={item.slug}>{item.title[language]}</Link>
                   </h3>
                   
@@ -642,7 +661,7 @@ export default function NewsPage() {
             <div className="md:w-1/3">
               <div className="relative h-40 rounded-xl overflow-hidden shadow-lg">
                 <Image 
-                  src="/images/law/justice-law-scales.jpg"
+                  src="/images/human-rights.jpg"
                   alt={language === 'fr' ? "Actualités récentes" : "الأخبار الحديثة"}
                   fill
                   style={{ objectFit: 'cover' }}
@@ -674,15 +693,15 @@ export default function NewsPage() {
                 transition={{ duration: 0.4, delay: index * 0.05 }}
                 >
                 <div className="relative h-52 overflow-hidden">
-                  {/* Category badge */}
+                  {/* Category badge - Improved visibility */}
                   <div className="absolute top-3 right-3 z-20">
-                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                      item.category.fr === 'Rapports' ? 'bg-blue-100 text-blue-800' :
-                      item.category.fr === 'Formation' ? 'bg-green-100 text-green-800' :
-                      item.category.fr === 'Partenariats' ? 'bg-purple-100 text-purple-800' :
-                      item.category.fr === 'Événements' ? 'bg-yellow-100 text-yellow-800' :
-                      item.category.fr === 'Programmes' ? 'bg-orange-100 text-orange-800' :
-                      'bg-gray-100 text-gray-800'
+                    <span className={`px-3 py-1.5 rounded-full text-sm font-bold ${
+                      item.category.fr === 'Rapports' ? 'bg-blue-600 text-white' :
+                      item.category.fr === 'Formation' ? 'bg-green-600 text-white' :
+                      item.category.fr === 'Partenariats' ? 'bg-purple-600 text-white' :
+                      item.category.fr === 'Événements' ? 'bg-yellow-600 text-white' :
+                      item.category.fr === 'Programmes' ? 'bg-orange text-white' :
+                      'bg-primary text-white'
                     }`}>
                       {item.category[language]}
                     </span>
@@ -698,27 +717,27 @@ export default function NewsPage() {
                       />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
                   
-                  {/* Date overlay */}
+                  {/* Date overlay - Improved visibility */}
                   <div className="absolute bottom-0 left-0 right-0 p-4 z-20">
-                    <div className="flex items-center text-white/90 text-xs">
-                            <FaRegCalendarAlt className={language === 'ar' ? 'ml-2' : 'mr-2'} />
-                      <span>{item.date[language]}</span>
+                    <div className="inline-flex items-center bg-black/50 text-white text-sm px-3 py-1.5 rounded-full">
+                            <FaRegCalendarAlt className={`${language === 'ar' ? 'ml-2' : 'mr-2'} text-primary`} />
+                      <span className="font-medium">{item.date[language]}</span>
                     </div>
                       </div>
                     </div>
                     
                 <div className="p-5 flex-grow flex flex-col">
-                  <h3 className="text-lg font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-primary transition-colors">
+                  <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-primary transition-colors">
                     <Link href={item.slug}>{item.title[language]}</Link>
                   </h3>
                   
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow">
+                  <p className="text-gray-600 text-base mb-4 line-clamp-3 flex-grow">
                       {item.excerpt[language]}
                     </p>
                     
                   <div className="flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
-                    <span className="text-xs text-gray-500 flex items-center">
-                      <FaUser className={language === 'ar' ? 'ml-1' : 'mr-1'} />
+                    <span className="text-sm text-gray-500 flex items-center font-medium">
+                      <FaUser className={`${language === 'ar' ? 'ml-2' : 'mr-2'} text-primary`} />
                       {item.author[language]}
                     </span>
                     

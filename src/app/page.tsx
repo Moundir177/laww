@@ -5,7 +5,6 @@ import Objectives from '../components/Objectives';
 import Mission from '../components/Mission';
 import Programs from '../components/Programs';
 import Newsletter from '../components/Newsletter';
-import VisualIdentity from '../components/VisualIdentity';
 
 export default function Home() {
   return (
@@ -16,7 +15,6 @@ export default function Home() {
       <Objectives />
       <Mission />
       <Programs />
-      <VisualIdentity />
       <Newsletter />
     </>
   );
