@@ -219,7 +219,7 @@ export default function Stats() {
         </div>
 
         {/* Enhanced decorative elements */}
-        <div className="relative h-10 md:h-14 mt-8 md:mt-10">
+        <div className="relative h-4 md:h-6 mt-4 md:mt-6">
           <motion.div
             className="absolute w-32 h-32 md:w-40 md:h-40 rounded-full bg-[#FF8A00]/20 blur-xl -bottom-20 right-10"
             animate={{ 

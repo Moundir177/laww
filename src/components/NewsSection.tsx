@@ -266,7 +266,7 @@ export default function NewsSection() {
   return (
     <section 
       ref={ref} 
-      className="py-24 bg-light" 
+      className="py-12 bg-light" 
       id="section_10"
     >
       <div className="container mx-auto px-4">
