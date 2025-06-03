@@ -8,14 +8,19 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
     name: Deploy to Cloudflare Pages
     steps:
-      - uses: actions/checkout@v3
-      
+      - name: Checkout
+        uses: actions/checkout@v4
+        
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
+          cache: 'npm'
           
       - name: Install dependencies
         run: npm ci
@@ -24,10 +29,9 @@ jobs:
         run: npm run build
         
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: laww-site
-          directory: out
+          command: pages deploy out --project-name=laww-site --branch=main
           gitHubToken: ${{ secrets.GITHUB_TOKEN }} 
