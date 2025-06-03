@@ -3,16 +3,16 @@ name: Deploy to Cloudflare Pages
 on:
   push:
     branches:
-      - master  # or main, depending on your default branch
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    name: Deploy
+    name: Deploy to Cloudflare Pages
     steps:
       - uses: actions/checkout@v3
       
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -23,10 +23,11 @@ jobs:
       - name: Build
         run: npm run build
         
-      - name: Direct Wrangler Deploy
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: |
-          npm install -g wrangler
-          wrangler pages deploy out --project-name droitfpra 
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: laww-site
+          directory: out
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }} 

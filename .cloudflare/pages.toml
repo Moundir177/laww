@@ -1,0 +1,11 @@
+[site]
+name = "laww-site"
+production_branch = "main"
+
+[build]
+command = "npm run build"
+output_directory = "out"
+cwd = "."
+
+[build.environment]
+NODE_VERSION = "18" 
