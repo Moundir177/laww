@@ -30,9 +30,9 @@ export default function ContactPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [forceRefresh, setForceRefresh] = useState(0);
 
-  const loadContent = () => {
+  const loadContent = async () => {
     try {
-      const content = getPageContent('contact');
+      const content = await getPageContent('contact');
       if (content) {
         console.log('Contact page - Content loaded with sections:', 
           content.sections ? content.sections.map(s => `${s.id}: ${s.title?.fr}`).join(', ') : 'No sections found');
@@ -46,33 +46,20 @@ export default function ContactPage() {
   };
 
   useEffect(() => {
-    // Initial load
     loadContent();
-
-    const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === 'page_contact' || event.key === 'editor_contact') {
-        console.log('Contact page - Storage change detected for key:', event.key);
-        // Force complete refresh from localStorage
-        loadContent();
-      }
-    };
     
-    // Listen for our custom content updated event
+    // Listen for custom content updated event
     const handleContentUpdated = () => {
       console.log('Contact page - Content updated event received');
-      // Force complete refresh 
       loadContent();
     };
-
-    // Add event listeners
-    window.addEventListener('storage', handleStorageChange);
-    window.addEventListener(CONTENT_UPDATED_EVENT, handleContentUpdated);
+    
+    window.addEventListener('content_updated', handleContentUpdated);
     
     return () => {
-      window.removeEventListener('storage', handleStorageChange);
-      window.removeEventListener(CONTENT_UPDATED_EVENT, handleContentUpdated);
+      window.removeEventListener('content_updated', handleContentUpdated);
     };
-  }, []);
+  }, [language]);
 
   // When the language changes, we should refresh the content too
   useEffect(() => {

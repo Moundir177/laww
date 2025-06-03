@@ -35,24 +35,20 @@ export default function AboutPage() {
     };
   }, []);
 
-  const loadContent = () => {
-    const content = getPageContent('about');
-    if (content) {
-      console.log('About page - Content loaded:', content);
-      setPageContent(content);
+  const loadContent = async () => {
+    try {
+      const content = await getPageContent('about');
+      if (content) {
+        console.log('About page - Content loaded:', content);
+        setPageContent(content);
+      }
+    } catch (error) {
+      console.error('Error loading about page content:', error);
     }
   };
 
   useEffect(() => {
     loadContent(); // Initial load
-
-    // Listen for storage events (localStorage changes)
-    const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === 'page_about' || event.key === 'editor_about') {
-        console.log('About page - Storage change detected');
-        loadContent();
-      }
-    };
 
     // Listen for custom content updated event
     const handleContentUpdated = () => {
@@ -60,11 +56,9 @@ export default function AboutPage() {
       loadContent();
     };
     
-    window.addEventListener('storage', handleStorageChange);
     window.addEventListener(CONTENT_UPDATED_EVENT, handleContentUpdated);
     
     return () => {
-      window.removeEventListener('storage', handleStorageChange);
       window.removeEventListener(CONTENT_UPDATED_EVENT, handleContentUpdated);
     };
   }, [language]);

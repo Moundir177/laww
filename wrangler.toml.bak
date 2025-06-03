@@ -1,0 +1,37 @@
+name = "droitfpra-new"
+compatibility_date = "2023-05-14"
+
+# Configure the Pages output directory
+pages_build_output_dir = "./out"
+
+[site]
+bucket = "./out"
+
+[build]
+command = "npm run build"
+
+# Include static assets like headers and redirects
+[site.static]
+include = ["_headers", "_redirects"]
+
+# Configure Cloudflare Pages Functions
+[functions]
+directory = "functions"
+
+[env.production]
+name = "droitfpra"
+route = ""
+workers_dev = true
+compatibility_date = "2023-05-14"
+
+[env.production.build]
+command = "npm run build"
+output_directory = "out"
+
+# Enable Cloudflare Pages Functions for production
+[env.production.functions]
+directory = "functions"
+
+[[env.production.routes]]
+pattern = "/*"
+script = "" 

@@ -274,9 +274,9 @@ export default function ReviewPage() {
   const [forceRefresh, setForceRefresh] = useState(0);
   
   // Function to load page content from localStorage with better error handling
-  const loadContent = () => {
+  const loadContent = async () => {
     try {
-      const content = getPageContent('review');
+      const content = await getPageContent('review');
       if (content) {
         console.log('Review page - Content loaded with sections:', 
           content.sections ? content.sections.map(s => `${s.id}: ${s.title?.fr}`).join(', ') : 'No sections found');
@@ -293,32 +293,18 @@ export default function ReviewPage() {
     // Load content on initial render
     loadContent();
     
-    // Set up event listeners for content updates
-    const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === 'page_review' || event.key === 'editor_review') {
-        console.log('Review page - Storage change detected for key:', event.key);
-        // Force complete refresh from localStorage
-        loadContent();
-      }
-    };
-    
+    // Listen for custom content updated event
     const handleContentUpdated = () => {
       console.log('Review page - Content updated event received');
-      // Force complete refresh
       loadContent();
     };
     
-    // Listen for direct localStorage changes
-    window.addEventListener('storage', handleStorageChange);
-    
-    // Listen for custom content updated event
-    window.addEventListener(CONTENT_UPDATED_EVENT, handleContentUpdated);
+    window.addEventListener('content_updated', handleContentUpdated);
     
     return () => {
-      window.removeEventListener('storage', handleStorageChange);
-      window.removeEventListener(CONTENT_UPDATED_EVENT, handleContentUpdated);
+      window.removeEventListener('content_updated', handleContentUpdated);
     };
-  }, []);
+  }, [language]);
   
   // When the language changes, we should refresh the content too
   useEffect(() => {

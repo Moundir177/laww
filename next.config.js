@@ -1,11 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
   reactStrictMode: true,
+  output: 'export',
   images: {
     unoptimized: true,
   },
-  // Remove experimental settings that cause errors
   trailingSlash: true,
   // Skip certain routes during static export
   distDir: '.next',

@@ -1,9 +1,9 @@
 'use client';
 
 import { useLanguage } from '@/contexts/LanguageContext';
-import NewsDetail from '@/components/NewsDetail';
 import Link from 'next/link';
 import Newsletter from '@/components/Newsletter';
+import { FaCalendarAlt, FaUser } from 'react-icons/fa';
 
 const articleContent = {
   id: 1,
@@ -23,11 +23,6 @@ const articleContent = {
     fr: 'Analyses',
     ar: 'تحليلات'
   },
-  keyPoints: [
-    { fr: 'Analyse des implications pour la société civile', ar: 'تحليل الآثار المترتبة على المجتمع المدني' },
-    { fr: 'Évaluation de la conformité aux standards internationaux', ar: 'تقييم التوافق مع المعايير الدولية' },
-    { fr: 'Recommandations pour améliorer le projet de loi', ar: 'توصيات لتحسين مشروع القانون' }
-  ],
   content: {
     fr: 'À l\'occasion de la journée internationale des droits des migrants, nous annonçons la création d\'une cellule juridique pour les migrants et les familles des disparus en mer en Algérie. N\'hésitez pas à visiter notre page Facebook et nous contacter.',
     ar: 'بمناسبة اليوم العالمي لحقوق المهاجرين، نعلن عن إنشاء خلية قانونية للمهاجرين وعائلات المفقودين في البحر في الجزائر. لا تترددوا في زيارة صفحتنا على فيسبوك والاتصال بنا.'
@@ -62,10 +57,42 @@ export default function AnalyseProjetLoiPage() {
       <div className="container mx-auto px-4 mt-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
-            <NewsDetail 
-              {...articleContent}
-              content={language === 'ar' ? articleContent.content.ar : articleContent.content.fr}
-            />
+            {/* YouTube Video as Main Content */}
+            <div className="bg-white p-0 rounded-2xl shadow-lg overflow-hidden mb-8">
+              <div className="w-full">
+                <div className="relative pb-[56.25%] h-0 overflow-hidden">
+                  <iframe 
+                    src="https://www.youtube.com/embed/ne8ZEXcXa6A?showinfo=0" 
+                    title="Journée internationale des droits des migrants"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowFullScreen
+                    className="absolute top-0 left-0 w-full h-full"
+                  ></iframe>
+                </div>
+              </div>
+              
+              <div className="p-8">
+                <h1 className="text-3xl md:text-4xl font-bold mb-6 text-secondary">
+                  {language === 'fr' ? articleContent.title.fr : articleContent.title.ar}
+                </h1>
+                
+                <div className="flex items-center mb-8">
+                  <div className="bg-light px-3 py-1 rounded text-sm text-gray-500 flex items-center">
+                    <FaCalendarAlt className="text-orange mr-2" size={14} />
+                    <span>{language === 'fr' ? articleContent.date.fr : articleContent.date.ar}</span>
+                  </div>
+                  <div className="ml-4 px-3 py-1 bg-light rounded text-sm text-gray-500 flex items-center">
+                    <FaUser className="text-orange mr-2" size={14} />
+                    <span>{language === 'fr' ? articleContent.author.fr : articleContent.author.ar}</span>
+                  </div>
+                </div>
+                
+                <p className="text-gray-700 leading-relaxed">
+                  {language === 'fr' ? articleContent.content.fr : articleContent.content.ar}
+                </p>
+              </div>
+            </div>
           </div>
           
           <div className="space-y-6">
@@ -79,7 +106,7 @@ export default function AnalyseProjetLoiPage() {
               </h3>
               
               <div className="flex flex-wrap gap-2">
-                {['Tous', 'Analyses', 'Rapports', 'Événements'].map((category, idx) => (
+                {['Tous', 'Formation', 'Rapports', 'Événements', 'Publications', 'Analyses', 'Programmes'].map((category, idx) => (
                   <Link 
                     key={category}
                     href="/news"

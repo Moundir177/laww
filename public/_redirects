@@ -1,5 +1,4 @@
 # Redirects for Cloudflare Pages
 # For client-side routing, redirect all paths to index.html
-/admin/* /index.html 200
 /* /index.html 200
 http://:project.pages.dev/*  https://:project.pages.dev/:splat  301! 

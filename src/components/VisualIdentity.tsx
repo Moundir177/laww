@@ -36,151 +36,26 @@ export default function VisualIdentity() {
     }
   ]);
 
-  const loadContent = () => {
-    const content = getPageContent('home');
+  const loadContent = async () => {
+    try {
+      const content = await getPageContent('home');
     if (content) {
       console.log('VisualIdentity - Loading content, available sections:', content.sections.map(s => s.id));
       
       // Find the identite_visuelle section by checking multiple possible IDs
       const identiteVisuelleSection = content.sections.find(section => 
-        section.id === '11' || 
-        section.id === 'section_11' || 
-        section.id === 'identite_visuelle' ||
-        (section.title && (
-          section.title.fr?.toLowerCase().includes('identité visuelle') || 
-          section.title.ar?.includes('هويتنا البصرية')
-        ))
-      );
-      
-      if (identiteVisuelleSection) {
-        console.log('VisualIdentity - Found section:', identiteVisuelleSection.title, identiteVisuelleSection.content);
+          section.id === 'identite_visuelle' || section.id === 'visual_identity');
         
-        // Set the section title and description
-        setSectionTitle(identiteVisuelleSection.title?.[language] || (language === 'fr' ? 'Notre identité visuelle' : 'هويتنا البصرية'));
-        
-        // Extract the description part and colors
-        const contentText = identiteVisuelleSection.content?.[language] || '';
-        console.log('VisualIdentity - Content text:', contentText);
-        
-        // Split the content by newlines to separate description from color info
-        const contentLines = contentText.split('\n');
-        if (contentLines.length > 0) {
-          // First line is the description
-          setSectionDesc(contentLines[0]);
+        if (identiteVisuelleSection) {
+          console.log('VisualIdentity - Found section:', identiteVisuelleSection.title);
           
-          // Try to extract color information
-          try {
-            const colorInfo = [];
-            
-            // Look for turquoise/blue color info
-            let turquoiseMatch;
-            if (language === 'fr') {
-              turquoiseMatch = contentText.match(/(?:Turquoise|blue)(?:\s*:\s*|\s+)(R\d+\s*\/\s*V\d+\s*\/\s*B\d+)\s+([#][a-fA-F0-9]{6})/i);
-            } else {
-              turquoiseMatch = contentText.match(/(تركواز|فيروزي)(?:\s*:\s*|\s+)(R\d+\s*\/\s*V\d+\s*\/\s*B\d+)\s+([#][a-fA-F0-9]{6})/i);
-            }
-            
-            // Look for orange color info
-            let orangeMatch;
-            if (language === 'fr') {
-              orangeMatch = contentText.match(/(?:Orange)(?:\s*:\s*|\s+)(R\d+\s*\/\s*V\d+\s*\/\s*B\d+)\s+([#][a-fA-F0-9]{6})/i);
-            } else {
-              orangeMatch = contentText.match(/(برتقالي)(?:\s*:\s*|\s+)(R\d+\s*\/\s*V\d+\s*\/\s*B\d+)\s+([#][a-fA-F0-9]{6})/i);
-            }
-            
-            console.log('VisualIdentity - Color matches:', { turquoiseMatch, orangeMatch });
-            
-            // If matches found, update the colors
-            const updatedColors = [];
-            
-            // First color - Turquoise/Blue
-            if (turquoiseMatch) {
-              const rgb = turquoiseMatch[1];
-              const hex = language === 'fr' ? turquoiseMatch[2] : turquoiseMatch[3];
-              
-              updatedColors.push({
-                name: language === 'fr' ? 'Turquoise' : 'فيروزي',
-                hex: hex,
-                rgb: rgb,
-                box: `bg-[${hex}] border-4 border-white`,
-                inner: 'bg-[#FF8A00]',
-              });
-            } else {
-              // Fallback to default
-              updatedColors.push({
-                name: language === 'fr' ? 'Turquoise' : 'فيروزي',
-                hex: '#3cb496',
-                rgb: 'R60 / V180 / B150',
-                box: 'bg-[#3cb496] border-4 border-white',
-                inner: 'bg-[#FF8A00]',
-              });
-            }
-            
-            // Second color - Orange
-            if (orangeMatch) {
-              const rgb = orangeMatch[1];
-              const hex = language === 'fr' ? orangeMatch[2] : orangeMatch[3];
-              
-              updatedColors.push({
-                name: language === 'fr' ? 'Orange' : 'برتقالي',
-                hex: hex,
-                rgb: rgb,
-                box: `bg-[${hex}] border-4 border-white`,
-                inner: 'bg-[#3cb496]',
-              });
-            } else {
-              // Fallback to default
-              updatedColors.push({
-                name: language === 'fr' ? 'Orange' : 'برتقالي',
-                hex: '#f39207',
-                rgb: 'R243 / V146 / B7',
-                box: 'bg-[#f39207] border-4 border-white',
-                inner: 'bg-[#3cb496]',
-              });
-            }
-            
-            // Use regex as a fallback if not matched above
-            if (updatedColors.length === 0) {
-              // Try general regex to find any colors
-              const colorRegex = /#[a-fA-F0-9]{6}/g;
-              const hexMatches = contentText.match(colorRegex);
-              
-              if (hexMatches && hexMatches.length >= 2) {
-                updatedColors.push({
-                  name: language === 'fr' ? 'Turquoise' : 'فيروزي',
-                  hex: hexMatches[0],
-                  rgb: 'R60 / V180 / B150',
-                  box: `bg-[${hexMatches[0]}] border-4 border-white`,
-                  inner: 'bg-[#FF8A00]',
-                });
-                
-                updatedColors.push({
-                  name: language === 'fr' ? 'Orange' : 'برتقالي',
-                  hex: hexMatches[1],
-                  rgb: 'R243 / V146 / B7',
-                  box: `bg-[${hexMatches[1]}] border-4 border-white`,
-                  inner: 'bg-[#3cb496]',
-                });
-              }
-            }
-            
-            // Update the colors state if we have new values
-            if (updatedColors.length > 0) {
-              console.log('VisualIdentity - Updated colors:', updatedColors);
-              setColors(updatedColors);
-            }
-          } catch (e) {
-            console.error('VisualIdentity - Error parsing color information:', e);
-          }
-        } else {
-          // Just set the whole content as description if no newlines
-          setSectionDesc(contentText);
+          // Set the section title and description
+          setSectionTitle(identiteVisuelleSection.title?.[language] || (language === 'ar' ? 'هويتنا البصرية' : 'Notre identité visuelle'));
+          setSectionDesc(identiteVisuelleSection.content?.[language] || '');
         }
-      } else {
-        console.log('VisualIdentity - Section not found!');
       }
-    } else {
-      console.log('VisualIdentity - No content found for home page');
+    } catch (error) {
+      console.error('Error loading visual identity content:', error);
     }
   };
 
@@ -192,20 +67,10 @@ export default function VisualIdentity() {
       loadContent();
     };
     
-    window.addEventListener(CONTENT_UPDATED_EVENT, handleContentUpdated);
-    
-    // Listen for storage changes
-    const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === 'page_home' || event.key === 'editor_home') {
-        loadContent();
-      }
-    };
-    
-    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('content_updated', handleContentUpdated);
     
     return () => {
-      window.removeEventListener(CONTENT_UPDATED_EVENT, handleContentUpdated);
-      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('content_updated', handleContentUpdated);
     };
   }, [language]);
 

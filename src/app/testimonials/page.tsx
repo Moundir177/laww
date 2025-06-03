@@ -51,9 +51,9 @@ export default function TestimonialsPage() {
   const [hoverRating, setHoverRating] = useState(0);
   
   // Function to load page content from localStorage
-  const loadContent = () => {
+  const loadContent = async () => {
     try {
-      const content = getPageContent('testimonials');
+      const content = await getPageContent('testimonials');
       if (content) {
         console.log('Testimonials page - Content loaded with sections:', 
           content.sections ? content.sections.map(s => `${s.id}: ${s.title?.fr}`).join(', ') : 'No sections found');
@@ -95,7 +95,7 @@ export default function TestimonialsPage() {
       window.removeEventListener('storage', handleStorageChange);
       window.removeEventListener(CONTENT_UPDATED_EVENT, handleContentUpdated);
     };
-  }, []);
+  }, [language]);
   
   // When the language changes, we should refresh the content too
   useEffect(() => {

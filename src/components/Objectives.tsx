@@ -34,54 +34,58 @@ export default function Objectives() {
     }
   ]);
 
-  const loadContent = () => {
-    const content = getPageContent('home');
-    if (content) {
-      // Find the objectives section
-      const objectivesSection = content.sections.find(section => section.id === 'objectives');
-      if (objectivesSection) {
-        // Set the section title and description
-        setSectionTitle(objectivesSection.title?.[language] || 'Nos objectifs');
-        setSectionDesc(objectivesSection.content?.[language] || '');
-        
-        // Look for details in the objectifs_details section
-        const objectivesDetailsSection = content.sections.find(section => section.id === 'objectifs_details');
-        if (objectivesDetailsSection && objectivesDetailsSection.content) {
-          const detailsContent = objectivesDetailsSection.content[language];
+  const loadContent = async () => {
+    try {
+      const content = await getPageContent('home');
+      if (content) {
+        // Find the objectives section
+        const objectivesSection = content.sections.find(section => section.id === 'objectives');
+        if (objectivesSection) {
+          // Set the section title and description
+          setSectionTitle(objectivesSection.title?.[language] || 'Nos objectifs');
+          setSectionDesc(objectivesSection.content?.[language] || '');
           
-          // Parse the content to extract the three objectives
-          // Assuming the content follows a format with "Formations et recherches:", "Sensibilisation et médias:", etc.
-          try {
-            // Create updated objectives with content from the database
-            const updatedObjectives = [...objectiveItems];
+          // Look for details in the objectifs_details section
+          const objectivesDetailsSection = content.sections.find(section => section.id === 'objectifs_details');
+          if (objectivesDetailsSection && objectivesDetailsSection.content) {
+            const detailsContent = objectivesDetailsSection.content[language];
             
-            // Convert newlines to spaces to ensure matches work across lines
-            const normalizedContent = detailsContent.replace(/\n/g, ' ');
-            
-            // Update formations content if found
-            const formationsMatch = normalizedContent.match(/Formations et recherches:([^]*?)(?=Sensibilisation et médias:|$)/);
-            if (formationsMatch && formationsMatch[1]) {
-              updatedObjectives[0].content = formationsMatch[1].trim();
+            // Parse the content to extract the three objectives
+            // Assuming the content follows a format with "Formations et recherches:", "Sensibilisation et médias:", etc.
+            try {
+              // Create updated objectives with content from the database
+              const updatedObjectives = [...objectiveItems];
+              
+              // Convert newlines to spaces to ensure matches work across lines
+              const normalizedContent = detailsContent.replace(/\n/g, ' ');
+              
+              // Update formations content if found
+              const formationsMatch = normalizedContent.match(/Formations et recherches:([^]*?)(?=Sensibilisation et médias:|$)/);
+              if (formationsMatch && formationsMatch[1]) {
+                updatedObjectives[0].content = formationsMatch[1].trim();
+              }
+              
+              // Update sensibilisation content if found
+              const sensibilisationMatch = normalizedContent.match(/Sensibilisation et médias:([^]*?)(?=Construction d'un État de droit:|$)/);
+              if (sensibilisationMatch && sensibilisationMatch[1]) {
+                updatedObjectives[1].content = sensibilisationMatch[1].trim();
+              }
+              
+              // Update droit content if found
+              const droitMatch = normalizedContent.match(/Construction d'un État de droit:([^]*?)$/);
+              if (droitMatch && droitMatch[1]) {
+                updatedObjectives[2].content = droitMatch[1].trim();
+              }
+              
+              setObjectiveItems(updatedObjectives);
+            } catch (error) {
+              console.error("Error parsing objectives details:", error);
             }
-            
-            // Update sensibilisation content if found
-            const sensibilisationMatch = normalizedContent.match(/Sensibilisation et médias:([^]*?)(?=Construction d'un État de droit:|$)/);
-            if (sensibilisationMatch && sensibilisationMatch[1]) {
-              updatedObjectives[1].content = sensibilisationMatch[1].trim();
-            }
-            
-            // Update droit content if found
-            const droitMatch = normalizedContent.match(/Construction d'un État de droit:([^]*?)$/);
-            if (droitMatch && droitMatch[1]) {
-              updatedObjectives[2].content = droitMatch[1].trim();
-            }
-            
-            setObjectiveItems(updatedObjectives);
-          } catch (error) {
-            console.error("Error parsing objectives details:", error);
           }
         }
       }
+    } catch (error) {
+      console.error('Error loading objectives content:', error);
     }
   };
 
@@ -93,20 +97,10 @@ export default function Objectives() {
       loadContent();
     };
     
-    window.addEventListener(CONTENT_UPDATED_EVENT, handleContentUpdated);
-    
-    // Listen for storage changes
-    const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === 'page_home' || event.key === 'editor_home') {
-        loadContent();
-      }
-    };
-    
-    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('content_updated', handleContentUpdated);
     
     return () => {
-      window.removeEventListener(CONTENT_UPDATED_EVENT, handleContentUpdated);
-      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('content_updated', handleContentUpdated);
     };
   }, [language]);
 

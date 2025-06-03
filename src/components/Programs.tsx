@@ -54,105 +54,92 @@ export default function Programs() {
     }
   ]);
 
-  const loadContent = () => {
-    const content = getPageContent('home');
-    if (content) {
-      console.log('Programs - Loading content, available sections:', content.sections.map(s => s.id));
-      
-      // Find the programmes section by checking multiple possible IDs
-      const programmesSection = content.sections.find(section => 
-        section.id === '9' || 
-        section.id === 'section_9' || 
-        section.id === 'programmes' ||
-        (section.title && (
-          section.title.fr?.toLowerCase().includes('programmes') || 
-          section.title.ar?.includes('برامجنا')
-        ))
-      );
-      
-      if (programmesSection) {
-        console.log('Programs - Found section:', programmesSection.title);
+  const loadContent = async () => {
+    try {
+      const content = await getPageContent('home');
+      if (content) {
+        console.log('Programs - Loading content, available sections:', content.sections.map(s => s.id));
         
-        // Set the section title and description
-        setSectionTitle(programmesSection.title?.[language] || (language === 'ar' ? 'برامجنا' : 'Nos Programmes'));
+        // Find the programmes section by checking multiple possible IDs
+        const programmesSection = content.sections.find(section => 
+          section.id === 'programmes' || section.id === 'programs');
         
-        // Handle non-JSON content safely
-        if (programmesSection.content && programmesSection.content[language]) {
-          setSectionDesc(programmesSection.content[language]);
-        } else {
-          setSectionDesc(language === 'ar' 
-            ? 'اكتشف البرامج المختلفة التي نعمل من خلالها على تعزيز وحماية الحقوق الأساسية.'
-            : 'Découvrez les différents programmes à travers lesquels nous travaillons pour promouvoir et protéger les droits fondamentaux.');
-        }
-        
-        // Check if there's metadata for the discover label
-        if (programmesSection.metadata?.discoverLabel) {
-          setDiscoverLabel(programmesSection.metadata.discoverLabel[language] || 
-            (language === 'ar' ? 'اكتشف عملنا' : 'Découvrez notre travail'));
-        }
-        
-        // Look for programme_items section to update program data
-        const programmeItemsSection = content.sections.find(section => 
-          section.id === 'programme_items' || 
-          section.id === '9_details' ||
-          section.id === 'section_9_details' ||
-          (section.title && (
-            section.title.fr?.toLowerCase().includes('programme') || 
-            section.title.ar?.includes('برامج')
-          ))
-        );
-        
-        if (programmeItemsSection && programmeItemsSection.content) {
-          console.log('Programs - Found items section:', programmeItemsSection.title);
+        if (programmesSection) {
+          console.log('Programs - Found section:', programmesSection.title);
           
-          // First check if content is available
-          const contentStr = programmeItemsSection.content[language] || '';
+          // Set the section title and description
+          setSectionTitle(programmesSection.title?.[language] || (language === 'ar' ? 'برامجنا' : 'Nos programmes'));
+          setSectionDesc(programmesSection.content?.[language] || '');
           
-          // Handle JSON or text content appropriately
-          if (contentStr && contentStr.trim()) {
-            try {
-              // Check if it looks like JSON
-              if (contentStr.trim().startsWith('[') && contentStr.trim().endsWith(']')) {
-                const programItems = JSON.parse(contentStr);
-                if (Array.isArray(programItems) && programItems.length > 0) {
-                  // Map the loaded program items to our format, keeping the icons
-                  const updatedProgramData = programItems.map((item, index) => {
-                    const originalIcon = programData[index % programData.length]?.icon || 
-                      [<FaGraduationCap />, <FaBalanceScale />, <FaBullhorn />][index % 3];
+          // Check if there's metadata for the discover label
+          if (programmesSection.metadata?.discoverLabel) {
+            setDiscoverLabel(programmesSection.metadata.discoverLabel[language] || 
+              (language === 'ar' ? 'اكتشف عملنا' : 'Découvrez notre travail'));
+          }
+          
+          // Look for programme_items section to update program data
+          const programmeItemsSection = content.sections.find(section => 
+            section.id === 'programme_items' || 
+            section.id === '9_details' ||
+            section.id === 'section_9_details' ||
+            (section.title && (
+              section.title.fr?.toLowerCase().includes('programme') || 
+              section.title.ar?.includes('برامج')
+            ))
+          );
+          
+          if (programmeItemsSection && programmeItemsSection.content) {
+            console.log('Programs - Found items section:', programmeItemsSection.title);
+            
+            // First check if content is available
+            const contentStr = programmeItemsSection.content[language] || '';
+            
+            // Handle JSON or text content appropriately
+            if (contentStr && contentStr.trim()) {
+              try {
+                // Check if it looks like JSON
+                if (contentStr.trim().startsWith('[') && contentStr.trim().endsWith(']')) {
+                  const programItems = JSON.parse(contentStr);
+                  if (Array.isArray(programItems) && programItems.length > 0) {
+                    // Map the loaded program items to our format, keeping the icons
+                    const updatedProgramData = programItems.map((item, index) => {
+                      const originalIcon = programData[index % programData.length]?.icon || 
+                        [<FaGraduationCap />, <FaBalanceScale />, <FaBullhorn />][index % 3];
+                      
+                      return {
+                        title: item.title || programData[index % programData.length]?.title || '',
+                        description: item.description || programData[index % programData.length]?.description || '',
+                        image: item.image || programData[index % programData.length]?.image || "/images/rights-education.jpg",
+                        link: item.link || programData[index % programData.length]?.link || "/",
+                        icon: originalIcon
+                      };
+                    });
                     
-                    return {
-                      title: item.title || programData[index % programData.length]?.title || '',
-                      description: item.description || programData[index % programData.length]?.description || '',
-                      image: item.image || programData[index % programData.length]?.image || "/images/rights-education.jpg",
-                      link: item.link || programData[index % programData.length]?.link || "/",
-                      icon: originalIcon
-                    };
-                  });
-                  
-                  setProgramData(updatedProgramData);
+                    setProgramData(updatedProgramData);
+                  }
+                } else {
+                  // Not JSON format, try to extract program info from text
+                  console.log('Programs - Content is not in JSON format, extracting from text');
+                  extractProgramInfoFromText(contentStr);
                 }
-              } else {
-                // Not JSON format, try to extract program info from text
-                console.log('Programs - Content is not in JSON format, extracting from text');
+              } catch (e) {
+                console.error("Error parsing programme items:", e);
+                // Try to extract program items from text content as fallback
                 extractProgramInfoFromText(contentStr);
               }
-            } catch (e) {
-              console.error("Error parsing programme items:", e);
-              // Try to extract program items from text content as fallback
-              extractProgramInfoFromText(contentStr);
+            }
+          } else {
+            console.log('Programs - No items section found, trying to extract from main section');
+            if (programmesSection.content && programmesSection.content[language]) {
+              extractProgramInfoFromText(programmesSection.content[language]);
             }
           }
         } else {
-          console.log('Programs - No items section found, trying to extract from main section');
-          if (programmesSection.content && programmesSection.content[language]) {
-            extractProgramInfoFromText(programmesSection.content[language]);
-          }
+          console.log('Programs - Section not found!');
         }
-      } else {
-        console.log('Programs - Section not found!');
       }
-    } else {
-      console.log('Programs - No content found for home page');
+    } catch (error) {
+      console.error('Error loading programs content:', error);
     }
   };
 
@@ -215,25 +202,13 @@ export default function Programs() {
     
     // Listen for custom content updated event
     const handleContentUpdated = () => {
-      console.log('Programs - Content updated event received');
       loadContent();
     };
     
-    window.addEventListener(CONTENT_UPDATED_EVENT, handleContentUpdated);
-    
-    // Listen for storage changes
-    const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === 'page_home' || event.key === 'editor_home') {
-        console.log('Programs - Storage change detected');
-        loadContent();
-      }
-    };
-    
-    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('content_updated', handleContentUpdated);
     
     return () => {
-      window.removeEventListener(CONTENT_UPDATED_EVENT, handleContentUpdated);
-      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('content_updated', handleContentUpdated);
     };
   }, [language]);
   

@@ -17,47 +17,55 @@ export default function Stats() {
   const [targetBeneficiaries, setTargetBeneficiaries] = useState(760);
   const [targetPartners, setTargetPartners] = useState(25);
   const [sectionTitle, setSectionTitle] = useState('');
+  const [sectionDesc, setSectionDesc] = useState('');
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
   const { language, t } = useLanguage();
 
-  const loadContent = () => {
-    const content = getPageContent('home');
-    if (content) {
-      // Find the impact section
-      const impactSection = content.sections.find(section => section.id === 'impact');
-      if (impactSection) {
-        // Set the section title
-        setSectionTitle(impactSection.title?.[language] || t('our.impact'));
-        
-        // Parse the content for statistics
-        try {
-          // Look for numbers in the content
-          const contentText = impactSection.content[language];
+  const loadContent = async () => {
+    try {
+      const content = await getPageContent('home');
+      if (content) {
+        // Find the impact section
+        const impactSection = content.sections.find(section => section.id === 'impact');
+        if (impactSection) {
+          // Set the section title
+          setSectionTitle(impactSection.title?.[language] || t('our.impact'));
           
-          // In order to avoid using the 's' flag which is only available in ES2018+,
-          // we'll replace newlines with spaces before matching
-          const normalizedText = contentText.replace(/\n/g, ' ');
-          const statsMatch = normalizedText.match(/(\d+)\s*\+\s*.*?(\d+)\s*\+\s*.*?(\d+)\s*\+/);
+          // Set the section description
+          setSectionDesc(impactSection.content?.[language] || t('impact.desc'));
           
-          if (statsMatch && statsMatch.length >= 4) {
-            setTargetTrainings(parseInt(statsMatch[1], 10) || 38);
-            setTargetBeneficiaries(parseInt(statsMatch[2], 10) || 760);
-            setTargetPartners(parseInt(statsMatch[3], 10) || 25);
-          } else {
-            // Try to get individual stats from separate lines
-            const trainingsMatch = contentText.match(/(\d+)\s*\+\s*.*?Formation/i);
-            const beneficiariesMatch = contentText.match(/(\d+)\s*\+\s*.*?Bénéficiaires/i);
-            const partnersMatch = contentText.match(/(\d+)\s*\+\s*.*?Partenaires/i);
+          // Parse the content for statistics
+          try {
+            // Look for numbers in the content
+            const contentText = impactSection.content[language];
             
-            if (trainingsMatch) setTargetTrainings(parseInt(trainingsMatch[1], 10) || 38);
-            if (beneficiariesMatch) setTargetBeneficiaries(parseInt(beneficiariesMatch[1], 10) || 760);
-            if (partnersMatch) setTargetPartners(parseInt(partnersMatch[1], 10) || 25);
+            // In order to avoid using the 's' flag which is only available in ES2018+,
+            // we'll replace newlines with spaces before matching
+            const normalizedText = contentText.replace(/\n/g, ' ');
+            const statsMatch = normalizedText.match(/(\d+)\s*\+\s*.*?(\d+)\s*\+\s*.*?(\d+)\s*\+/);
+            
+            if (statsMatch && statsMatch.length >= 4) {
+              setTargetTrainings(parseInt(statsMatch[1], 10) || 38);
+              setTargetBeneficiaries(parseInt(statsMatch[2], 10) || 760);
+              setTargetPartners(parseInt(statsMatch[3], 10) || 25);
+            } else {
+              // Try to get individual stats from separate lines
+              const trainingsMatch = contentText.match(/(\d+)\s*\+\s*.*?Formation/i);
+              const beneficiariesMatch = contentText.match(/(\d+)\s*\+\s*.*?Bénéficiaires/i);
+              const partnersMatch = contentText.match(/(\d+)\s*\+\s*.*?Partenaires/i);
+              
+              if (trainingsMatch) setTargetTrainings(parseInt(trainingsMatch[1], 10) || 38);
+              if (beneficiariesMatch) setTargetBeneficiaries(parseInt(beneficiariesMatch[1], 10) || 760);
+              if (partnersMatch) setTargetPartners(parseInt(partnersMatch[1], 10) || 25);
+            }
+          } catch (error) {
+            console.error("Error parsing impact statistics:", error);
           }
-        } catch (error) {
-          console.error("Error parsing impact statistics:", error);
         }
       }
+    } catch (error) {
+      console.error('Error loading stats content:', error);
     }
   };
 
@@ -69,22 +77,12 @@ export default function Stats() {
       loadContent();
     };
     
-    window.addEventListener(CONTENT_UPDATED_EVENT, handleContentUpdated);
-    
-    // Listen for storage changes
-    const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === 'page_home' || event.key === 'editor_home') {
-        loadContent();
-      }
-    };
-    
-    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('content_updated', handleContentUpdated);
     
     return () => {
-      window.removeEventListener(CONTENT_UPDATED_EVENT, handleContentUpdated);
-      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('content_updated', handleContentUpdated);
     };
-  }, [language]);
+  }, [language, t]);
 
   useEffect(() => {
     if (isInView) {

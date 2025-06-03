@@ -7,9 +7,6 @@ import { useEffect, useState } from 'react';
 import { getPageContent } from '@/lib/database';
 import Image from 'next/image';
 
-// Custom event name for content updates
-const CONTENT_UPDATED_EVENT = 'content_updated';
-
 // Client-only component for the hero background
 function HeroBackground() {
   const [isClient, setIsClient] = useState(false);
@@ -110,38 +107,31 @@ export default function Hero() {
   const { language } = useLanguage();
   const [pageContent, setPageContent] = useState<any | null>(null);
 
-  const loadContent = () => {
-    const content = getPageContent('home');
-    if (content) {
-      setPageContent(content);
+  const loadContent = async () => {
+    try {
+      const content = await getPageContent('home');
+      if (content) {
+        setPageContent(content);
+      }
+    } catch (error) {
+      console.error('Error loading hero content:', error);
     }
   };
 
   useEffect(() => {
-    loadContent(); // Initial load
-
-    // Create a custom event listener for content updates
-    const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === 'page_home' || event.key === 'editor_home') {
-        loadContent(); // Reload content if home page data changes
-      }
-    };
-
-    // Listen for direct localStorage changes
-    window.addEventListener('storage', handleStorageChange);
+    loadContent();
     
-    // Listen for our custom content updated event
+    // Listen for custom content updated event
     const handleContentUpdated = () => {
       loadContent();
     };
     
-    window.addEventListener(CONTENT_UPDATED_EVENT, handleContentUpdated);
+    window.addEventListener('content_updated', handleContentUpdated);
     
     return () => {
-      window.removeEventListener('storage', handleStorageChange);
-      window.removeEventListener(CONTENT_UPDATED_EVENT, handleContentUpdated);
+      window.removeEventListener('content_updated', handleContentUpdated);
     };
-  }, []); 
+  }, [language]);
 
   // Get hero section content
   const heroSection = pageContent?.sections?.find((section: any) => section.id === 'hero');

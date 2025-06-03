@@ -15,12 +15,30 @@ export default function Mission() {
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
   useEffect(() => {
-    // Load page content from database
-    const content = getPageContent('home');
-    if (content) {
-      setPageContent(content);
-    }
-  }, []);
+    const loadContent = async () => {
+      try {
+        const content = await getPageContent('home');
+        if (content) {
+          setPageContent(content);
+        }
+      } catch (error) {
+        console.error('Error loading mission content:', error);
+      }
+    };
+    
+    loadContent();
+    
+    // Listen for content updates
+    const handleContentUpdated = () => {
+      loadContent();
+    };
+    
+    window.addEventListener('content_updated', handleContentUpdated);
+    
+    return () => {
+      window.removeEventListener('content_updated', handleContentUpdated);
+    };
+  }, [language]);
 
   // Get mission and droits_egaux sections
   const missionSection = pageContent?.sections.find(section => section.id === 'mission');

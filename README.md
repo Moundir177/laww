@@ -7,59 +7,6 @@ Ce projet est un site web multilingue (français et arabe) pour une fondation de
 - Site web multilingue (français et arabe)
 - Conception responsive avec Tailwind CSS
 - Pages dynamiques avec Next.js
-- Interface d'administration pour la gestion du contenu
-
-## Interface d'administration
-
-Une interface d'administration complète a été implémentée pour permettre la gestion du contenu du site web. Cette interface comprend :
-
-### Authentification
-
-- Page de connexion sécurisée
-- Identifiants par défaut : 
-  - Nom d'utilisateur : `admin`
-  - Mot de passe : `admin123`
-
-### Tableau de bord
-
-- Vue d'ensemble des statistiques du site
-- Accès rapide aux différentes sections d'administration
-
-### Gestion des pages
-
-L'interface permet de modifier le contenu de toutes les pages principales du site :
-- Page d'accueil
-- À propos
-- Programmes
-- Actualités
-- Ressources
-- Galerie
-- Contact
-
-Pour chaque page, il est possible de :
-- Modifier les titres et textes en français et en arabe
-- Ajouter, modifier ou supprimer des sections
-- Réorganiser l'ordre des sections
-- Télécharger et gérer les images
-- Synchroniser le contenu avec la version publique du site
-
-### Gestion des actualités
-
-- Ajout, modification et suppression d'articles d'actualité
-- Gestion des catégories d'actualités
-- Édition multilingue (français et arabe)
-
-### Gestion des ressources
-
-- Ajout, modification et suppression de ressources documentaires
-- Gestion des types de ressources (rapports, guides, analyses, etc.)
-- Téléchargement de fichiers PDF et d'images
-
-### Galerie d'images
-
-- Téléchargement et organisation des images
-- Ajout de descriptions multilingues
-- Gestion des catégories d'images
 
 ## Stockage des données
 
@@ -84,16 +31,6 @@ npm run build
 # Démarrer en mode production
 npm start
 ```
-
-## Accès à l'interface d'administration
-
-Après avoir démarré le serveur, accédez à l'interface d'administration via :
-
-```
-http://localhost:3000/admin
-```
-
-Utilisez les identifiants par défaut mentionnés ci-dessus pour vous connecter.
 
 ## Getting Started
 

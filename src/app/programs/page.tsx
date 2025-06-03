@@ -76,9 +76,9 @@ export default function Programs() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   
   // Function to load page content from localStorage with better error handling
-  const loadContent = () => {
+  const loadContent = async () => {
     try {
-      const content = getPageContent('programs');
+      const content = await getPageContent('programs');
       if (content) {
         console.log('Programs page - Content loaded with sections:', 
           content.sections.map(s => `${s.id}: ${s.title?.fr}`).join(', '));
