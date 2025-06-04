@@ -1,5 +1,30 @@
 // This is a simple client-side data handling utility
 // In a production environment, you'd use a real database with server-side API endpoints
+import { getPersistedPage, getPersistedPages, savePersistentPage } from './api';
+import { 
+  getPersistedNewsItems,
+  getPersistedNewsItem,
+  getPersistedNewsBySlug,
+  savePersistentNewsItem
+} from './newsApi';
+import {
+  getPersistedTeamMembers,
+  getPersistedTeamMember,
+  savePersistentTeamMember,
+  deletePersistedTeamMember
+} from './teamApi';
+import {
+  getPersistedTestimonials,
+  getPersistedTestimonial,
+  savePersistentTestimonial,
+  deletePersistedTestimonial
+} from './testimonialsApi';
+import {
+  getPersistedMedia,
+  getPersistedMediaItem,
+  savePersistentMediaItem,
+  deletePersistedMediaItem
+} from './mediaApi';
 
 // Type definitions for multilingual content
 export interface Multilingual {
@@ -45,6 +70,7 @@ export interface NewsItem {
   category: string;
   author?: string;
   image?: string;
+  videoUrl?: string;
   tags?: string[];
 }
 
@@ -62,7 +88,42 @@ export interface ResourceItem {
   tags?: string[];
 }
 
-// API URL
+// Types for media content
+export interface MediaItem {
+  id: string;
+  title: Multilingual;
+  description: Multilingual;
+  type: string; // image, video, document
+  url: string;
+  thumbnailUrl?: string;
+  date: string;
+  category?: string;
+  tags?: string[];
+}
+
+// Types for testimonials
+export interface Testimonial {
+  id: string;
+  name: Multilingual;
+  role: Multilingual;
+  content: Multilingual;
+  imageUrl?: string;
+  rating?: number;
+  date?: string;
+}
+
+// Types for team members
+export interface TeamMember {
+  id: string;
+  name: Multilingual;
+  role: Multilingual;
+  bio: Multilingual;
+  imageUrl?: string;
+  socialLinks?: Record<string, string>;
+  order?: number;
+}
+
+// API URL for remote API (fallback)
 const API_BASE_URL = typeof window !== 'undefined' 
   ? `${window.location.protocol}//${window.location.host}/api`
   : 'https://droitfpra-new.pages.dev/api';
@@ -182,8 +243,15 @@ const staticFallbackContent: Record<string, PageContent> = {
   }
 };
 
-// Function to get page content
+// Function to get page content - using local storage first, then fallback to API
 export const getPageContent = async (pageId: string): Promise<PageContent | null> => {
+  // Try to get from local storage first
+  const localPage = getPersistedPage(pageId);
+  if (localPage) {
+    return localPage;
+  }
+  
+  // If not found in local storage, try API
   try {
     const response = await fetch(`${API_BASE_URL}/page/${pageId}`);
     
@@ -212,8 +280,15 @@ export const getPageContent = async (pageId: string): Promise<PageContent | null
   }
 };
 
-// Function to get all pages
+// Function to get all pages - using local storage first, then fallback to API
 export const getPages = async (): Promise<PageContent[]> => {
+  // Get from local storage
+  const localPages = getPersistedPages();
+  if (Object.keys(localPages).length > 0) {
+    return Object.values(localPages);
+  }
+  
+  // Fallback to API
   try {
     const response = await fetch(`${API_BASE_URL}/pages`);
     
@@ -228,8 +303,15 @@ export const getPages = async (): Promise<PageContent[]> => {
   }
 };
 
-// Function to create or update a page
+// Function to create or update a page - using local storage first, then API
 export const savePageContent = async (page: PageContent): Promise<boolean> => {
+  // Save to local storage
+  const success = savePersistentPage(page);
+  if (success) {
+    return true;
+  }
+  
+  // Fallback to API
   try {
     const response = await fetch(`${API_BASE_URL}/page`, {
       method: 'POST',
@@ -253,51 +335,44 @@ export const savePageContent = async (page: PageContent): Promise<boolean> => {
 
 // Function to create or update a section
 export const saveSection = async (section: PageSection, pageId: string): Promise<boolean> => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/section`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        ...section,
-        pageId,
-      }),
-    });
-    
-    if (!response.ok) {
-      throw new Error(`Failed to save section: ${response.statusText}`);
-    }
-    
-    const result = await response.json();
-    return result.success;
-  } catch (error) {
-    console.error('Error saving section:', error);
-    return false;
+  // Get the page
+  const page = await getPageContent(pageId);
+  if (!page) return false;
+  
+  // Update the section
+  const sectionIndex = page.sections.findIndex(s => s.id === section.id);
+  if (sectionIndex !== -1) {
+    page.sections[sectionIndex] = section;
+  } else {
+    page.sections.push(section);
   }
+  
+  // Save the updated page
+  return savePageContent(page);
 };
 
 // Function to delete a section
 export const deleteSection = async (pageId: string, sectionId: string): Promise<boolean> => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/section/${pageId}/${sectionId}`, {
-      method: 'DELETE',
-    });
-    
-    if (!response.ok) {
-      throw new Error(`Failed to delete section: ${response.statusText}`);
-    }
-    
-    const result = await response.json();
-    return result.success;
-  } catch (error) {
-    console.error('Error deleting section:', error);
-    return false;
-  }
+  // Get the page
+  const page = await getPageContent(pageId);
+  if (!page) return false;
+  
+  // Remove the section
+  page.sections = page.sections.filter(s => s.id !== sectionId);
+  
+  // Save the updated page
+  return savePageContent(page);
 };
 
 // Function to get all news
 export const getNews = async (): Promise<NewsItem[]> => {
+  // Get from local storage
+  const newsItems = getPersistedNewsItems();
+  if (newsItems.length > 0) {
+    return newsItems;
+  }
+  
+  // Fallback to API
   try {
     const response = await fetch(`${API_BASE_URL}/news`);
     
@@ -314,6 +389,13 @@ export const getNews = async (): Promise<NewsItem[]> => {
 
 // Function to get a specific news item by ID
 export const getNewsById = async (newsId: string): Promise<NewsItem | null> => {
+  // Try to get from local storage first
+  const localNewsItem = getPersistedNewsItem(newsId);
+  if (localNewsItem) {
+    return localNewsItem;
+  }
+  
+  // Fallback to API
   try {
     const response = await fetch(`${API_BASE_URL}/news/${newsId}`);
     
@@ -334,6 +416,13 @@ export const getNewsById = async (newsId: string): Promise<NewsItem | null> => {
 
 // Function to get a specific news item by slug
 export const getNewsItem = async (slug: string, lang: 'fr' | 'ar'): Promise<NewsItem | null> => {
+  // Try to get from local storage first
+  const localNewsItem = getPersistedNewsBySlug(slug, lang);
+  if (localNewsItem) {
+    return localNewsItem;
+  }
+  
+  // Fallback to API lookup by iterating through all news
   try {
     const allNews = await getNews();
     return allNews.find(item => item.slug[lang] === slug) || null;
@@ -345,6 +434,13 @@ export const getNewsItem = async (slug: string, lang: 'fr' | 'ar'): Promise<News
 
 // Function to create or update a news item
 export const saveNewsItem = async (news: NewsItem): Promise<boolean> => {
+  // Save to local storage
+  const success = savePersistentNewsItem(news);
+  if (success) {
+    return true;
+  }
+  
+  // Fallback to API
   try {
     const response = await fetch(`${API_BASE_URL}/news`, {
       method: 'POST',
@@ -376,6 +472,263 @@ export const getResources = (): ResourceItem[] => {
 export const getResourceItem = (slug: string, lang: 'fr' | 'ar'): ResourceItem | null => {
   // This function is no longer used in the new implementation
   return null;
+};
+
+// New functions for enhanced content management
+
+// Media management
+export const getAllMedia = async (): Promise<MediaItem[]> => {
+  // Get from local storage
+  const mediaItems = getPersistedMedia();
+  if (mediaItems.length > 0) {
+    return mediaItems;
+  }
+  
+  // Fallback to API
+  try {
+    const response = await fetch(`${API_BASE_URL}/media`);
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch media: ${response.statusText}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching media:', error);
+    return [];
+  }
+};
+
+export const saveMedia = async (media: MediaItem): Promise<boolean> => {
+  // Save to local storage
+  const success = savePersistentMediaItem(media);
+  if (success) {
+    return true;
+  }
+  
+  // Fallback to API
+  try {
+    const response = await fetch(`${API_BASE_URL}/media`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(media),
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to save media: ${response.statusText}`);
+    }
+    
+    const result = await response.json();
+    return result.success;
+  } catch (error) {
+    console.error('Error saving media:', error);
+    return false;
+  }
+};
+
+export const deleteMedia = async (mediaId: string): Promise<boolean> => {
+  // Delete from local storage
+  const success = deletePersistedMediaItem(mediaId);
+  if (success) {
+    return true;
+  }
+  
+  // Fallback to API
+  try {
+    const response = await fetch(`${API_BASE_URL}/media/${mediaId}`, {
+      method: 'DELETE',
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to delete media: ${response.statusText}`);
+    }
+    
+    const result = await response.json();
+    return result.success;
+  } catch (error) {
+    console.error('Error deleting media:', error);
+    return false;
+  }
+};
+
+// Testimonial management
+export const getTestimonials = async (): Promise<Testimonial[]> => {
+  // Get from local storage
+  const testimonials = getPersistedTestimonials();
+  if (testimonials.length > 0) {
+    return testimonials;
+  }
+  
+  // Fallback to API
+  try {
+    const response = await fetch(`${API_BASE_URL}/testimonials`);
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch testimonials: ${response.statusText}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching testimonials:', error);
+    return [];
+  }
+};
+
+export const saveTestimonial = async (testimonial: Testimonial): Promise<boolean> => {
+  // Save to local storage
+  const success = savePersistentTestimonial(testimonial);
+  if (success) {
+    return true;
+  }
+  
+  // Fallback to API
+  try {
+    const response = await fetch(`${API_BASE_URL}/testimonial`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(testimonial),
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to save testimonial: ${response.statusText}`);
+    }
+    
+    const result = await response.json();
+    return result.success;
+  } catch (error) {
+    console.error('Error saving testimonial:', error);
+    return false;
+  }
+};
+
+export const deleteTestimonial = async (id: string): Promise<boolean> => {
+  // Delete from local storage
+  const success = deletePersistedTestimonial(id);
+  if (success) {
+    return true;
+  }
+  
+  // Fallback to API
+  try {
+    const response = await fetch(`${API_BASE_URL}/testimonial/${id}`, {
+      method: 'DELETE',
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to delete testimonial: ${response.statusText}`);
+    }
+    
+    const result = await response.json();
+    return result.success;
+  } catch (error) {
+    console.error('Error deleting testimonial:', error);
+    return false;
+  }
+};
+
+// Team member management
+export const getTeamMembers = async (): Promise<TeamMember[]> => {
+  // Get from local storage
+  const teamMembers = getPersistedTeamMembers();
+  if (teamMembers.length > 0) {
+    return teamMembers;
+  }
+  
+  // Fallback to API
+  try {
+    const response = await fetch(`${API_BASE_URL}/team`);
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch team members: ${response.statusText}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching team members:', error);
+    return [];
+  }
+};
+
+export const saveTeamMember = async (member: TeamMember): Promise<boolean> => {
+  // Save to local storage
+  const success = savePersistentTeamMember(member);
+  if (success) {
+    return true;
+  }
+  
+  // Fallback to API
+  try {
+    const response = await fetch(`${API_BASE_URL}/team`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(member),
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to save team member: ${response.statusText}`);
+    }
+    
+    const result = await response.json();
+    return result.success;
+  } catch (error) {
+    console.error('Error saving team member:', error);
+    return false;
+  }
+};
+
+export const deleteTeamMember = async (id: string): Promise<boolean> => {
+  // Delete from local storage
+  const success = deletePersistedTeamMember(id);
+  if (success) {
+    return true;
+  }
+  
+  // Fallback to API
+  try {
+    const response = await fetch(`${API_BASE_URL}/team/${id}`, {
+      method: 'DELETE',
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to delete team member: ${response.statusText}`);
+    }
+    
+    const result = await response.json();
+    return result.success;
+  } catch (error) {
+    console.error('Error deleting team member:', error);
+    return false;
+  }
+};
+
+// File upload helper
+export const uploadFile = async (file: File, type: 'image' | 'video' | 'document'): Promise<string | null> => {
+  try {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('type', type);
+    
+    const response = await fetch(`${API_BASE_URL}/upload`, {
+      method: 'POST',
+      body: formData,
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to upload file: ${response.statusText}`);
+    }
+    
+    const result = await response.json();
+    return result.url;
+  } catch (error) {
+    console.error('Error uploading file:', error);
+    return null;
+  }
 };
 
 // For future expansion, these functions could be replaced with API calls to a real backend 

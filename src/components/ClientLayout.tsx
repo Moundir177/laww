@@ -4,6 +4,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import React from 'react';
+import InitializeDataComponent from '@/app/initialize-data';
 
 export default function ClientLayout({
   children,
@@ -12,6 +13,7 @@ export default function ClientLayout({
 }) {
   return (
     <LanguageProvider>
+      <InitializeDataComponent />
       <Navbar />
       <main className="flex-grow">{children}</main>
       <Footer />
